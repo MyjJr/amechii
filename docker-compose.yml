@@ -10,6 +10,8 @@ services:
     ports: 
       - 8080:80
     restart: always
+    volumes:
+      - ./backend/app:/app
   
   db:
     image: mariadb:latest
