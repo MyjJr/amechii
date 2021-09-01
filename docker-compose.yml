@@ -1,0 +1,19 @@
+services:
+  backend:
+    depends_on:
+      - db
+    build: 
+      context: ./backend
+      dockerfile: backend.dockerfile
+    env_file: 
+      - ${ENV_FILE_PATH:-config.env}
+    ports: 
+      - 8080:80
+    restart: always
+  
+  db:
+    image: mariadb:latest
+    env_file: 
+      - ${ENV_FILE_PATH:-config.env}
+    ports:
+    - 3306:3306
