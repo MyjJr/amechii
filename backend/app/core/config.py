@@ -1,0 +1,22 @@
+import os
+
+
+TEST_ENV_VAR = os.getenv("TEST_ENV_VAR")
+
+
+MARIADB_SERVER = os.getenv("MARIADB_SERVER")
+MARIADB_DATABASE = os.getenv("MARIADB_DATABASE")
+
+MARIADB_USER = os.getenv("MARIADB_USER")
+MARIADB_PASSWORD = os.getenv("MARIADB_PASSWORD")
+
+SQLALCHEMY_DATABASE_URI = (
+    f"mysql+pymysql://{MARIADB_USER}:{MARIADB_PASSWORD}@{MARIADB_SERVER}/{MARIADB_DATABASE}"
+)
+
+FIRST_USER = os.getenv("FIRST_USER")
+FIRST_USER_PASSWORD = os.getenv("FIRST_USER")
+
+if __name__ == "__main__":
+    print()
+    print(TEST_ENV_VAR)
