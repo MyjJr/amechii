@@ -17,6 +17,8 @@ SQLALCHEMY_DATABASE_URI = (
 FIRST_USER = os.getenv("FIRST_USER")
 FIRST_USER_PASSWORD = os.getenv("FIRST_USER")
 
+API_ROOT_PATH = os.getenv("API_ROOT_PATH")
+
 if __name__ == "__main__":
     print()
     print(TEST_ENV_VAR)
