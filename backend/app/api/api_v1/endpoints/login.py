@@ -11,7 +11,7 @@ from app import crud
 from app.core import config
 from app.core.jwt import create_access_token
 from app.api.utils.db import get_db
-from app.api.utils.security import get_current_user
+from app.api.utils.security import get_validated_current_user
 
 router = APIRouter()
 
@@ -39,8 +39,8 @@ async def login_access_token(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.post("/test-token", response_model=User)
-def test_token(current_user: DBUser = Depends(get_current_user)):
+@router.get("/test-token", response_model=User)
+def test_token(current_user: DBUser = Depends(get_validated_current_user)):
     """
     Test access token
     """
