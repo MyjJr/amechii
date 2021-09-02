@@ -1,18 +1,15 @@
-import sys
-
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 from starlette.responses import Response
-from sqlalchemy.orm import Session
 
+from app.api.api_v1.api import api_router
 from app.core import config
 from app.db.session import session
 
-from app.api.utils.db import get_db
-from app import crud
-
-app = FastAPI()
+app = FastAPI(
+    title=config.PROJECT_NAME, openapi_url=config.API_ROOT_PATH + "/openapi.json"
+)
 
 origins = [
     "http://localhost",
@@ -29,6 +26,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(api_router, prefix=config.API_ROOT_PATH)
 
 
 @app.middleware("http")
@@ -51,30 +50,6 @@ async def test_middleware(request: Request, call_next):
     print("4")
 
     return response
-
-
-@app.get("/")
-async def read_root():
-    version = f"{sys.version_info.major}.{sys.version_info.minor}"
-    message = f"Hello world! From FastAPI running on Uvicorn with Gunicorn. Using Python {version}"
-    response: Response = {"message": message}
-
-    # print("\n")
-    for name, value in vars(config).items():
-        if name[:2] != "__":
-            # print('%s=%s' % (name, value))
-            response[name] = str(value)
-
-    return response
-
-
-@app.get("/testuser")
-async def get_test_user(  # yapf: disable
-    db: Session = Depends(get_db),
-):
-    res = crud.user.get(db, 1)
-    print(res)
-    return res
 
 
 if __name__ == "__main__":
