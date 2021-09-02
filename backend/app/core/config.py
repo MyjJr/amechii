@@ -2,6 +2,7 @@ import os
 
 
 TEST_ENV_VAR = os.getenv("TEST_ENV_VAR")
+PROJECT_NAME = os.getenv("PROJECT_NAME")
 
 
 MARIADB_SERVER = os.getenv("MARIADB_SERVER")
