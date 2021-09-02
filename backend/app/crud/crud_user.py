@@ -4,7 +4,7 @@ from typing import Optional
 from app.crud.base import CRUDBase
 from app.models.user import User
 from app.schemas.user import UserCreate, UserUpdate
-from app.core.security import get_password_hash
+from app.core.security import get_password_hash, verify_password
 
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
@@ -17,6 +17,20 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
 
     def get_by_name(self, db_session: Session, *, name: str) -> Optional[User]:
         return db_session.query(User).filter(User.name == name).first()
+
+    def authenticate(
+        self, db_session: Session,
+        *,
+        username: str,
+        password: str
+    ) -> Optional[User]:  # yapf: disable
+
+        user = self.get_by_name(db_session, name=username)
+        if not user:
+            return None
+        if not verify_password(password, user.password):
+            return None
+        return user
 
 
 user = CRUDUser(User)
@@ -31,5 +45,13 @@ if __name__ == "__main__":
     session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     db: Session = session()
-    t = db.query(User).all()
-    print(t[0].id)
+    a = user.get_by_name(db, name="firstuserver")
+    b = user.authenticate(db, username="firstuserver", password="firstuserpassword")
+    user_in = UserCreate(
+        name="Kuroi_Cc",
+        password="123456"
+    )  # yapf: disable
+    useraaa = user.create(db, obj_in=user_in)
+
+    print(useraaa.name)
+    print(b)
