@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 import datetime
 
 from app.db.base_class import Base
+from app.models.task import Task  # noqa
 
 
 class User(Base):
@@ -13,4 +14,4 @@ class User(Base):
     password = Column(String(64), nullable=False)
     registration_time = Column(DateTime, default=datetime.datetime.now)
 
-    tasks = relationship("app.models.task.Task", backref="users")
+    tasks = relationship("Task", backref="users")
