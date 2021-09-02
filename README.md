@@ -1,7 +1,7 @@
 # Amechii
 This project is for Open Hack U 2021 Online Vol.2 presented by Yahoo! Japan
 
-Our team called MyjJr. with followingmembers:
+Our team called MyjJr. with following members:
 
 - [@TaikiCode](https://github.com/TaikiCode)
 - [@rikuhub](https://github.com/rikuhub)
