@@ -1,6 +1,3 @@
-# import sys
-# sys.path.append("./backend")
-
 import logging
 
 from app.db.init_db import init_db

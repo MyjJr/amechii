@@ -1,7 +1,3 @@
-import sys
-# sys.path.append("..")
-sys.path.append("./backend")
-
 from fastapi import FastAPI, Depends
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
