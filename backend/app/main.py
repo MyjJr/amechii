@@ -1,6 +1,4 @@
 import sys
-# sys.path.append("..")
-sys.path.append("./backend")
 
 from fastapi import FastAPI, Depends
 from starlette.middleware.cors import CORSMiddleware
@@ -34,13 +32,24 @@ app.add_middleware(
 
 
 @app.middleware("http")
-async def db_session_middleware(request: Request, call_next):  # 数据库会话中间件
+async def db_session_middleware(request: Request, call_next):
     response: Response = Response("Internal server error", status_code=500)
     try:
-        request.state.db = session()  # 本地会话
+        request.state.db = session()
+        print("1")
         response = await call_next(request)
+        print("2")
     finally:
         request.state.db.close()
+    return response
+
+
+@app.middleware("http")
+async def test_middleware(request: Request, call_next):
+    print("3")
+    response = await call_next(request)
+    print("4")
+
     return response
 
 
@@ -50,10 +59,10 @@ async def read_root():
     message = f"Hello world! From FastAPI running on Uvicorn with Gunicorn. Using Python {version}"
     response: Response = {"message": message}
 
-    print("\n")
+    # print("\n")
     for name, value in vars(config).items():
         if name[:2] != "__":
-            print('%s=%s' % (name, value))
+            # print('%s=%s' % (name, value))
             response[name] = str(value)
 
     return response
