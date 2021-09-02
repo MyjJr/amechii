@@ -3,3 +3,4 @@ setup.sh
 .env
 remove_dockerimage.sh
 restart.sh
+run_frontend.sh
