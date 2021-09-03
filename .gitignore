@@ -4,3 +4,4 @@ __pycache__
 /backend/app/test.py
 /config.yaml
 db/
+.DS_Store
