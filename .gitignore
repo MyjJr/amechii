@@ -1,9 +1,5 @@
 __pycache__
-setup.sh
 /.env
-remove_dockerimage.sh
-restart.sh
-run_frontend.sh
 /backend/app/core/configlocal.py
 /backend/app/test.py
 /config.yaml
