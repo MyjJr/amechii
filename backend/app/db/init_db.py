@@ -25,7 +25,8 @@ def init_db(db_session):
         base.Base.metadata.create_all(bind=engine)
         print("create table end")
 
-    user = crud.user.get_by_name(db_session, name=config.FIRST_USER)
+    # user = crud.user.get_by_name(db_session, name=config.FIRST_USER)
+    user = None
     if not user:
         print("start create first user")
         user_in = UserCreate(
