@@ -16,6 +16,11 @@ class UserUpdate(UserBase):
     password: Optional[str] = None
 
 
+class UserLogin(BaseModel):
+    username: str
+    password: str
+
+
 class User(UserBase):
     id: Optional[int] = None
     registration_time: Optional[datetime] = None
