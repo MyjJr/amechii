@@ -43,7 +43,7 @@ const login = async () => {
     }).then((data) => {
       const options = {path: "/"}
       cookies.set("access_token", data.access_token, options)
-      // token_typeもここで保存できる。。
+      // token_typeもここで保存できる。
     })
     router.push("/")
   } catch(err) {
