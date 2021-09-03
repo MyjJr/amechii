@@ -1,7 +1,51 @@
-import React from "react";
+import React, {useState} from "react";
 import Link from "next/link";
+import Cookies from "universal-cookie"
+import {useRouter} from "next/router";
 
-const AuthForm = ({ params, loginFn }) => {
+
+// cookieインスタンス
+const cookies = new Cookies()
+
+const AuthForm = ({ params }) => {
+  const router = useRouter()
+
+  const [user, setUser] = useState({
+    username: "firstuserver",
+    password: "firstuserpassword",
+  });
+
+
+  const login = async () => {
+    const params = JSON.stringify({username: user.username, password: user.password})
+    try {
+      await fetch(
+        `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/login/access-token`,
+        {
+          method: "POST",
+          body: params,
+          headers: {
+            "Content-Type": "application/json"
+          },
+        }
+      )
+      .then((res) => {
+        if(res.status === 400) {
+          throw "authentication failed";
+        } else if(res.ok) {
+          return res.json()
+        }
+      }).then((data) => {
+        const options = {path: "/"}
+        cookies.set("access_token", data.access_token, options)
+        // token_typeもここで保存できる。
+      })
+      router.push("/")
+    } catch(err) {
+      alert(err)
+    }
+  }
+  
   return (
     <div className="w-full lg:w-5/12 px-4">
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
@@ -24,6 +68,8 @@ const AuthForm = ({ params, loginFn }) => {
               </label>
               <input
                 type="username"
+                value={user.username}
+                onChange={(e) => setUser({ ...user, username: e.target.value })}
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 placeholder="Username"
               />
@@ -38,6 +84,8 @@ const AuthForm = ({ params, loginFn }) => {
               </label>
               <input
                 type="password"
+                value={user.password}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 placeholder="Password"
               />
@@ -59,7 +107,7 @@ const AuthForm = ({ params, loginFn }) => {
               <button
                 className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                 type="button"
-                onClick={() => loginFn()}
+                onClick={() => login()}
               >
                 {params.title}
               </button>
