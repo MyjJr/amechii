@@ -1,15 +1,16 @@
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
 const IndexNavbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
   return (
     <>
-      <nav className="navbar-section w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-white shadow">
+      <nav className="navbar-section w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-white shadow-lg z-50">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link href="/">
-              <a className="text-blueGray-700 text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase">
+              <a className="text-blueGray-700 text-sm font-bold leading-relaxed inline-block mr-6 py-2 whitespace-nowrap uppercase">
                 Amechii
               </a>
             </Link>
@@ -29,24 +30,33 @@ const IndexNavbar = () => {
             id="example-navbar-warning"
           >
             <ul className="flex flex-col lg:flex-row list-none mr-auto">
-              <li className="flex items-center lg:mx-4 md:my-1 sm:my-1">
-                tasks
+            <li className="flex items-center lg:mx-4 md:my-1 sm:my-1">
+                <Link href="/">
+                  <a className="text-blueGray-600 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase">
+                    tasks
+                  </a>
+                </Link>
               </li>
               <li className="flex items-center lg:mx-4 md:my-1 sm:my-1">
-                products
+                <Link href="/">
+                  <a className="text-blueGray-600 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase">
+                    products
+                  </a>
+                </Link>
               </li>
+
             </ul>
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
               <li className="flex items-center lg:mx-4 md:my-1 sm:my-1">
                 <Link href="/auth/login">
-                  <a className="text-blueGray-300 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase">
+                  <a className="text-blueGray-600 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase">
                     login
                   </a>
                 </Link>
               </li>
               <li className="flex items-center lg:mx-4 md:my-1 sm:my-1">
                 <Link href="/auth/register">
-                  <a className="text-blueGray-300 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase">
+                  <a className="text-blueGray-600 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase">
                     signup
                   </a>
                 </Link>

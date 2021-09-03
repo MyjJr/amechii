@@ -70,7 +70,7 @@ const AuthForm = ({ params }) => {
         <div className="w-1/2"></div>
         <div className="w-1/2 text-right">
           <Link href={params.path}>
-            <a href="#pablo" className="text-blueGray-200">
+            <a href="#pablo" className="text-blueGray-800">
               <small>{params.text}</small>
             </a>
           </Link>
