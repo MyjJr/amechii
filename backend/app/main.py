@@ -14,7 +14,9 @@ app = FastAPI(
 
 origins = [
     "http://localhost",
-    "null"
+    "null",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
 ]  # yapf: disable
 
 origin_regex = "http://localhost:[0-9]+"
@@ -36,9 +38,10 @@ async def token_validate_middleware(request: Request, call_next):
 
     allow_no_authenticate = [
         config.API_ROOT_PATH + "/login/access-token",
-        config.API_ROOT_PATH + '/users/create_user',
+        config.API_ROOT_PATH + '/users/create-user',
         "/docs",
-        "/api/v1/openapi.json"
+        "/api/v1/openapi.json",
+        "/service-worker.js"
     ]  # yapf: disable
 
     if request.url.path not in allow_no_authenticate:
