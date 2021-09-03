@@ -16,9 +16,8 @@ class UserUpdate(UserBase):
     password: Optional[str] = None
 
 
-class UserLogin(BaseModel):
-    username: str
-    password: str
+class UserLogin(UserCreate):
+    pass
 
 
 class User(UserBase):
