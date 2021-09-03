@@ -46,8 +46,7 @@ async def token_validate_middleware(request: Request, call_next):
         token = await reusable_oauth2(request)
         current_user = validate_token(request.state.db, token)
         request.state.user = current_user
-
-    print("Correct token! ")
+        print("Correct token! ")
 
     response = await call_next(request)
     return response
