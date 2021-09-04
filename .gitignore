@@ -8,3 +8,4 @@ __pycache__
 /config.yaml
 /db/
 .DS_Store
+/backend/app/dbtest.py
