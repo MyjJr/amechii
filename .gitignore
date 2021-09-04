@@ -2,6 +2,7 @@ __pycache__
 /.env
 /backend/app/core/configlocal.py
 /backend/app/test.py
+/backend/app/db_curd_test.py
 /config.yaml
 /db/
 .DS_Store
