@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from typing import Optional
 
 from app.crud.base import CRUDBase
-from app.models.user import Transaction, User
+from app.models.user import User
 from app.schemas.user import UserCreate, UserUpdate
 from app.core.security import get_password_hash, verify_password
 
@@ -71,11 +71,4 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         return from_user
 
 
-# class CRUDTransaction(CRUDBase[Transaction]):
-
-#     def get_by_title(self, db_session: Session, *, title: str) -> Optional[Transaction]:
-#         return db_session.query(Transaction).filter(Transaction.title == title).first()
-
-
 user = CRUDUser(User)
-# transaction = CRUDTransaction(Transaction)
