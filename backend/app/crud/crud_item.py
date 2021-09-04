@@ -6,7 +6,7 @@ from app.schemas.item import ItemCreate, ItemUpdate
 
 class CRUDItem(CRUDBase[Item, ItemCreate, ItemUpdate]):
     def create(self, db_session: Session, *, obj_in: ItemCreate) -> Item:
-        
+
         db_obj = Item(
             name=obj_in.name,
             image=obj_in.image,
@@ -21,7 +21,3 @@ class CRUDItem(CRUDBase[Item, ItemCreate, ItemUpdate]):
 
 
 item = CRUDItem(Item)
-
-
-
-

@@ -1,4 +1,4 @@
-#更新時と追加時
+# 更新時と追加時
 from typing import Optional
 from pydantic import BaseModel
 
@@ -19,8 +19,9 @@ class ItemCreate(ItemBase):
 class ItemUpdate(ItemBase):
     pass
 
+
 class Item(ItemCreate):
-    id : int
+    id: int
     image: str
     detail: str
     url: str
