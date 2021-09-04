@@ -1,10 +1,18 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from typing import TYPE_CHECKING
+from sqlalchemy import Column, Integer, String, DateTime, Table, ForeignKey
 from sqlalchemy.orm import relationship
 import datetime
-
 from app.db.base_class import Base
-from app.models.task import Task  # noqa
 
+
+if TYPE_CHECKING:
+    from app.models.task import Task
+
+user_following = Table(
+    "user_following", Base.metadata,
+    Column("user_id", Integer, ForeignKey("users.id"), nullable=False),
+    Column("follwing_id", Integer, ForeignKey("users.id"), nullable=False)
+)
 
 class User(Base):
     __tablename__ = "users"
@@ -14,4 +22,12 @@ class User(Base):
     password = Column(String(64), nullable=False)
     registration_time = Column(DateTime, default=datetime.datetime.now())
 
-    tasks = relationship("Task", backref="users")
+    tasks = relationship("Task", back_populates="users")
+
+    following = relationship(
+        "User",
+        lambda: user_following,
+        primaryjoin=lambda: User.id == user_following.c.user_id,
+        secondaryjoin=lambda: User.id == user_following.c.follwing_id,
+        backref="followers"
+    )

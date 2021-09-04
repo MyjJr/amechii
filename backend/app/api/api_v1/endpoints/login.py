@@ -21,7 +21,7 @@ async def login_access_token(*, db: Session = Depends(get_db), form_data: UserLo
     OAuth2 compatible token login, get an access token for future requests
     """
     user = crud.user.authenticate(
-        db, username=form_data.username, password=form_data.password
+        db, username=form_data.name, password=form_data.password
     )
 
     if not user:

@@ -3,5 +3,6 @@ __pycache__
 /backend/app/core/configlocal.py
 /backend/app/test.py
 /config.yaml
-db/
 /backend/app/dbtest.py
+/db/
+.DS_Store
