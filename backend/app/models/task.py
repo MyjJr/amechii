@@ -12,6 +12,7 @@ from app.db.base_class import Base
 if TYPE_CHECKING:
     from app.models.user import User  # noqa
     from app.models.item import Item  # noqa
+    from app.models.address import Address # noqa
 
 
 class PriorityType(str, enum.Enum):
@@ -32,6 +33,7 @@ class Task(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     set_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     do_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    address_id = Column(Integer, ForeignKey("addresses.id"), nullable=False)
     title = Column(String(256), index=True, nullable=False)
     deadline = Column(DateTime, nullable=False)
     create_datetime = Column(DateTime, default=datetime.datetime.now)
@@ -42,13 +44,9 @@ class Task(Base):
     subtasks = relationship("Subtask", back_populates="tasks")
     do_user = relationship("User", back_populates="do_tasks", primaryjoin="Task.do_id==User.id")
     set_user = relationship("User", back_populates="set_tasks", primaryjoin="Task.set_id==User.id")
-
     task_item = relationship("Task_item", back_populates="tasks", primaryjoin="Task.id==Task_item.task_id")
+    address = relationship("Address", back_populates="tasks")
 
-# <<Entity>>
-# tasks
-
-# -addresses_id:FK (住所のやつ)
 
 class Subtask(Base):
     __tablename__ = "subtasks"
