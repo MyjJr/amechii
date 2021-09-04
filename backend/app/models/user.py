@@ -32,7 +32,7 @@ class User(Base):
     set_tasks = relationship("Task", back_populates="set_user", primaryjoin="User.id==Task.set_id")
 
     transactions = relationship("Transaction", back_populates="user")
- 
+
     following = relationship(
         "User",
         lambda: user_following,
@@ -40,6 +40,7 @@ class User(Base):
         secondaryjoin=lambda: User.id == user_following.c.follwing_id,
         backref="followers"
     )
+
 
 class Transaction(Base):
     __tablename__ = "transactions"

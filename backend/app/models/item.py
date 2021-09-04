@@ -9,6 +9,7 @@ from app.db.base_class import Base
 if TYPE_CHECKING:
     from app.models.task import Task_item  # noqa
 
+
 class Item(Base):
     __tablename__ = "items"
 
