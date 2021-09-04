@@ -30,7 +30,7 @@ const IndexNavbar = () => {
             id="example-navbar-warning"
           >
             <ul className="flex flex-col lg:flex-row list-none mr-auto">
-            <li className="flex items-center lg:mx-4 md:my-1 sm:my-1">
+              <li className="flex items-center lg:mx-4 md:my-1 sm:my-1">
                 <Link href="/">
                   <a className="text-blueGray-600 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase">
                     tasks
@@ -44,7 +44,6 @@ const IndexNavbar = () => {
                   </a>
                 </Link>
               </li>
-
             </ul>
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
               <li className="flex items-center lg:mx-4 md:my-1 sm:my-1">
@@ -54,13 +53,13 @@ const IndexNavbar = () => {
                   </a>
                 </Link>
               </li>
-              <li className="flex items-center lg:mx-4 md:my-1 sm:my-1">
+              {/* <li className="flex items-center lg:mx-4 md:my-1 sm:my-1">
                 <Link href="/auth/register">
                   <a className="text-blueGray-600 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase">
                     signup
                   </a>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

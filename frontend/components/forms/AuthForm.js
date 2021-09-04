@@ -1,81 +1,134 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import Cookies from "universal-cookie";
+import { useRouter } from "next/router";
 
-const AuthForm = ({ params, loginFn }) => {
+// cookieインスタンス
+const cookies = new Cookies();
+
+const AuthForm = () => {
+  const router = useRouter();
+
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+  });
+
+  const [isLogin, setIsLogin] = useState(true);
+
+  const login = async () => {
+    try {
+      await fetch(
+        `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/login/access-token`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            username: user.username,
+            password: user.password,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((res) => {
+          if (res.status === 400) {
+            throw "authentication failed";
+          } else if (res.ok) {
+            return res.json();
+          }
+        })
+        .then((data) => {
+          const options = { path: "/" };
+          cookies.set("access_token", data.access_token, options);
+          cookies.set("token_type", data.token_type, options);
+        });
+      router.push("/");
+    } catch (err) {
+      alert(err);
+    }
+  };
+  // console.log(isLogin);
+  // console.log(user);
+
+  const authUser = async (e) => {
+    e.preventDefault();
+    if (isLogin) {
+      login();
+    } else {
+      try {
+        await fetch(
+          `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/users/create-user`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              name: user.username,
+              password: user.password,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        ).then((res) => {
+          if (res.status === 400) {
+            throw "authentication failed";
+          }
+        });
+        login();
+      } catch (err) {
+        alert(err);
+      }
+    }
+  };
+
   return (
-    <div className="w-full lg:w-5/12 px-4">
-      <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
-        <div className="rounded-t mb-0 px-6 py-6">
-          <div className="text-center mb-3">
-            <h3 className="text-blueGray-500 text-2xl font-bold">
-              {params.title}
-            </h3>
-          </div>
-          <hr className="mt-6 border-b-1 border-blueGray-300" />
-        </div>
-        <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-          <form>
-            <div className="relative w-full mb-3">
-              <label
-                className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                username
-              </label>
-              <input
-                type="username"
-                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                placeholder="Username"
-              />
-            </div>
-
-            <div className="relative w-full mb-3">
-              <label
-                className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                placeholder="Password"
-              />
-            </div>
-            <div>
-              <label className="inline-flex items-center cursor-pointer">
-                <input
-                  id="customCheckLogin"
-                  type="checkbox"
-                  className="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
-                />
-                <span className="ml-2 text-sm font-semibold text-blueGray-600">
-                  Remember me
-                </span>
-              </label>
-            </div>
-
-            <div className="text-center mt-6">
-              <button
-                className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                type="button"
-                onClick={() => loginFn()}
-              >
-                {params.title}
-              </button>
-            </div>
-          </form>
-        </div>
+    <div className="authForm-container">
+      {/* <div className="back-btn">
+        <a href="">
+          <i className="fas fa-arrow-left"></i>
+        </a>
+      </div> */}
+      <div className="welcome">
+        <p>
+          Welcome to <br /> Amechii
+        </p>
       </div>
-      <div className="flex flex-wrap mt-6 relative">
-        <div className="w-1/2"></div>
-        <div className="w-1/2 text-right">
-          <Link href={params.path}>
-            <a href="#pablo" className="text-blueGray-800">
-              <small>{params.text}</small>
+      <div className="login">
+        <form onSubmit={authUser}>
+          <div className="form-content username">
+            <i className="far fa-user"></i>
+            <input
+              type="text"
+              placeholder="User name"
+              value={user.username}
+              onChange={(e) => setUser({ ...user, username: e.target.value })}
+            />
+          </div>
+          <div className="form-content password">
+            <i className="fas fa-key"></i>
+            <input
+              type="password"
+              placeholder="Password"
+              value={user.password}
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
+            />
+          </div>
+          <div>
+            <button type="submit" className="login-btn">
+              {isLogin ? "Login" : "Sign up"}
+            </button>
+          </div>
+          <div className="create-text">
+            <span>
+              {isLogin
+                ? "Amechiiは初めてですか？"
+                : "すでにアカウントを持っている"}
+            </span>
+            <a onClick={() => setIsLogin(!isLogin)} className="create-link">
+              {isLogin ? "登録" : "ログイン"}
             </a>
-          </Link>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   );

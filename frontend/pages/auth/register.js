@@ -12,12 +12,12 @@ const register = () => {
   return (
     <div className="container mx-auto px-4 h-full">
       <div className="flex content-center items-center justify-center h-full">
-        <AuthForm params={registerParams} />
+        {/* <AuthForm params={registerParams} /> */}
       </div>
     </div>
   );
 };
 
-register.layout = Auth;
+// register.layout = Auth;
 
 export default register;
