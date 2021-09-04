@@ -22,6 +22,8 @@ FIRST_USER_PASSWORD = os.getenv("FIRST_USER_PASSWORD")
 SECRET_KEY = os.getenv("SECRET_KEY")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 
+ICON_SERVER_PATH = os.getenv("ICON_SERVER_PATH")
+
 if __name__ == "__main__":
     print()
     print(TEST_ENV_VAR)

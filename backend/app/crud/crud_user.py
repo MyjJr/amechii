@@ -9,7 +9,15 @@ from app.core.security import get_password_hash, verify_password
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
     def create(self, db_session: Session, *, obj_in: UserCreate) -> User:
-        db_obj = User(name=obj_in.name, password=get_password_hash(obj_in.password))
+        if not obj_in.display_name:
+            obj_in.display_name = obj_in.name
+
+        db_obj = User(
+            name=obj_in.name,
+            display_name=obj_in.display_name,
+            icon=obj_in.icon,
+            password=get_password_hash(obj_in.password)
+        )
         db_session.add(db_obj)
         db_session.commit()
         db_session.refresh(db_obj)
@@ -32,26 +40,35 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             return None
         return user
 
+    def follow(self, db_session: Session, *,
+               from_user_id: int, follow_user_id: int) -> Optional[User]:  # yapf: disable
+
+        from_user = self.get(db_session, from_user_id)
+        follow_user = self.get(db_session, follow_user_id)
+
+        if not (from_user and follow_user):
+            return None
+
+        from_user.following.append(follow_user)
+        db_session.add(from_user)
+        db_session.commit()
+        db_session.refresh(from_user)
+        return from_user
+
+    def unfollow(self, db_session: Session, *,
+                 from_user_id: int, unfollow_user_id: int) -> Optional[User]:  # yapf: disable
+
+        from_user = self.get(db_session, from_user_id)
+        unfollow_user = self.get(db_session, unfollow_user_id)
+
+        if not (from_user and unfollow_user and unfollow_user in from_user.following):
+            return None
+
+        from_user.following.remove(unfollow_user)
+        db_session.add(from_user)
+        db_session.commit()
+        db_session.refresh(from_user)
+        return from_user
+
 
 user = CRUDUser(User)
-
-if __name__ == "__main__":
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm import sessionmaker
-    from app.core import configlocal
-    engine = create_engine(
-        configlocal.SQLALCHEMY_DATABASE_URI, encoding='UTF-8', echo=True
-    )
-    session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-    db: Session = session()
-    a = user.get_by_name(db, name="firstuserver")
-    b = user.authenticate(db, username="firstuserver", password="firstuserpassword")
-    user_in = UserCreate(
-        name="Kuroi_Cc",
-        password="123456"
-    )  # yapf: disable
-    useraaa = user.create(db, obj_in=user_in)
-
-    print(useraaa.name)
-    print(b)
