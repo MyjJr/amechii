@@ -9,6 +9,7 @@ from app.db.base_class import Base
 if TYPE_CHECKING:
     from app.models.task import Task_item  # noqa
 
+
 class Item(Base):
     __tablename__ = "items"
 
@@ -16,6 +17,7 @@ class Item(Base):
     name = Column(String(256), nullable=False)
     image = Column(String(256))
     price = Column(INTEGER(unsigned=True), nullable=False)
-    url = Column(String(512))
+    url = Column(String(512), nullable=True)
+    detail = Column(String(512), nullable=True)
 
     item_task = relationship("Task_item", back_populates="items", primaryjoin="Item.id==Task_item.item_id")

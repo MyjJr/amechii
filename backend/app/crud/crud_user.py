@@ -40,5 +40,35 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             return None
         return user
 
+    def follow(self, db_session: Session, *,
+               from_user_id: int, follow_user_id: int) -> Optional[User]:  # yapf: disable
+
+        from_user = self.get(db_session, from_user_id)
+        follow_user = self.get(db_session, follow_user_id)
+
+        if not (from_user and follow_user):
+            return None
+
+        from_user.following.append(follow_user)
+        db_session.add(from_user)
+        db_session.commit()
+        db_session.refresh(from_user)
+        return from_user
+
+    def unfollow(self, db_session: Session, *,
+                 from_user_id: int, unfollow_user_id: int) -> Optional[User]:  # yapf: disable
+
+        from_user = self.get(db_session, from_user_id)
+        unfollow_user = self.get(db_session, unfollow_user_id)
+
+        if not (from_user and unfollow_user and unfollow_user in from_user.following):
+            return None
+
+        from_user.following.remove(unfollow_user)
+        db_session.add(from_user)
+        db_session.commit()
+        db_session.refresh(from_user)
+        return from_user
+
 
 user = CRUDUser(User)
