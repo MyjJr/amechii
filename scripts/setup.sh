@@ -6,5 +6,6 @@ export ENV_FILE_PATH=".env"
 # sh run_frontend.sh
 
 # docker-compose config
-sh remove_dockerimage.sh
+
+sh scripts/remove_dockerimage.sh
 docker-compose up --force-recreate --build
