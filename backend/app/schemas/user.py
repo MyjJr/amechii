@@ -14,14 +14,16 @@ class UserCreate(UserBase):
 
 
 class UserUpdate(UserBase):
-    icon: str = "default.png"
+    icon: str = None
     password: Optional[str] = None
+    followers: list = []
+    following: list = []
 
 
 class User(UserBase):
     id: Optional[int] = None
     name: Optional[int] = None
-    icon: str = "default.png"
+    icon: str = None
     registration_time: Optional[datetime] = None
 
     class Config:
