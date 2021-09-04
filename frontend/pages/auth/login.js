@@ -1,12 +1,11 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import router, { useReducer, useRouter } from "next/router";
 import Auth from "../../layouts/Auth";
 import AuthForm from "../../components/forms/AuthForm";
-import Cookies from "universal-cookie"
-
+import Cookies from "universal-cookie";
 
 // cookieインスタンス
-const cookies = new Cookies()
+const cookies = new Cookies();
 
 // const login = async () => {
 //   const params = JSON.stringify({username: "firstuserver", password: "firstuserpassword"})
@@ -38,9 +37,8 @@ const cookies = new Cookies()
 //   }
 // }
 
-
 const Login = () => {
-  const router = useRouter()
+  const router = useRouter();
   const loginParams = {
     title: "Login",
     path: "/auth/register",
@@ -48,11 +46,12 @@ const Login = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 h-full">
-      <div className="flex content-center items-center justify-center h-full">
-        <AuthForm params={loginParams}/>
-      </div>
-    </div>
+    <AuthForm />
+    // <div className="container mx-auto px-4 h-full">
+    //   <div className="flex content-center items-center justify-center h-full">
+    //     <AuthForm />
+    //   </div>
+    // </div>
   );
 };
 

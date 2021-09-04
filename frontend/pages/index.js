@@ -3,8 +3,25 @@ import Image from "next/image";
 // import styles from '../styles/Home.module.css'
 import IndexNavbar from "../components/Navbars/IndexNavbar";
 import Card from "../components/cards/Card";
+import { useEffect } from "react";
+import Cookies from "universal-cookie";
 
 export default function Home() {
+  // cookieインスタンス
+  const cookies = new Cookies();
+
+  useEffect(async () => {
+    // if(cookies.get("access_token")) {
+    //   const data = await fetch("http://localhost:8080/api/v1/users/testuser", {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${cookies.get('access_token')}`
+    //     },
+    //   })
+    //   console.log(data)
+    // }
+  }, []);
   return (
     <div className="layout-container">
       <Head>
@@ -18,14 +35,14 @@ export default function Home() {
       </div>
       <main className="timeLine-section">
         <div className="cardWrapper">
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-          </div>
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </div>
       </main>
     </div>
   );
