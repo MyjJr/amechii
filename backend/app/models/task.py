@@ -11,7 +11,7 @@ from app.db.base_class import Base
 if TYPE_CHECKING:
     from app.models.user import User  # noqa
     from app.models.item import Item  # noqa
-    from app.models.address import Address # noqa
+    from app.models.address import Address  # noqa
 
 
 class PriorityType(str, enum.Enum):
@@ -38,7 +38,7 @@ class Task(Base):
     create_datetime = Column(DateTime, default=datetime.datetime.now)
     end_datetime = Column(DateTime, nullable=True)
     back_money = Column(Boolean, default=True)
-    status: Column(Enum(StatusType), nullable=False)
+    status = Column(Enum(StatusType), nullable=False)
 
     subtasks = relationship("Subtask", back_populates="tasks")
 
@@ -55,8 +55,8 @@ class Subtask(Base):
     task_id = Column(Integer, ForeignKey("tasks.id"), nullable=False)
 
     title = Column(String(256), index=True, nullable=False)
-    priority: Column(Enum(PriorityType), index=True, nullable=True)
-    status: Column(Enum(StatusType), index=True, nullable=False)
+    priority = Column(Enum(PriorityType), index=True, nullable=True)
+    status = Column(Enum(StatusType), index=True, nullable=False)
     create_datetime = Column(DateTime, default=datetime.datetime.now)
     end_datetime = Column(DateTime)
 
