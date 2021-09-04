@@ -1,5 +1,16 @@
+$cMain: #a7ddd6;
+$cSecond: #ffa843;
+$cAdd: #fdfdfd;
+$cTitle: #777;
+$cSubtext: #999;
+$sMain: 0px 2px 4px rgba(0, 0, 0, 0.15);
+
 * {
   box-sizing: border-box;
+}
+
+*:focus {
+  outline: none;
 }
 
 html,
@@ -91,5 +102,166 @@ body {
     height: 25vh;
     width: 85vw;
     margin: 1rem 0;
+  }
+}
+
+.authForm-container {
+  position: relative;
+  background-color: $cAdd;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: "Poppins", sans-serif;
+}
+
+.back-btn {
+  position: fixed;
+  top: 8%;
+  left: 8%;
+}
+
+.back-btn i {
+  font-size: 25px;
+  color: #999;
+}
+
+.welcome {
+  position: absolute;
+  top: 22%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  color: #777;
+  font-size: 35px;
+  font-weight: 600;
+  margin: 0 auto;
+  width: 280px;
+}
+
+.login {
+  position: absolute;
+  top: 70%;
+  right: 50%;
+  -webkit-transform: translate(50%, -50%);
+  transform: translate(50%, -50%);
+}
+
+.login form {
+  width: 280px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.login form .form-content {
+  width: 100%;
+  padding: 10px 0;
+  border-bottom: solid 1px #a7ddd6;
+  text-align: left;
+}
+
+.login form .form-content i {
+  color: #999;
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+.login form .form-content input {
+  color: #777;
+  border-bottom: 1px solid #cccccc;
+  border: none;
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+input:focus {
+  border: none;
+}
+
+.login form .form-content input:focus {
+  outline: none;
+  color: #777;
+}
+
+.login form .password {
+  margin-top: 20px;
+}
+
+.login form .create-text {
+  color: #999;
+  text-align: center;
+  font-size: 12px;
+}
+
+.login form .create-text .create-link {
+  color: #a7ddd6;
+  cursor: pointer;
+}
+
+.login form .login-btn {
+  background-color: #a7ddd6;
+  color: #fdfdfd;
+  padding: 13px 35px;
+  font-size: 15px;
+  border: none;
+  border-radius: 100vh;
+  margin: 40px 0 10px 0;
+  -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+@media (min-width: 600px) {
+  /******************************************************************
+  
+  Stylesheet: 600px以上のタブレットやモニタで適用
+  
+******************************************************************/
+  .back-btn {
+    display: none;
+  }
+}
+
+@media (min-width: 960px) {
+  /******************************************************************
+  
+  Stylesheet: 960px以上のモニタで適用
+  
+******************************************************************/
+  .welcome {
+    width: 50%;
+    top: 50%;
+    left: 35%;
+    font-size: 60px;
+    line-height: 1.3em;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+  .login {
+    width: 50%;
+    top: 50%;
+    right: 30%;
+    -webkit-transform: translate(50%, -50%);
+    transform: translate(50%, -50%);
+  }
+  .login form {
+    width: 350px;
+  }
+  .login form .password {
+    margin-top: 30px;
+  }
+  .login form .login-btn {
+    margin-top: 50px;
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1280px) {
+  /******************************************************************
+  
+  Stylesheet: 1280px以上のモニタで適用
+  
+******************************************************************/
+  .welcome {
+    left: 40%;
   }
 }

@@ -6,6 +6,6 @@ __pycache__
 /backend/app/demo_date.py
 /backend/app/icon
 /config.yaml
+/backend/app/dbtest.py
 /db/
 .DS_Store
-/backend/app/dbtest.py
