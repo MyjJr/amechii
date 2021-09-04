@@ -34,7 +34,7 @@ class User(Base):
     set_tasks = relationship("Task", back_populates="set_user", primaryjoin="User.id==Task.set_id")
     address = relationship("Address", back_populates="user")
     transactions = relationship("Transaction", back_populates="user")
- 
+
     following = relationship(
         "User",
         lambda: user_following,
