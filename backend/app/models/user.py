@@ -7,10 +7,9 @@ from sqlalchemy.orm import relationship
 
 from app.db.base_class import Base
 
-
+from app.models.address import Address  # noqa
 if TYPE_CHECKING:
     from app.models.task import Task  # noqa
-    from app.models.address import Address  # noqa
 
 
 user_following = Table(

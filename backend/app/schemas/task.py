@@ -6,6 +6,7 @@ from datetime import datetime
 class TaskCreate(BaseModel):
     set_id: int
     do_id: int
+    address_id: int
     title: str
     deadline: datetime
     back_money: bool = True
@@ -14,6 +15,7 @@ class TaskCreate(BaseModel):
 
 class TaskUpdate(BaseModel):
     do_id: Optional[int] = None
+    address_id: Optional[int] = None
     title: Optional[str] = None
     deadline: Optional[datetime] = None
     back_money: Optional[bool] = None
