@@ -16,8 +16,6 @@ class UserCreate(UserBase):
 class UserUpdate(UserBase):
     icon: str = None
     password: Optional[str] = None
-    followers: list = []
-    following: list = []
 
 
 class User(UserBase):
