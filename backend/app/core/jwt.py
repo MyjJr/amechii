@@ -13,7 +13,7 @@ from app.schemas.token import TokenPayload
 
 ALGORITHM = "HS256"
 access_token_jwt_subject = "access"
-reusable_oauth2 = OAuth2PasswordBearer(tokenUrl=config.API_ROOT_PATH + "/login/access-token")  # yapf: disable
+reusable_oauth2 = OAuth2PasswordBearer(tokenUrl=config.API_ROOT_PATH + "/login/token")  # yapf: disable
 
 
 def create_access_token(*, data: dict, expires_delta: Optional[timedelta] = None):

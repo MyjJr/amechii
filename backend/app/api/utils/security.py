@@ -6,7 +6,7 @@ from app.core.jwt import validate_token, reusable_oauth2
 from app.api.utils.db import get_db
 
 
-def get_current_user(request: Request):
+def get_current_user(request: Request, token: str = Security(reusable_oauth2)):
     return request.state.user
 
 

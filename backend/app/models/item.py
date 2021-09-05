@@ -20,4 +20,4 @@ class Item(Base):
     url = Column(String(512), nullable=True)
     detail = Column(String(512), nullable=True)
 
-    item_task = relationship("Task_item", back_populates="items", primaryjoin="Item.id==Task_item.item_id")
+    tasks = relationship("Task_item", back_populates="items", primaryjoin="Item.id==Task_item.item_id")
