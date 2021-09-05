@@ -1,6 +1,5 @@
 import os
 
-
 TEST_ENV_VAR = os.getenv("TEST_ENV_VAR")
 PROJECT_NAME = os.getenv("PROJECT_NAME")
 
@@ -23,6 +22,9 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 
 ICON_SERVER_PATH = os.getenv("ICON_SERVER_PATH")
+ITEM_IMAGE_SERVER_PATH = os.getenv("ITEM_IMAGE_SERVER_PATH")
+
+INSERT_DEMO_DATA = os.getenv("INSERT_DEMO_DATA")
 
 if __name__ == "__main__":
     print()

@@ -2,8 +2,6 @@ __pycache__
 /.env
 /backend/app/core/configlocal.py
 /backend/app/test.py
-/backend/app/db_curd_test.py
-/backend/app/demo_date.py
 /backend/app/icon
 /config.yaml
 /backend/app/dbtest.py
