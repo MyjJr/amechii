@@ -6,7 +6,7 @@ from starlette.responses import Response
 from app.api.api_v1.api import api_router
 from app.core import config
 from app.db.session import session
-from app.core.jwt import validate_token, reusable_oauth2
+from app.core.jwt import check_token, validate_token
 
 app = FastAPI(
     title=config.PROJECT_NAME, openapi_url=config.API_ROOT_PATH + "/openapi.json"
@@ -55,7 +55,7 @@ async def token_validate_middleware(request: Request, call_next):
 
     if request.url.path not in allow_no_authenticate:
         print("Validate token..........")
-        token = await reusable_oauth2(request)
+        token = check_token(request)
         current_user = validate_token(request.state.db, token)
         request.state.user = current_user
         print("Correct token! ")
