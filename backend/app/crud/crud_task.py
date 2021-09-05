@@ -30,17 +30,10 @@ class CRUDTask(CRUDBase[Task, TaskCreate, TaskUpdate]):
         return db_session.query(Task).filter(Task.set_id == set_id).all()
 
 
-
-
-
 class CRUDSubTask(CRUDBase[SubTask, SubTaskCreate, SubTaskUpdate]):
     def get_by_task_id(self, db_session: Session, *, task_id: int) -> Optional[SubTask]:
         return db_session.query(SubTask).filter(SubTask.id == task_id).all()
 
-    def create(self, db_session: Session, *, task_id: int, obj_in: SubTaskCreate) -> Optional[SubTask]:
-        obj_in_db = deepcopy(obj_in)
-        subtask = super().create(db_session, task_id, obj_in=obj_in_db)
-        return subtask
 
 class CRUDTask_item(CRUDBase[Task_item, Task_itemCreate, Task_itemUpdate]):
     pass
