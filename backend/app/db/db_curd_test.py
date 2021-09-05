@@ -98,7 +98,7 @@ if __name__ == "__main__":
     from sqlalchemy.orm import Session
 
     from app.core import configlocal
-
+    from app.models.task import Task
     engine = create_engine(
         configlocal.SQLALCHEMY_DATABASE_URI, encoding='UTF-8', echo=True
     )
@@ -107,10 +107,11 @@ if __name__ == "__main__":
     db: Session = session()
     # b = crud.item.get(db, 1)
     # print_obj_attributes(b)
-    a = crud.user.get_multi(db)
-
-    for i in a:
-        print_obj_attributes(a)
+    # a = crud.user.get_multi(db)
+    b = db.query(Task).filter(Task.do_id == 1).all()
+    print_obj_attributes(b)
+    # for i in a:
+        # print_obj_attributes(a)
     # insert_demo_data_all(db)
     # task_create(db)
 

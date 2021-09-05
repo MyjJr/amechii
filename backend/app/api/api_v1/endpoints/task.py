@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List
-from app.models.task import Task, SubTask
+
 from app.schemas.task import TaskRes, TaskCreate, SubTask, SubTaskCreate
 from app.models.user import User as DBUser
 from app.api.utils.db import get_db
@@ -10,19 +10,17 @@ from app.api.utils.security import get_current_user
 from app import crud
 router = APIRouter()
 
-@router.get("/get-mytasks", response_model=List[Task])
-async def get_tasks(
+@router.get("/get-mytasks", response_model=List[TaskRes])
+async def get_mytasks(
+    *,
     db: Session = Depends(get_db),
     current_user: DBUser = Depends(get_current_user),
-    skip: int = 0,
-    limit: int = 100,
-    order_desc: bool = True
 ):
-    task_list = crud.task.get_by_do_id(db, do_id=current_user.id, skip=skip, limit=limit, order_desc=order_desc)
+    task_list = crud.task.get_by_do_id(db, do_id=current_user.id)
     return task_list
 
 @router.get("/get-theirtasks", response_model=List[TaskRes])
-async def get_tasks(
+async def get_theirtasks(
     db: Session = Depends(get_db),
     current_user: DBUser = Depends(get_current_user),
     skip: int = 0,
@@ -33,7 +31,7 @@ async def get_tasks(
     return task_list
 
 
-@router.post("/post-task", response_model=TaskRes)
+@router.post("/create-task", response_model=TaskRes)
 async def create_task(*,
     db: Session = Depends(get_db),
     current_user: DBUser = Depends(get_current_user),
@@ -58,7 +56,7 @@ async def get_subtasks(
     return subtask_list
 
 
-@router.post("/post-subtask", response_model=SubTask)
+@router.post("/create-subtask", response_model=SubTask)
 async def create_subtask(*,
     db: Session = Depends(get_db),
     task_id: int,

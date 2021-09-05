@@ -1,5 +1,5 @@
 from copy import deepcopy
-from typing import Optional
+from typing import Optional, List
 from sqlalchemy.orm import Session
 
 from app.crud.base import CRUDBase
@@ -23,10 +23,10 @@ class CRUDTask(CRUDBase[Task, TaskCreate, TaskUpdate]):
                 task_item.create(db_session, obj_in=task_item_in)
         return task
 
-    def get_by_do_id(self, db_session: Session, *, do_id: int) -> Optional[Task]:
+    def get_by_do_id(self, db_session: Session, *, do_id: int) -> Optional[List[Task]]:
         return db_session.query(Task).filter(Task.do_id == do_id).all()
 
-    def get_by_set_id(self, db_session: Session, *, set_id: int) -> Optional[Task]:
+    def get_by_set_id(self, db_session: Session, *, set_id: int) -> Optional[List[Task]]:
         return db_session.query(Task).filter(Task.set_id == set_id).all()
 
 

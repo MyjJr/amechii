@@ -37,11 +37,8 @@ async def get_users(
     *,
     db: Session = Depends(get_db),
     name: str,
-    skip: int = 0,
-    limit: int = 100,
-    order_desc: bool = True
 ):
-    user_list = crud.user.get_like_name(db, name=name, skip=skip, limit=limit, order_desc=order_desc)
+    user_list = crud.user.get_like_name(db, name=name)
     return user_list
 
 
