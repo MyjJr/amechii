@@ -43,5 +43,3 @@ async def get_users(
 ):
     user_list = crud.user.get_like_name(db, name=name, skip=skip, limit=limit, order_desc=order_desc)
     return user_list
-
-
