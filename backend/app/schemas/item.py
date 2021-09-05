@@ -25,6 +25,7 @@ class Item(ItemCreate):
     image: str
     detail: str
     url: str
+    detail: str
 
     class Config:
         orm_mode = True
