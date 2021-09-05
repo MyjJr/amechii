@@ -33,26 +33,34 @@ app.add_middleware(
 app.include_router(api_router, prefix=config.API_ROOT_PATH)
 
 
-@app.middleware("http")
-async def token_validate_middleware(request: Request, call_next):
+# @app.middleware("http")
+# async def token_validate_middleware(request: Request, call_next):
 
-    allow_no_authenticate = [
-        config.API_ROOT_PATH + "/login/access-token",
-        config.API_ROOT_PATH + '/users/create-user',
-        "/docs",
-        "/api/v1/openapi.json",
-        "/service-worker.js"
-    ]  # yapf: disable
+#     allow_no_authenticate = [
+#         "/docs",
+#         "/service-worker.js",
+#         config.API_ROOT_PATH + "/login/access-token",
+#         config.API_ROOT_PATH + '/users/create-user',
+#         config.API_ROOT_PATH + "/openapi.json",
+#         config.API_ROOT_PATH + "/items/",
+#         config.API_ROOT_PATH + "/login/token"
+#     ]  # yapf: disable
 
-    if request.url.path not in allow_no_authenticate:
-        print("validate token..........")
-        token = await reusable_oauth2(request)
-        current_user = validate_token(request.state.db, token)
-        request.state.user = current_user
-        print("Correct token! ")
+#     validate_flag = True
+#     for i in allow_no_authenticate:
+#         if request.url.path in i:
+#             validate_flag = False
+#             break
 
-    response = await call_next(request)
-    return response
+#     if validate_flag:
+#         print("validate token..........")
+#         token = await reusable_oauth2(request)
+#         current_user = validate_token(request.state.db, token)
+#         request.state.user = current_user
+#         print("Correct token! ")
+
+#     response = await call_next(request)
+#     return response
 
 
 @app.middleware("http")
