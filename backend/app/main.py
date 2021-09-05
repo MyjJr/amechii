@@ -33,34 +33,35 @@ app.add_middleware(
 app.include_router(api_router, prefix=config.API_ROOT_PATH)
 
 
-# @app.middleware("http")
-# async def token_validate_middleware(request: Request, call_next):
+@app.middleware("http")
+async def token_validate_middleware(request: Request, call_next):
 
-#     allow_no_authenticate = [
-#         "/docs",
-#         "/service-worker.js",
-#         config.API_ROOT_PATH + "/login/access-token",
-#         config.API_ROOT_PATH + '/users/create-user',
-#         config.API_ROOT_PATH + "/openapi.json",
-#         config.API_ROOT_PATH + "/items/",
-#         config.API_ROOT_PATH + "/login/token"
-#     ]  # yapf: disable
+    allow_no_authenticate = [
+        "/docs",
+        "/service-worker.js",
+        config.API_ROOT_PATH + "/login/access-token",
+        config.API_ROOT_PATH + '/users/create-user',
+        config.API_ROOT_PATH + "/openapi.json",
+        config.API_ROOT_PATH + "/items/get-items",
+        config.API_ROOT_PATH + "/login/token"
+    ]  # yapf: disable
 
-#     validate_flag = True
-#     for i in allow_no_authenticate:
-#         if request.url.path in i:
-#             validate_flag = False
-#             break
+    print("Access from", request.url.path)
+    # validate_flag = False
+    # for i in allow_no_authenticate:
+    #     if request.url.path in i:
+    #         validate_flag = False
+    #         break
 
-#     if validate_flag:
-#         print("validate token..........")
-#         token = await reusable_oauth2(request)
-#         current_user = validate_token(request.state.db, token)
-#         request.state.user = current_user
-#         print("Correct token! ")
+    if request.url.path not in allow_no_authenticate:
+        print("Validate token..........")
+        token = await reusable_oauth2(request)
+        current_user = validate_token(request.state.db, token)
+        request.state.user = current_user
+        print("Correct token! ")
 
-#     response = await call_next(request)
-#     return response
+    response = await call_next(request)
+    return response
 
 
 @app.middleware("http")
@@ -68,12 +69,12 @@ async def db_session_middleware(request: Request, call_next):
     response: Response = Response("Internal server error", status_code=500)
     try:
         request.state.db = session()
-        print("get DB session")
+        print("Get DB session")
         response = await call_next(request)
 
     finally:
         request.state.db.close()
-        print("close DB session")
+        print("Close DB session")
     return response
 
 
