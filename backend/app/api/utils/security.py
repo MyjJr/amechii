@@ -7,6 +7,7 @@ from app.api.utils.db import get_db
 
 
 def get_current_user(request: Request, token: str = Security(reusable_oauth2)):
+    print(token)
     return request.state.user
 
 

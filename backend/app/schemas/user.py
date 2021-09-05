@@ -20,7 +20,7 @@ class UserUpdate(UserBase):
 
 class User(UserBase):
     id: Optional[int] = None
-    name: Optional[int] = None
+    name: Optional[str] = None
     icon: str = None
     registration_time: Optional[datetime] = None
 
