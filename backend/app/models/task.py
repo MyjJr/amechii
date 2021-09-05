@@ -40,15 +40,15 @@ class Task(Base):
     back_money = Column(Boolean, default=True)
     status = Column(Enum(StatusType), nullable=False)
 
-    subtasks = relationship("Subtask", back_populates="tasks")
+    subtasks = relationship("SubTask", back_populates="tasks")
 
     do_user = relationship("User", back_populates="do_tasks", primaryjoin="Task.do_id==User.id")  # yapf: disable
     set_user = relationship("User", back_populates="set_tasks", primaryjoin="Task.set_id==User.id")  # yapf: disable
-    task_item = relationship("Task_item", back_populates="tasks", primaryjoin="Task.id==Task_item.task_id")  # yapf: disable
+    items = relationship("Task_item", back_populates="tasks", primaryjoin="Task.id==Task_item.task_id")  # yapf: disable
     address = relationship("Address", back_populates="tasks")
 
 
-class Subtask(Base):
+class SubTask(Base):
     __tablename__ = "subtasks"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
@@ -70,5 +70,5 @@ class Task_item(Base):
     task_id = Column(Integer, ForeignKey("tasks.id"), nullable=False)
     item_id = Column(Integer, ForeignKey("items.id"), nullable=False)
 
-    tasks = relationship("Task", back_populates="task_item", primaryjoin="Task_item.task_id==Task.id")  # yapf: disable
-    items = relationship("Item", back_populates="item_task", primaryjoin="Task_item.item_id==Item.id")  # yapf: disable
+    tasks = relationship("Task", back_populates="items", primaryjoin="Task_item.task_id==Task.id")  # yapf: disable
+    items = relationship("Item", back_populates="tasks", primaryjoin="Task_item.item_id==Item.id")  # yapf: disable
