@@ -20,12 +20,13 @@ class ItemUpdate(ItemBase):
     pass
 
 
-class Item(ItemCreate):
+class Item(BaseModel):
     id: int
-    image: str
-    detail: str
-    url: str
-    detail: str
+    name: str
+    image: Optional[str] = None
+    price: int
+    url: Optional[str] = None
+    detail: Optional[str] = None
 
     class Config:
         orm_mode = True
