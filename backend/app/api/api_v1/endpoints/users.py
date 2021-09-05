@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from typing import List
 
 from app import crud
 from app.schemas.user import User, UserCreate
@@ -29,3 +30,18 @@ async def user_create(*, db: Session = Depends(get_db), user_in: UserCreate):
     user = crud.user.create(db, obj_in=user_in)
 
     return user
+
+
+@router.get("/get-users", response_model=List[User])
+async def get_users(
+    *,
+    db: Session = Depends(get_db),
+    name: str,
+    skip: int = 0,
+    limit: int = 100,
+    order_desc: bool = True
+):
+    user_list = crud.user.get_like_name(db, name=name, skip=skip, limit=limit, order_desc=order_desc)
+    return user_list
+
+

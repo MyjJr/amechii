@@ -48,9 +48,9 @@ class Task_itemUpdate(BaseModel):
 class SubTask(BaseModel):
     id: int
     task_id: int
-    title: str = None
-    priority: str
-    status: str
+    title: str
+    priority: Optional[str] = None
+    status: Optional[str] = None
 
     class Config:
         orm_mode = True
