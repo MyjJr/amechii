@@ -15,11 +15,6 @@ ALGORITHM = "HS256"
 access_token_jwt_subject = "access"
 reusable_oauth2 = OAuth2PasswordBearer(tokenUrl=config.API_ROOT_PATH + "/login/token")  # yapf: disable
 
-credentials_exception = HTTPException(
-    status_code=403,
-    detail="Could not validate credentials",
-)
-
 
 def create_access_token(*, data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
@@ -44,7 +39,7 @@ def check_token(request: Request):
     authorization: str = request.headers.get("Authorization")
     scheme, param = get_authorization_scheme_param(authorization)
     if not authorization or scheme.lower() != "bearer":
-        raise credentials_exception
+        param = None
     return param
 
 
@@ -54,7 +49,7 @@ def validate_token(db: Session, token: str):
         payload = jwt.decode(token, config.SECRET_KEY, algorithms=[ALGORITHM])
         token_data = TokenPayload(**payload)
     except JWTError:
-        raise credentials_exception
+        return None
     user = crud.user.get(db, id=token_data.user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
