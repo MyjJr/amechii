@@ -5,13 +5,13 @@ from sqlalchemy.orm import Session
 from datetime import timedelta
 
 from app.schemas.token import Token
-from app.schemas.user import User, UserLogin
-from app.models.user import User as DBUser
+from app.schemas.user import UserLogin  # User
+# from app.models.user import User as DBUser
 from app import crud
 from app.core import config
 from app.core.jwt import create_access_token
 from app.api.utils.db import get_db
-from app.api.utils.security import get_validated_current_user
+# from app.api.utils.security import get_validated_current_user
 
 router = APIRouter()
 
@@ -38,7 +38,9 @@ async def login_access_token(*, db: Session = Depends(get_db), form_data: UserLo
 
 
 @router.post("/token", response_model=Token)
-async def token(*, db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()):
+async def token(
+    *, db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()
+):
     """
     OAuth2 compatible token login, get an access token for future requests
     """
@@ -58,9 +60,9 @@ async def token(*, db: Session = Depends(get_db), form_data: OAuth2PasswordReque
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.get("/test-token", response_model=User)
-def test_token(current_user: DBUser = Depends(get_validated_current_user)):
-    """
-    Test access token
-    """
-    return current_user
+# @router.get("/test-token", response_model=User)
+# def test_token(current_user: DBUser = Depends(get_validated_current_user)):
+#     """
+#     Test access token
+#     """
+#     return current_user

@@ -11,7 +11,7 @@ from app.api.utils.db import get_db
 router = APIRouter()
 
 
-@router.get("/testuser", response_model=User)
+@router.get("/current-user", response_model=User)
 async def get_test_user(  # yapf: disable
     current_user: DBUser = Depends(get_current_user)
 ):
