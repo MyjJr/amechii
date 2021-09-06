@@ -1,26 +1,33 @@
-from typing import List, Optional
+from typing import Dict, List, Optional
 from pydantic import BaseModel
 from datetime import datetime
+from app.models.task import StatusType
+from app.schemas.item import Item
+from app.schemas.address import Address
 
 
-class TaskCreate(BaseModel):
-    set_id: int
-    do_id: int
-    address_id: Optional[int] = None
-    title: str
-    deadline: datetime
-    back_money: bool = True
-    status: str = "not_complete"
-    item_id_list: List[int] = []
-
-
-class TaskUpdate(BaseModel):
-    do_id: Optional[int] = None
-    address_id: Optional[int] = None
+class TaskBase(BaseModel):
     title: Optional[str] = None
     deadline: Optional[datetime] = None
     back_money: Optional[bool] = None
-    status: Optional[str] = None
+    status: Optional[StatusType] = None
+
+
+class Task(TaskBase):
+    create_datetime: datetime
+    end_datetime: Optional[datetime] = None
+
+
+class TaskCreate(TaskBase):
+    address_id: Optional[int] = None
+    set_id: int
+    do_id: Optional[int] = None
+    item_id_list: List[int] = []
+
+
+class TaskUpdate(TaskBase):
+    address_id: Optional[int] = None
+    do_id: Optional[int] = None
 
 
 class SubTaskCreate(BaseModel):
@@ -46,29 +53,23 @@ class Task_itemUpdate(BaseModel):
 
 
 class SubTask(BaseModel):
-    id: int
     task_id: int
-    title: str = None
-    priority: str
-    status: str
+    title: str
+    priority: Optional[str] = None
+    status: Optional[str] = None
 
     class Config:
         orm_mode = True
 
 
-class Item(BaseModel):
-    id: int
-    name: str
-    imag_url: str
-    price: int
-    description: str
-    num: int
+class ChangeStatus(BaseModel):
+    status: str
 
 
-class TaskRes(BaseModel):
-    id: int
-    title: str
-    memo: Optional[str] = None
-    deadline: Optional[datetime] = None
+class TaskRes(Task):
     subtasks: Optional[List[SubTask]] = None
     items: Optional[List[Item]] = None
+
+
+class FinishTask(BaseModel):
+    end_time: datetime
