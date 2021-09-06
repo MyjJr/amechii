@@ -3,6 +3,7 @@ from app.schemas.user import UserCreate
 from app.schemas.item import ItemCreate
 from app.schemas.task import TaskCreate, SubTaskCreate
 from app.schemas.address import AddressCreate
+from app.schemas.transaction import TransactionCreate
 from app.utils import print_obj_attributes
 
 from app.db import demo_date
@@ -82,6 +83,19 @@ def subtask_create(db):
         print_obj_attributes(subtask)
 
 
+def transaction_create(db):
+    for i in demo_date.demo_transactions:
+
+        obj_in = TransactionCreate(
+            amount=i["amount"],
+            user_id=i["user_id"]
+        )
+        transaction = crud.transaction.create(db, obj_in=obj_in)
+        print_obj_attributes(transaction)
+        balance = crud.transaction.get_balance(db, i["user_id"])
+        print(balance)
+
+
 def insert_demo_data_all(db):
 
     user_create(db)
@@ -90,6 +104,7 @@ def insert_demo_data_all(db):
     address_create(db)
     task_create(db)
     subtask_create(db)
+    transaction_create(db)
 
 
 if __name__ == "__main__":
@@ -107,10 +122,25 @@ if __name__ == "__main__":
     db: Session = session()
     # b = crud.item.get(db, 1)
     # print_obj_attributes(b)
-    a = crud.user.get_multi(db)
+    obj_in = TransactionCreate(
+        title="1",
+        amount=-20000,
+        user_id=1
+    )
+    transaction_create(db)
+    # balance = crud.transaction.get_balance(db, 1)
+    # print(balance)
+    # a = crud.transaction.create(db, obj_in=obj_in)
+    # print(crud.transaction.get_balance(db, 1))
 
-    for i in a:
-        print_obj_attributes(a)
+    # obj_in = TransactionCreate(
+    #     title="0",
+    #     amount=20000,
+    #     user_id=1
+    # )
+
+    # a = crud.transaction.create(db, obj_in=obj_in)
+    # print(crud.transaction.get_balance(db, 1))
     # insert_demo_data_all(db)
     # task_create(db)
 
