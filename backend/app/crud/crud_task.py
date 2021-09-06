@@ -31,8 +31,8 @@ class CRUDTask(CRUDBase[Task, TaskCreate, TaskUpdate]):
 
 
 class CRUDSubTask(CRUDBase[SubTask, SubTaskCreate, SubTaskUpdate]):
-    def get_by_task_id(self, db_session: Session, *, task_id: int) -> Optional[SubTask]:
-        return db_session.query(SubTask).filter(SubTask.id == task_id).all()
+    def get_by_task_id(self, db_session: Session, *, task_id: int) -> Optional[List[SubTask]]:
+        return db_session.query(SubTask).filter(SubTask.task_id == task_id).all()
 
 
 class CRUDTask_item(CRUDBase[Task_item, Task_itemCreate, Task_itemUpdate]):

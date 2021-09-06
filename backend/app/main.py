@@ -43,7 +43,9 @@ async def token_validate_middleware(request: Request, call_next):
         config.API_ROOT_PATH + '/users/create-user',
         config.API_ROOT_PATH + "/openapi.json",
         config.API_ROOT_PATH + "/items/get-items",
-        config.API_ROOT_PATH + "/login/token"
+        config.API_ROOT_PATH + "/login/token",
+        config.API_ROOT_PATH + "/users/get-users",
+        config.API_ROOT_PATH + "/tasks/get-subtasks",
     ]  # yapf: disable
 
     print("Access from", request.url.path)
