@@ -8,6 +8,7 @@ from app.db.base_class import Base
 
 if TYPE_CHECKING:
     from app.models.task import Task_item  # noqa
+    from app.models.user import Favourite  # noqa
 
 
 class Item(Base):
@@ -21,3 +22,4 @@ class Item(Base):
     detail = Column(String(512), nullable=True)
 
     tasks = relationship("Task_item", back_populates="items", primaryjoin="Item.id==Task_item.item_id")
+    users = relationship("Favourite", back_populates="items", primaryjoin="Item.id==Favourite.item_id")
