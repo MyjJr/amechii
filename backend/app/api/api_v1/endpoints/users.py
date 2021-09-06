@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from app import crud
-from app.schemas.user import User, UserCreate, Following, Follow, UserInfo
+from app.schemas.user import User, UserCreate, Following, Follow, UserInfo, Favourite, FavouriteCreate
 from app.models.user import User as DBUser, user_following
 from app.api.utils.security import get_current_user
 from app.api.utils.db import get_db
@@ -65,8 +65,8 @@ async def get_users(
     return user_list
 
 
-@router.get("/get-user-info", response_model=UserInfo)
-async def get_user_info(
+@router.get("/get-info", response_model=UserInfo)
+async def get_info(
     *,
     db: Session = Depends(get_db),
     current_user: DBUser = Depends(get_current_user)
@@ -74,3 +74,32 @@ async def get_user_info(
     user_list = crud.user.get_user_info(db, id=current_user.id)
     return user_list
 
+
+@router.get("/get-fav", response_model=List[Favourite])
+async def get_fav(
+    *,
+    db: Session = Depends(get_db),
+    current_user: DBUser = Depends(get_current_user)
+):
+    fav_list = crud.favourite.get_favourites(db, user_id=current_user.id)
+    return fav_list
+
+
+@router.post("/add-fav", response_model=List[Favourite])
+async def add_fav(
+    *,
+    db: Session = Depends(get_db),
+    current_user: DBUser = Depends(get_current_user),
+    item_id: int
+):
+    return crud.favourite.add_favourite(db, user_id=current_user.id, item=item_id)
+
+
+@router.delete("/del-fav", response_model=List[Favourite])
+async def del_fav(
+    *,
+    db: Session = Depends(get_db),
+    current_user: DBUser = Depends(get_current_user),
+    item_id: int
+):
+    return crud.favourite.del_favourite(db, user_id=current_user.id, item=item_id)

@@ -248,3 +248,19 @@ demo_tasks_items = [
         "item_id": item_banana_id
     }
 ]
+
+demo_favourite = [
+    {
+        "user_id": kitty_id,
+        "item_id": item_carrot_id
+    }, {
+        "user_id": mymelo_id,
+        "item_id": item_tomato_id
+    }, {
+        "user_id": cinnamon_id,
+        "item_id": item_berry_id
+    }, {
+        "user_id": kitty_id,
+        "item_id": item_banana_id
+    }
+]

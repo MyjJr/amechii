@@ -1,8 +1,11 @@
 from datetime import datetime
 from typing import Dict, List, Optional, TYPE_CHECKING
 from pydantic import BaseModel
+from app.models.user import Favourite
 from app.schemas.transaction import Transaction
 from app.schemas.address import Address
+from app.schemas.item import Item
+
 
 class UserBase(BaseModel):
     display_name: Optional[str] = None
@@ -56,11 +59,31 @@ class TaskBase(BaseModel):
     deadline: Optional[datetime] = None
     back_money: Optional[bool] = None
 
-    
+
+class FavouriteCreate(BaseModel):
+    user_id: int
+    item_id: int
+
+    class Config:
+        orm_mode = True
+
+
+class FavouriteUpdate(FavouriteCreate):
+    pass
+
+
+class Favourite(BaseModel):
+    items: Optional[Item] = None
+
+    class Config:
+        orm_mode = True
+
+
 class UserInfo(User):
     transactions: Optional[List[Transaction]] = None
     #following: Optional[List[Following]] = None
     address: Optional[List[Address]] = None
+    items: Optional[List[Favourite]] = None
     
     class Config:
         orm_mode = True

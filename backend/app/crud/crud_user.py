@@ -76,7 +76,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         db_session.refresh(from_user)
         return from_user
 
-    def get_user_info(self, db_session: Session, *, id: str) -> Optional[User]:
+    def get_user_info(self, db_session: Session, *, id: int) -> Optional[User]:
         return db_session.query(User).filter(User.id == id).first()
 
 
