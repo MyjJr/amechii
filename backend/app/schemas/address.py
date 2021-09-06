@@ -18,7 +18,6 @@ class AddressUpdate(BaseModel):
 
 
 class Address(AddressCreate):
-    id: int
-
+    
     class Config:
         orm_mode = True
