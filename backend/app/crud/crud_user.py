@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from typing import Optional
+from typing import List, Optional
 
 from app.crud.base import CRUDBase
 from app.models.user import User
@@ -26,8 +26,8 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
     def get_by_name(self, db_session: Session, *, name: str) -> Optional[User]:
         return db_session.query(User).filter(User.name == name).first()
 
-    def get_like_name(self, db_session: Session, *, name: str) -> Optional[User]:
-        return db_session.query(User).filter(User.name.like(name)).all()
+    def get_like_name(self, db_session: Session, *, name: str) -> List[User]:
+        return db_session.query(User).filter(User.name.like(name + "%")).all()
 
     def authenticate(
         self, db_session: Session,

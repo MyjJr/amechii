@@ -11,7 +11,7 @@ from app.api.utils.db import get_db
 router = APIRouter()
 
 
-@router.get("/testuser", response_model=User)
+@router.get("/current-user", response_model=User)
 async def get_test_user(  # yapf: disable
     current_user: DBUser = Depends(get_current_user)
 ):
@@ -32,7 +32,7 @@ async def user_create(*, db: Session = Depends(get_db), user_in: UserCreate):
     return user
 
 
-@router.get("/get-users", response_model=List[User])
+@router.get("/get-users-by-name", response_model=List[User])
 async def get_users(
     *,
     db: Session = Depends(get_db),
@@ -40,5 +40,3 @@ async def get_users(
 ):
     user_list = crud.user.get_like_name(db, name=name)
     return user_list
-
-
