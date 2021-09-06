@@ -1,7 +1,6 @@
 from datetime import datetime
-from typing import Dict, List, Optional, TYPE_CHECKING
+from typing import List, Optional  # , TYPE_CHECKING, Dict
 from pydantic import BaseModel
-from app.models.user import Favourite
 from app.schemas.transaction import Transaction
 from app.schemas.address import Address
 from app.schemas.item import Item
@@ -25,10 +24,18 @@ class UserUpdate(UserBase):
     password: Optional[str] = None
 
 
-class User(UserBase):
+class UserInDB(UserBase):
     id: Optional[int] = None
     name: Optional[str] = None
     registration_time: Optional[datetime] = None
+
+
+class User(UserInDB):
+    id: Optional[int] = None
+    name: Optional[str] = None
+    registration_time: Optional[datetime] = None
+    following: List[UserInDB] = []
+    followers: List[UserInDB] = []
 
     class Config:
         orm_mode = True
@@ -81,9 +88,9 @@ class Favourite(BaseModel):
 
 class UserInfo(User):
     transactions: Optional[List[Transaction]] = None
-    #following: Optional[List[Following]] = None
+    # following: Optional[List[Following]] = None
     address: Optional[List[Address]] = None
     items: Optional[List[Favourite]] = None
-    
+
     class Config:
         orm_mode = True
