@@ -4,13 +4,16 @@ from pydantic import BaseModel
 
 
 class TransactionBase(BaseModel):
-    title: str
+    title: str = "取引"
 
 
 class TransactionCreate(TransactionBase):
     amount: int
-    net_balance: int
     user_id: int
+
+
+class DBTransactionCreate(TransactionCreate):
+    net_balance: int
 
 
 class TransactionUpdate(TransactionBase):
