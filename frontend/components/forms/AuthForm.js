@@ -23,7 +23,7 @@ const AuthForm = () => {
         {
           method: "POST",
           body: JSON.stringify({
-            username: user.username,
+            name: user.username,
             password: user.password,
           }),
           headers: {
