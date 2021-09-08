@@ -89,9 +89,9 @@ class User(UserInDB):
 
 
 class UserInfo(User):
-    from app.schemas.task import TaskRes
+    from app.schemas.task import TaskRes, SetTaskRes
     do_tasks: List[TaskRes] = []
-    set_tasks: List[TaskRes] = []
+    set_tasks: List[SetTaskRes] = []
     transactions: Optional[List[Transaction]] = None
     address: Optional[List[Address]] = None
     favourites: Optional[List[Favourite]] = None
