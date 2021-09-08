@@ -94,7 +94,14 @@ async def add_fav(
     current_user: DBUser = Depends(get_current_user),
     item_id: int
 ):
-    return crud.favourite.add_favourite(db, user_id=current_user.id, item=item_id)
+    fav = crud.favourite.add_favourite(db, user_id=current_user.id, item=item_id)
+    if not fav:
+        raise HTTPException(
+            status_code=400,
+            detail="This item already exists.",
+        )
+    fav_list = crud.favourite.get_favourites(db, user_id=current_user.id)
+    return fav_list
 
 
 @router.delete("/del-fav", response_model=List[Favourite])
@@ -104,4 +111,6 @@ async def del_fav(
     current_user: DBUser = Depends(get_current_user),
     item_id: int
 ):
-    return crud.favourite.del_favourite(db, user_id=current_user.id, item=item_id)
+    crud.favourite.del_favourite(db, user_id=current_user.id, item=item_id)
+    fav_list = crud.favourite.get_favourites(db, user_id=current_user.id)
+    return fav_list
