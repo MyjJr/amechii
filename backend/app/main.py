@@ -13,6 +13,7 @@ app = FastAPI(
 )
 
 origins = [
+    "*",
     "http://localhost",
     "null",
     "http://localhost:3000",
@@ -39,6 +40,7 @@ async def token_validate_middleware(request: Request, call_next):
     allow_no_authenticate = [
         "/docs",
         "/service-worker.js",
+        config.API_ROOT_PATH + "/utils/",
         config.API_ROOT_PATH + "/login/access-token",
         config.API_ROOT_PATH + '/users/create-user',
         config.API_ROOT_PATH + "/openapi.json",
