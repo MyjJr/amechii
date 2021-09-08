@@ -4,7 +4,7 @@ from app.schemas.item import ItemCreate
 from app.schemas.task import TaskCreate, SubTaskCreate
 from app.schemas.address import AddressCreate
 from app.schemas.transaction import TransactionCreate
-from app.utils import print_obj_attributes
+# from app.utils import print_obj_attributes
 
 from app.db import demo_date
 
@@ -18,7 +18,8 @@ def user_create(db):
             password=i["password"]
         )
         user = crud.user.create(db, obj_in=user_in)
-        print_obj_attributes(user)
+        print(user)
+        # print_obj_attributes(user)
 
 
 def follow_create(db):
@@ -26,8 +27,9 @@ def follow_create(db):
         user = crud.user.follow(
             db, from_user_id=i["from_user"], follow_user_id=i["to_user"]
         )
-        for i in user.following:
-            print(i.name)
+        # for i in user.following:
+        #     print(i.name)
+        print(user)
 
 
 def item_create(db):
@@ -36,7 +38,8 @@ def item_create(db):
             name=i["name"], image=i["image"], detail=i["detail"], price=i["price"]
         )
         item = crud.item.create(db, obj_in=item_in)
-        print_obj_attributes(item)
+        print(item)
+        # print_obj_attributes(item)
 
 
 def address_create(db):
@@ -49,7 +52,8 @@ def address_create(db):
             address=i["address"]
         )
         address = crud.address.create(db, obj_in=address_in)
-        print_obj_attributes(address)
+        print(address)
+        # print_obj_attributes(address)
 
 
 def task_create(db):
@@ -68,7 +72,8 @@ def task_create(db):
             item_id_list=item_id_list_in
         )
         task = crud.task.create(db, obj_in=task_in)
-        print_obj_attributes(task)
+        print(task)
+        # print_obj_attributes(task)
 
 
 def subtask_create(db):
@@ -80,7 +85,8 @@ def subtask_create(db):
             status=i["status"]
         )
         subtask = crud.subtask.create(db, obj_in=subtask_in)
-        print_obj_attributes(subtask)
+        print(subtask)
+        # print_obj_attributes(subtask)
 
 
 def transaction_create(db):
@@ -91,9 +97,10 @@ def transaction_create(db):
             user_id=i["user_id"]
         )
         transaction = crud.transaction.create(db, obj_in=obj_in)
-        print_obj_attributes(transaction)
-        balance = crud.transaction.get_balance(db, i["user_id"])
-        print(balance)
+        print(transaction)
+        # print_obj_attributes(transaction)
+        # balance = crud.transaction.get_balance(db, i["user_id"])
+        # print(balance)
 
 
 def favourite_create(db):
