@@ -14,11 +14,15 @@ class CRUDFavourite(CRUDBase[Favourite, FavouriteCreate, FavouriteUpdate]):
 
     # お気に入りリストに追加
     def add_favourite(self, db_session: Session, *, user_id: int, item: int) -> Optional[Favourite]:
+        favourite = db_session.query(Favourite).filter(Favourite.user_id == user_id, Favourite.item_id == item).first()
+        if favourite:
+            return None
+
         favourite_in = FavouriteCreate(
             user_id=user_id,
             item_id=item
         )
-        favourite.create(db_session, obj_in=favourite_in)
+        return self.create(db_session, obj_in=favourite_in)
 
     # お気に入りリストから削除
     def del_favourite(self, db_session: Session, *, user_id: int, item: int) -> Optional[Favourite]:
