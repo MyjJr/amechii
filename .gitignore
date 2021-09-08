@@ -7,3 +7,4 @@ __pycache__
 /backend/app/dbtest.py
 /db/
 .DS_Store
+/nginx/logs/
