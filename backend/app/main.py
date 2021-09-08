@@ -13,6 +13,7 @@ app = FastAPI(
 )
 
 origins = [
+    "*",
     "http://localhost",
     "null",
     "http://localhost:3000",
@@ -39,11 +40,16 @@ async def token_validate_middleware(request: Request, call_next):
     allow_no_authenticate = [
         "/docs",
         "/service-worker.js",
+        config.API_ROOT_PATH + "/utils/",
         config.API_ROOT_PATH + "/login/access-token",
         config.API_ROOT_PATH + '/users/create-user',
         config.API_ROOT_PATH + "/openapi.json",
         config.API_ROOT_PATH + "/items/get-items",
-        config.API_ROOT_PATH + "/login/token"
+        config.API_ROOT_PATH + "/login/token",
+
+        config.API_ROOT_PATH + "/users/get-users-by-name",
+        config.API_ROOT_PATH + "/users/get-users",
+        config.API_ROOT_PATH + "/tasks/get-subtasks",
     ]  # yapf: disable
 
     print("Access from", request.url.path)
@@ -56,7 +62,13 @@ async def token_validate_middleware(request: Request, call_next):
     if request.url.path not in allow_no_authenticate:
         print("Validate token..........")
         token = check_token(request)
+        if not token:
+            return Response("Without Access Token", status_code=402)
+
         current_user = validate_token(request.state.db, token)
+        if not current_user:
+            return Response("Could not validate credentials", status_code=403)
+
         request.state.user = current_user
         print("Correct token! ")
 

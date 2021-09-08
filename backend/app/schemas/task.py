@@ -1,9 +1,8 @@
-from typing import Dict, List, Optional
+from typing import List, Optional  # , Dict, TYPE_CHECKING
 from pydantic import BaseModel
 from datetime import datetime
-from app.models.task import StatusType
+from app.models.task import StatusType  # , Task_item
 from app.schemas.item import Item
-from app.schemas.address import Address
 
 
 class TaskBase(BaseModel):
@@ -52,7 +51,15 @@ class Task_itemUpdate(BaseModel):
     pass
 
 
+class Task_item(BaseModel):
+    items: Optional[Item] = None
+
+    class Config:
+        orm_mode = True
+
+
 class SubTask(BaseModel):
+    id: int
     task_id: int
     title: str
     priority: Optional[str] = None
@@ -67,8 +74,29 @@ class ChangeStatus(BaseModel):
 
 
 class TaskRes(Task):
+    from app.schemas.user import UserInDB
+
+    set_user: Optional[UserInDB] = None
+    do_user: Optional[UserInDB] = None
     subtasks: Optional[List[SubTask]] = None
-    items: Optional[List[Item]] = None
+    items: Optional[List[Task_item]] = None
+
+    class Config:
+        orm_mode = True
+
+
+# class MyTaskRes(TaskRes):
+#     set_user: Optional[UserInDB] = None
+
+#     class Config:
+#         orm_mode = True
+
+
+# class SetTaskRes(TaskRes):
+#     do_user: Optional[UserInDB] = None
+
+#     class Config:
+#         orm_mode = True
 
 
 class FinishTask(BaseModel):

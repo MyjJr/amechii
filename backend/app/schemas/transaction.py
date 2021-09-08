@@ -26,3 +26,6 @@ class Transaction(TransactionBase):
     amount: int
     net_balance: int
     time: Optional[datetime] = None
+
+    class Config:
+        orm_mode = True
