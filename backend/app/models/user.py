@@ -55,7 +55,7 @@ class Favourite(Base):
     users = relationship("User", back_populates="items", primaryjoin="Favourite.user_id==User.id")  # yapf: disable
     items = relationship("Item", back_populates="users", primaryjoin="Favourite.item_id==Item.id")  # yapf: disable
 
-    
+
 class Transaction(Base):
     __tablename__ = "transactions"
 

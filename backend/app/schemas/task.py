@@ -1,10 +1,9 @@
-from typing import Dict, List, Optional, TYPE_CHECKING
+from typing import List, Optional  # , Dict, TYPE_CHECKING
 from pydantic import BaseModel
 from datetime import datetime
-from app.models.task import StatusType, Task_item
+from app.models.task import StatusType  # , Task_item
 from app.schemas.item import Item
 from app.schemas.user import UserBase
-
 
 
 class TaskBase(BaseModel):
@@ -57,7 +56,7 @@ class Task_item(BaseModel):
     items: Optional[Item] = None
 
     class Config:
-            orm_mode=True
+        orm_mode = True
 
 
 class SubTask(BaseModel):
@@ -80,21 +79,21 @@ class TaskRes(Task):
     items: Optional[List[Task_item]] = None
 
     class Config:
-            orm_mode=True
+        orm_mode = True
 
 
 class MyTaskRes(TaskRes):
     set_user: Optional[UserBase] = None
 
     class Config:
-        orm_mode=True
+        orm_mode = True
 
 
 class SetTaskRes(TaskRes):
     do_user: Optional[UserBase] = None
 
     class Config:
-        orm_mode=True
+        orm_mode = True
 
 
 class FinishTask(BaseModel):

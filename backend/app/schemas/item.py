@@ -1,7 +1,6 @@
 # 更新時と追加時
 from typing import Optional
 from pydantic import BaseModel
-from sqlalchemy.sql.elements import Null
 
 
 class ItemBase(BaseModel):

@@ -1,5 +1,5 @@
 from app import crud
-from app.schemas.user import UserCreate, FavouriteCreate
+from app.schemas.user import UserCreate  # , FavouriteCreate
 from app.schemas.item import ItemCreate
 from app.schemas.task import TaskCreate, SubTaskCreate
 from app.schemas.address import AddressCreate
