@@ -1,16 +1,16 @@
- 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List
 
-from app.schemas.task import SetTaskRes, MyTaskRes,TaskRes, TaskCreate, SubTask, SubTaskCreate
+from app.schemas.task import TaskRes, SubTask  # , TaskCreate, SubTaskCreate
 from app.models.user import User as DBUser
 from app.api.utils.db import get_db
 from app.api.utils.security import get_current_user
 from app import crud
 router = APIRouter()
 
-@router.get("/get-mytasks", response_model=List[MyTaskRes])
+
+@router.get("/get-mytasks", response_model=List[TaskRes])
 async def get_mytasks(
     *,
     db: Session = Depends(get_db),
@@ -19,7 +19,8 @@ async def get_mytasks(
     task_list = crud.task.get_by_do_id(db, do_id=current_user.id)
     return task_list
 
-@router.get("/get-theirtasks", response_model=List[SetTaskRes])
+
+@router.get("/get-theirtasks", response_model=List[TaskRes])
 async def get_theirtasks(
     db: Session = Depends(get_db),
     current_user: DBUser = Depends(get_current_user),

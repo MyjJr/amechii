@@ -1,10 +1,9 @@
 from sqlalchemy.orm import Session
 from typing import Optional, List
 
-from sqlalchemy.sql.functions import user
 
 from app.crud.base import CRUDBase
-from app.models.user import User, user_following
+from app.models.user import User  # , user_following
 from app.schemas.user import UserCreate, UserUpdate
 from app.core.security import get_password_hash, verify_password
 
@@ -28,7 +27,10 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
     def get_by_name(self, db_session: Session, *, name: str) -> Optional[User]:
         return db_session.query(User).filter(User.name == name).first()
 
-    def get_like_name(self, db_session: Session, *, name: str) -> Optional[List[User]]:
+    def get_like_user_name(self, db_session: Session, *, name: str) -> List[User]:
+        return db_session.query(User).filter(User.name.like(name + "%")).all()
+
+    def get_like_name(self, db_session: Session, *, name: str) -> List[User]:
         search = "%{}%".format(name)
         return db_session.query(User).filter(User.display_name.like(search)).all()
 

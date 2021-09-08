@@ -1,5 +1,5 @@
 from app import crud
-from app.schemas.user import UserCreate, FavouriteCreate
+from app.schemas.user import UserCreate  # , FavouriteCreate
 from app.schemas.item import ItemCreate
 from app.schemas.task import TaskCreate, SubTaskCreate
 from app.schemas.address import AddressCreate
@@ -119,22 +119,25 @@ if __name__ == "__main__":
     from sqlalchemy.orm import Session
 
     from app.core import configlocal
-    from app.models.task import Task
+    # from app.models.task import Task
     engine = create_engine(
         configlocal.SQLALCHEMY_DATABASE_URI, encoding='UTF-8', echo=True
     )
     session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     db: Session = session()
+
+    a = crud.user.get_like_name(db, name="k")
+    a = 0
     # b = crud.item.get(db, 1)
     # print_obj_attributes(b)
 
-    obj_in = TransactionCreate(
-        title="1",
-        amount=-20000,
-        user_id=1
-    )
-    transaction_create(db)
+    # obj_in = TransactionCreate(
+    #     title="1",
+    #     amount=-20000,
+    #     user_id=1
+    # )
+    # transaction_create(db)
     # balance = crud.transaction.get_balance(db, 1)
     # print(balance)
     # a = crud.transaction.create(db, obj_in=obj_in)

@@ -34,7 +34,7 @@ class User(Base):
     set_tasks = relationship("Task", back_populates="set_user", primaryjoin="User.id==Task.set_id")
     address = relationship("Address", back_populates="user")
     transactions = relationship("Transaction", back_populates="user")
-    items = relationship("Favourite", back_populates="users", primaryjoin="User.id==Favourite.user_id")
+    favourites = relationship("Favourite", back_populates="users", primaryjoin="User.id==Favourite.user_id")
 
     following = relationship(
         "User",
@@ -52,10 +52,10 @@ class Favourite(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     item_id = Column(Integer, ForeignKey("items.id"), nullable=False)
 
-    users = relationship("User", back_populates="items", primaryjoin="Favourite.user_id==User.id")  # yapf: disable
+    users = relationship("User", back_populates="favourites", primaryjoin="Favourite.user_id==User.id")  # yapf: disable
     items = relationship("Item", back_populates="users", primaryjoin="Favourite.item_id==Item.id")  # yapf: disable
 
-    
+
 class Transaction(Base):
     __tablename__ = "transactions"
 
