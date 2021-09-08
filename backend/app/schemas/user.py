@@ -88,9 +88,8 @@ class Favourite(BaseModel):
 
 class UserInfo(User):
     transactions: Optional[List[Transaction]] = None
-    # following: Optional[List[Following]] = None
     address: Optional[List[Address]] = None
-    items: Optional[List[Favourite]] = None
+    favourites: Optional[List[Favourite]] = None
 
     class Config:
         orm_mode = True
