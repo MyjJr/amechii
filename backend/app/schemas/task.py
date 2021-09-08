@@ -85,18 +85,12 @@ class TaskRes(Task):
         orm_mode = True
 
 
-# class MyTaskRes(TaskRes):
-#     set_user: Optional[UserInDB] = None
+class SetTaskRes(TaskRes):
+    from app.schemas.user import Address
+    address: Address
 
-#     class Config:
-#         orm_mode = True
-
-
-# class SetTaskRes(TaskRes):
-#     do_user: Optional[UserInDB] = None
-
-#     class Config:
-#         orm_mode = True
+    class Config:
+        orm_mode = True
 
 
 class FinishTask(BaseModel):
