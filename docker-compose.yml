@@ -1,4 +1,23 @@
 services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - 80:80
+    volumes:
+      # - ./nginx/html:/usr/share/nginx/html
+      - ./nginx/conf:/etc/nginx/conf.d
+      # - ./nginx/logs:/var/log/nginx
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: frontend.dockerfile
+
+    # ports:
+    #   - "3000:3000"
+    volumes:
+      - ./frontend:/code
+
   backend:
     depends_on:
       - db
