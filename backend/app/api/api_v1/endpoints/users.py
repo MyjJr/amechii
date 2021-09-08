@@ -64,7 +64,7 @@ async def user_unfollow(
     return user
 
 
-@router.get("/get-users", response_model=List[User])
+@router.get("/get-users", response_model=List[DBUser])
 async def get_users(
     *,
     db: Session = Depends(get_db),
