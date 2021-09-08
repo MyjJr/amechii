@@ -34,26 +34,34 @@ async def user_create(*, db: Session = Depends(get_db), user_in: UserCreate):
     return user
 
 
-# @router.post("/follow-user", response_model=Following)
-# async def user_follow(*,
-#     db: Session = Depends(get_db),
-#     current_user: DBUser = Depends(get_current_user),
-#     id: int):
+@router.post("/follow-user", response_model=User)
+async def user_follow(
+    *,
+    db: Session = Depends(get_db),
+    current_user: DBUser = Depends(get_current_user),
+    id: int
+):
 
-#     user = crud.user.follow(db, from_user_id=current_user.id, follow_user_id=id)
+    user = crud.user.follow(db, from_user_id=current_user.id, follow_user_id=id)
+    user.balance = crud.transaction.get_balance(db, current_user.id)
 
-#     return user
+    return user
 
 
-# @router.post("/unfollow-user", response_model=Following)
-# async def user_unfollow(*,
-#     db: Session = Depends(get_db),
-#     current_user: DBUser = Depends(get_current_user),
-#     id: int):
+@router.delete("/unfollow-user", response_model=User)
+async def user_unfollow(
+    *,
+    db: Session = Depends(get_db),
+    current_user: DBUser = Depends(get_current_user),
+    id: int
+):
 
-#     user = crud.user.unfollow(db, from_user_id=current_user.id, follow_user_id=id)
+    user = crud.user.unfollow(db, from_user_id=current_user.id, unfollow_user_id=id)
+    if not user:
+        user = crud.user.get(db, current_user.id)
+    user.balance = crud.transaction.get_balance(db, current_user.id)
 
-#     return user
+    return user
 
 
 @router.get("/get-users", response_model=List[User])
@@ -68,9 +76,7 @@ async def get_users(
 
 @router.get("/get-info", response_model=UserInfo)
 async def get_info(
-    *,
-    db: Session = Depends(get_db),
-    current_user: DBUser = Depends(get_current_user)
+    *, db: Session = Depends(get_db), current_user: DBUser = Depends(get_current_user)
 ):
     user = crud.user.get_user_info(db, id=current_user.id)
     user.balance = crud.transaction.get_balance(db, current_user.id)
@@ -79,9 +85,7 @@ async def get_info(
 
 @router.get("/get-fav", response_model=List[Favourite])
 async def get_fav(
-    *,
-    db: Session = Depends(get_db),
-    current_user: DBUser = Depends(get_current_user)
+    *, db: Session = Depends(get_db), current_user: DBUser = Depends(get_current_user)
 ):
     fav_list = crud.favourite.get_favourites(db, user_id=current_user.id)
     return fav_list
