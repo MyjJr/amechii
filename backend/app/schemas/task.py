@@ -3,7 +3,6 @@ from pydantic import BaseModel
 from datetime import datetime
 from app.models.task import StatusType  # , Task_item
 from app.schemas.item import Item
-from app.schemas.user import UserBase
 
 
 class TaskBase(BaseModel):
@@ -75,6 +74,10 @@ class ChangeStatus(BaseModel):
 
 
 class TaskRes(Task):
+    from app.schemas.user import UserInDB
+
+    set_user: Optional[UserInDB] = None
+    do_user: Optional[UserInDB] = None
     subtasks: Optional[List[SubTask]] = None
     items: Optional[List[Task_item]] = None
 
@@ -82,18 +85,18 @@ class TaskRes(Task):
         orm_mode = True
 
 
-class MyTaskRes(TaskRes):
-    set_user: Optional[UserBase] = None
+# class MyTaskRes(TaskRes):
+#     set_user: Optional[UserInDB] = None
 
-    class Config:
-        orm_mode = True
+#     class Config:
+#         orm_mode = True
 
 
-class SetTaskRes(TaskRes):
-    do_user: Optional[UserBase] = None
+# class SetTaskRes(TaskRes):
+#     do_user: Optional[UserInDB] = None
 
-    class Config:
-        orm_mode = True
+#     class Config:
+#         orm_mode = True
 
 
 class FinishTask(BaseModel):

@@ -30,17 +30,6 @@ class UserInDB(UserBase):
     registration_time: Optional[datetime] = None
 
 
-class User(UserInDB):
-    id: Optional[int] = None
-    name: Optional[str] = None
-    registration_time: Optional[datetime] = None
-    following: List[UserInDB] = []
-    followers: List[UserInDB] = []
-
-    class Config:
-        orm_mode = True
-
-
 class UserLogin(BaseModel):
     name: str
     password: str
@@ -86,7 +75,23 @@ class Favourite(BaseModel):
         orm_mode = True
 
 
+class User(UserInDB):
+    id: Optional[int] = None
+    name: Optional[str] = None
+    registration_time: Optional[datetime] = None
+    following: List[UserInDB] = []
+    followers: List[UserInDB] = []
+    favourites: Optional[List[Favourite]] = None
+    balance: int
+
+    class Config:
+        orm_mode = True
+
+
 class UserInfo(User):
+    from app.schemas.task import TaskRes
+    do_tasks: List[TaskRes] = []
+    set_tasks: List[TaskRes] = []
     transactions: Optional[List[Transaction]] = None
     address: Optional[List[Address]] = None
     favourites: Optional[List[Favourite]] = None
