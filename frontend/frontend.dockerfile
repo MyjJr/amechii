@@ -1,4 +1,5 @@
 FROM node:14.16.0-stretch-slim
+COPY . /code
 
 WORKDIR /code
 EXPOSE 3000
