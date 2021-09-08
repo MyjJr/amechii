@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from app import crud
-from app.schemas.user import User, UserCreate, UserInfo, Favourite  # , Following, Follow, FavouriteCreate
+from app.schemas.user import User, UserCreate, UserInfo, UserInDB, Favourite  # , Following, Follow, FavouriteCreate
 from app.models.user import User as DBUser  # , user_following
 from app.api.utils.security import get_current_user
 from app.api.utils.db import get_db
@@ -13,12 +13,14 @@ router = APIRouter()
 
 @router.get("/current-user", response_model=User)
 async def get_test_user(  # yapf: disable
+    db: Session = Depends(get_db),
     current_user: DBUser = Depends(get_current_user)
 ):
+    current_user.balance = crud.transaction.get_balance(db, current_user.id)
     return current_user
 
 
-@router.post("/create-user", response_model=User)
+@router.post("/create-user", response_model=UserInDB)
 async def user_create(*, db: Session = Depends(get_db), user_in: UserCreate):
     user = crud.user.get_by_name(db, name=user_in.name)
     if user:
@@ -70,8 +72,9 @@ async def get_info(
     db: Session = Depends(get_db),
     current_user: DBUser = Depends(get_current_user)
 ):
-    user_list = crud.user.get_user_info(db, id=current_user.id)
-    return user_list
+    user = crud.user.get_user_info(db, id=current_user.id)
+    user.balance = crud.transaction.get_balance(db, current_user.id)
+    return user
 
 
 @router.get("/get-fav", response_model=List[Favourite])

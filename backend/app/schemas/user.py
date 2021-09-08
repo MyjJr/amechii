@@ -78,11 +78,11 @@ class Favourite(BaseModel):
 class User(UserInDB):
     id: Optional[int] = None
     name: Optional[str] = None
+    balance: int
     registration_time: Optional[datetime] = None
     following: List[UserInDB] = []
     followers: List[UserInDB] = []
     favourites: Optional[List[Favourite]] = None
-    balance: int
 
     class Config:
         orm_mode = True
