@@ -48,8 +48,6 @@ const AuthForm = () => {
       alert(err);
     }
   };
-  // console.log(isLogin);
-  // console.log(user);
 
   const authUser = async (e) => {
     e.preventDefault();

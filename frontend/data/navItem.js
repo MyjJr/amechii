@@ -6,7 +6,7 @@ export const nav_menu = [
 
 export const dropdown_menu = [
   { name: "残高: 12,000円", href: "#" },
-  { name: "Your Profile", href: "/profile" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
+  { name: "プロフィール", href: "/profile" },
+  { name: "欲しいもの", href: "/wishlist" },
+  { name: "Logout", href: "#" },
 ];

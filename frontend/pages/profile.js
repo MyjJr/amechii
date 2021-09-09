@@ -1,21 +1,11 @@
 import { useState } from "react";
-import { Tab } from "@headlessui/react";
-import Navbar from "../components/Navbars/Navbar";
 import ProfileCard from "../components/cards/ProfileCard";
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import BaseLayout from "../components/layouts/BaseLayout";
 
 const Profile = () => {
-  return (
-    <div className="layout-container">
-      <Navbar />
-      <main className="main-section">
-        <ProfileCard />
-      </main>
-    </div>
-  );
+  return <ProfileCard />;
 };
+
+Profile.layout = BaseLayout;
 
 export default Profile;

@@ -109,12 +109,13 @@ body {
 
 .authForm-container {
   position: relative;
-  background-color: $cAdd;
+  // background-color: $cAdd;
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
   font-family: "Poppins", sans-serif;
+  z-index: 0;
 }
 
 .back-btn {
