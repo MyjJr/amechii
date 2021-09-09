@@ -9,7 +9,7 @@ import * as cookie from 'cookie'
 
 export default function Home(props) {
 
-  console.log(props)
+  console.log(props.userInfo)
 
   const cookies = new Cookies();
 
@@ -29,8 +29,8 @@ export default function Home(props) {
 }
 
 
-export async function getServerSideProps(context) {
 
+export const getServerSideProps = async (context) =>  {
   if(!context.req.headers.cookie) {
     return {
       props: {
@@ -40,19 +40,20 @@ export async function getServerSideProps(context) {
   }
 
   const parsedCookies = cookie.parse(context.req.headers.cookie);
-  const data = await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/users/get-info`,{
-    // mode: "no-cors",
+  
+  const res = await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/users/get-info`,{
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
+      "accept": "application/json",
       Authorization: `${parsedCookies.token_type} ${parsedCookies.access_token}`,
     }
   })
 
+  const userInfo = await res.json()
+
   return {
     props: {
-      // cookie: parsedCookies,
-      data: JSON.parse(JSON.stringify(data))
+      userInfo
     },
   };
 }
