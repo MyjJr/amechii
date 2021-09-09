@@ -22,7 +22,7 @@ const cookies = new Cookies();
 const Navbar = (props) => {
   const router = useRouter();
 
-  console.log(props)
+  // console.log(props)
 
   const [tokenInfo, setTokenInfo] = useState({
     access_token: "",

@@ -5,8 +5,11 @@ import Card from "../components/cards/Card";
 import { useEffect } from "react";
 import Cookies from "universal-cookie";
 import Navbar from "../components/Navbars/Navbar";
+import * as cookie from 'cookie'
 
-export default function Home() {
+export default function Home(props) {
+
+  console.log(props.userInfo)
 
   const cookies = new Cookies();
 
@@ -23,4 +26,34 @@ export default function Home() {
       </div>
     </div>
   );
+}
+
+
+
+export const getServerSideProps = async (context) =>  {
+  if(!context.req.headers.cookie) {
+    return {
+      props: {
+        data: null
+      }
+    }
+  }
+
+  const parsedCookies = cookie.parse(context.req.headers.cookie);
+  
+  const res = await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/users/get-info`,{
+    method: "GET",
+    headers: {
+      "accept": "application/json",
+      Authorization: `${parsedCookies.token_type} ${parsedCookies.access_token}`,
+    }
+  })
+
+  const userInfo = await res.json()
+
+  return {
+    props: {
+      userInfo
+    },
+  };
 }

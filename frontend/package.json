@@ -19,6 +19,7 @@
     "@headlessui/react": "^1.4.1",
     "@heroicons/react": "^1.0.4",
     "@tailwindcss/forms": "^0.3.3",
+    "cookie": "^0.4.1",
     "daisyui": "^1.14.0",
     "heroicons": "^1.0.4",
     "next": "11.1.2",
