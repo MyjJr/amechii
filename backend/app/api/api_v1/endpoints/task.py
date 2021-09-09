@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends  # , HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 
-from app.schemas.task import TaskRes, SubTask, SetTaskRes, SubTaskCreate, SubTaskUpdate  # , TaskCreate
+from app.schemas.task import TaskRes, SubTask, SetTaskRes, SubTaskCreate  # , SubTaskUpdate  # , TaskCreate
 from app.models.user import User as DBUser
 from app.api.utils.db import get_db
 from app.api.utils.security import get_current_user
@@ -61,21 +61,21 @@ async def create_subtask(
     return subtask
 
 
-@router.post("/update-subtask", response_model=SubTask)
-async def update_subtask(
-    *,
-    db: Session = Depends(get_db),
-    subtask_id: int,
-    subtask_in: SubTaskUpdate,
-    current_user: DBUser = Depends(get_current_user)
-):
-    subtask_obj = crud.subtask.get(db, subtask_id)
-    if not subtask_obj:
-        return HTTPException(
-            status_code=402,
-            detail="Subtask not found",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    subtask = crud.subtask.update(db, db_obj=subtask_obj, obj_in=subtask_in)
+# @router.post("/update-subtask", response_model=SubTask)
+# async def update_subtask(
+#     *,
+#     db: Session = Depends(get_db),
+#     subtask_id: int,
+#     subtask_in: SubTaskUpdate,
+#     current_user: DBUser = Depends(get_current_user)
+# ):
+#     subtask_obj = crud.subtask.get(db, subtask_id)
+#     if not subtask_obj:
+#         return HTTPException(
+#             status_code=402,
+#             detail="Subtask not found",
+#             headers={"WWW-Authenticate": "Bearer"},
+#         )
+#     subtask = crud.subtask.update(db, db_obj=subtask_obj, obj_in=subtask_in)
 
-    return subtask
+#     return subtask
