@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends  # , HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 
-from app.schemas.task import TaskRes, SubTask, SetTaskRes  # , TaskCreate, SubTaskCreate
+from app.schemas.task import TaskRes, SubTask, SetTaskRes, SubTaskCreate  # , SubTaskUpdate  # , TaskCreate
 from app.models.user import User as DBUser
 from app.api.utils.db import get_db
 from app.api.utils.security import get_current_user
@@ -41,22 +41,41 @@ async def get_theirtasks(
 
 #     return task
 
+
 @router.get("/get-subtasks", response_model=List[SubTask])
-async def get_subtasks(
-    *,
-    db: Session = Depends(get_db),
-    task_id: int
-):
+async def get_subtasks(*, db: Session = Depends(get_db), task_id: int):
     subtask_list = crud.subtask.get_by_task_id(db, task_id=task_id)
     return subtask_list
 
 
-# @router.post("/create-subtask", response_model=SubTask)
-# async def create_subtask(*,
-#     db: Session = Depends(get_db),
-#     task_id: int,
-#     subtask_post: SubTaskCreate):
+@router.post("/create-subtask", response_model=SubTask)
+async def create_subtask(
+    *,
+    db: Session = Depends(get_db),
+    subtask_in: SubTaskCreate,
+    current_user: DBUser = Depends(get_current_user)
+):
 
-#     subtask = crud.subtask.create(db, task_id=task_id, obj_in=subtask_post)
+    subtask = crud.subtask.create(db, obj_in=subtask_in)
+
+    return subtask
+
+
+# @router.post("/update-subtask", response_model=SubTask)
+# async def update_subtask(
+#     *,
+#     db: Session = Depends(get_db),
+#     subtask_id: int,
+#     subtask_in: SubTaskUpdate,
+#     current_user: DBUser = Depends(get_current_user)
+# ):
+#     subtask_obj = crud.subtask.get(db, subtask_id)
+#     if not subtask_obj:
+#         return HTTPException(
+#             status_code=402,
+#             detail="Subtask not found",
+#             headers={"WWW-Authenticate": "Bearer"},
+#         )
+#     subtask = crud.subtask.update(db, db_obj=subtask_obj, obj_in=subtask_in)
 
 #     return subtask

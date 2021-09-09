@@ -19,8 +19,10 @@ function classNames(...classes) {
 
 const cookies = new Cookies();
 
-const Navbar = () => {
+const Navbar = (props) => {
   const router = useRouter();
+
+  // console.log(props)
 
   const [tokenInfo, setTokenInfo] = useState({
     access_token: "",
@@ -33,6 +35,22 @@ const Navbar = () => {
       token_type: cookies.get("token_type"),
     });
   }, [cookies]);
+
+
+  // ロゴをクリックでユーザー情報取得（仮）
+  const getUser = async ()  => {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/users/get-info`,{
+      // mode: "no-cors",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${tokenInfo.token_type} ${tokenInfo.access_token}`,
+      }
+    })
+    console.log(data)
+  }
+
+
 
   return (
     <Disclosure as="nav" className="bg-gray-800 navbar-section my-auto">
@@ -57,6 +75,7 @@ const Navbar = () => {
                     className="block lg:hidden h-8 w-auto"
                     src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                     alt="Workflow"
+                    onClick={() => getUser()}
                   />
                   <img
                     className="hidden lg:block h-8 w-auto"

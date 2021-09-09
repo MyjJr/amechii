@@ -36,6 +36,7 @@ def init_db(db_session):
         user = crud.user.create(db_session, obj_in=user_in)
         print("create first user end")
 
-    if config.INSERT_DEMO_DATA == "True":
-        insert_demo_data_all(db_session)
+        if config.INSERT_DEMO_DATA == "True":
+            insert_demo_data_all(db_session)
+
     db_session.close()

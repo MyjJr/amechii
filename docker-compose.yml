@@ -1,4 +1,27 @@
 services:
+  nginx:
+    depends_on:
+      - frontend
+      - backend
+    image: nginx:latest
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      # - ./nginx/logs:/var/log/nginx
+      # - ./nginx/html:/usr/share/nginx/html
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: frontend.dockerfile
+
+    ports:
+      - 3000:3000
+    volumes:
+      # - ./image:/image
+      - ./frontend:/code
+
   backend:
     depends_on:
       - db
@@ -11,6 +34,7 @@ services:
       - 8080:80
     restart: always
     volumes:
+      - ./image:/image
       - ./backend/app:/app
   
   db:
@@ -18,6 +42,6 @@ services:
     env_file: 
       - ${ENV_FILE_PATH:-config.env}
     ports:
-    - 3306:3306
-    # volumes: 
-    # - ./db/data:/var/lib/mysql
+      - 3306:3306
+    volumes: 
+    - ./db/data:/var/lib/mysql

@@ -19,7 +19,7 @@ const AuthForm = () => {
   const login = async () => {
     try {
       await fetch(
-        `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/login/access-token`,
+        `${process.env.NEXT_PUBLIC_CLIENT_URL}api/v1/login/access-token`,
         {
           method: "POST",
           body: JSON.stringify({
@@ -56,7 +56,7 @@ const AuthForm = () => {
     } else {
       try {
         await fetch(
-          `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/users/create-user`,
+          `${process.env.NEXT_PUBLIC_CLIENT_URL}api/v1/users/create-user`,
           {
             method: "POST",
             body: JSON.stringify({

@@ -13,6 +13,7 @@ class TaskBase(BaseModel):
 
 
 class Task(TaskBase):
+    id: int
     create_datetime: datetime
     end_datetime: Optional[datetime] = None
 

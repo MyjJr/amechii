@@ -4,7 +4,7 @@ from app.schemas.item import ItemCreate
 from app.schemas.task import TaskCreate, SubTaskCreate
 from app.schemas.address import AddressCreate
 from app.schemas.transaction import TransactionCreate
-from app.utils import print_obj_attributes
+# from app.utils import print_obj_attributes
 
 from app.db import demo_date
 
@@ -18,16 +18,18 @@ def user_create(db):
             password=i["password"]
         )
         user = crud.user.create(db, obj_in=user_in)
-        print_obj_attributes(user)
+        print(user)
+        # print_obj_attributes(user)
 
 
 def follow_create(db):
     for i in demo_date.demo_follows:
         user = crud.user.follow(
-            db, from_user_id=i["from_user"], follow_user_id=i["to_user"]
+            db, from_user_id=i["from_id"], follow_user_id=i["to_id"]
         )
-        for i in user.following:
-            print(i.name)
+        # for i in user.following:
+        #     print(i.name)
+        print(user)
 
 
 def item_create(db):
@@ -36,7 +38,8 @@ def item_create(db):
             name=i["name"], image=i["image"], detail=i["detail"], price=i["price"]
         )
         item = crud.item.create(db, obj_in=item_in)
-        print_obj_attributes(item)
+        print(item)
+        # print_obj_attributes(item)
 
 
 def address_create(db):
@@ -49,26 +52,25 @@ def address_create(db):
             address=i["address"]
         )
         address = crud.address.create(db, obj_in=address_in)
-        print_obj_attributes(address)
+        print(address)
+        # print_obj_attributes(address)
 
 
 def task_create(db):
-    item_id_list_in = []
-    for i in demo_date.demo_tasks_items:
-        item_id_list_in.append(i["item_id"])
-    for i in demo_date.demo_tasks:
+    for i in range(len(demo_date.demo_tasks)):
         task_in = TaskCreate(
-            set_id=i["from_user"],
-            do_id=i["to_user"],
-            address_id=i["addresses_id"],
-            title=i["title"],
-            deadline=i["deadline"],
-            back_money=i["back_money"],
-            status=i["status"],
-            item_id_list=item_id_list_in
+            set_id=demo_date.demo_tasks[i]["set_id"],
+            do_id=demo_date.demo_tasks[i]["do_id"],
+            address_id=demo_date.demo_tasks[i]["addresses_id"],
+            title=demo_date.demo_tasks[i]["title"],
+            deadline=demo_date.demo_tasks[i]["deadline"],
+            back_money=demo_date.demo_tasks[i]["back_money"],
+            status=demo_date.demo_tasks[i]["status"],
+            item_id_list=[demo_date.demo_tasks_items[i]["item_id"]]
         )
         task = crud.task.create(db, obj_in=task_in)
-        print_obj_attributes(task)
+        print(task)
+        # print_obj_attributes(task)
 
 
 def subtask_create(db):
@@ -80,7 +82,8 @@ def subtask_create(db):
             status=i["status"]
         )
         subtask = crud.subtask.create(db, obj_in=subtask_in)
-        print_obj_attributes(subtask)
+        print(subtask)
+        # print_obj_attributes(subtask)
 
 
 def transaction_create(db):
@@ -91,9 +94,10 @@ def transaction_create(db):
             user_id=i["user_id"]
         )
         transaction = crud.transaction.create(db, obj_in=obj_in)
-        print_obj_attributes(transaction)
-        balance = crud.transaction.get_balance(db, i["user_id"])
-        print(balance)
+        print(transaction)
+        # print_obj_attributes(transaction)
+        # balance = crud.transaction.get_balance(db, i["user_id"])
+        # print(balance)
 
 
 def favourite_create(db):
@@ -126,9 +130,10 @@ if __name__ == "__main__":
     session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     db: Session = session()
+    insert_demo_data_all(db)
 
-    a = crud.user.get_like_name(db, name="k")
-    a = 0
+    # a = crud.user.get_like_name(db, name="k")
+    # a = 0
     # b = crud.item.get(db, 1)
     # print_obj_attributes(b)
 
@@ -151,7 +156,6 @@ if __name__ == "__main__":
 
     # a = crud.transaction.create(db, obj_in=obj_in)
     # print(crud.transaction.get_balance(db, 1))
-    # insert_demo_data_all(db)
     # task_create(db)
 
     # task = crud.task.get(db, 1)
