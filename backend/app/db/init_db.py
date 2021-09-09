@@ -10,6 +10,7 @@ from app.db import base
 from app.schemas.user import UserCreate
 from app.core import config
 from app import crud
+from app.db.db_curd_test import insert_demo_data_all
 
 
 def model_exists(model_class):
@@ -33,5 +34,8 @@ def init_db(db_session):
             password=config.FIRST_USER_PASSWORD
         )  # yapf: disable
         user = crud.user.create(db_session, obj_in=user_in)
-        db_session.close()
         print("create first user end")
+
+    if config.INSERT_DEMO_DATA == "True":
+        insert_demo_data_all(db_session)
+    db_session.close()

@@ -6,13 +6,14 @@ from starlette.responses import Response
 from app.api.api_v1.api import api_router
 from app.core import config
 from app.db.session import session
-from app.core.jwt import validate_token, reusable_oauth2
+from app.core.jwt import check_token, validate_token
 
 app = FastAPI(
     title=config.PROJECT_NAME, openapi_url=config.API_ROOT_PATH + "/openapi.json"
 )
 
 origins = [
+    "*",
     "http://localhost",
     "null",
     "http://localhost:3000",
@@ -37,17 +38,37 @@ app.include_router(api_router, prefix=config.API_ROOT_PATH)
 async def token_validate_middleware(request: Request, call_next):
 
     allow_no_authenticate = [
+        "/docs",
+        "/service-worker.js",
+        config.API_ROOT_PATH + "/utils/",
         config.API_ROOT_PATH + "/login/access-token",
         config.API_ROOT_PATH + '/users/create-user',
-        "/docs",
-        "/api/v1/openapi.json",
-        "/service-worker.js"
+        config.API_ROOT_PATH + "/openapi.json",
+        config.API_ROOT_PATH + "/items/get-items",
+        config.API_ROOT_PATH + "/login/token",
+
+        config.API_ROOT_PATH + "/users/get-users-by-name",
+        config.API_ROOT_PATH + "/users/get-users",
+        config.API_ROOT_PATH + "/tasks/get-subtasks",
     ]  # yapf: disable
 
+    print("Access from", request.url.path)
+    # validate_flag = False
+    # for i in allow_no_authenticate:
+    #     if request.url.path in i:
+    #         validate_flag = False
+    #         break
+
     if request.url.path not in allow_no_authenticate:
-        print("validate token..........")
-        token = await reusable_oauth2(request)
+        print("Validate token..........")
+        token = check_token(request)
+        if not token:
+            return Response("Without Access Token", status_code=402)
+
         current_user = validate_token(request.state.db, token)
+        if not current_user:
+            return Response("Could not validate credentials", status_code=403)
+
         request.state.user = current_user
         print("Correct token! ")
 
@@ -60,12 +81,12 @@ async def db_session_middleware(request: Request, call_next):
     response: Response = Response("Internal server error", status_code=500)
     try:
         request.state.db = session()
-        print("get DB session")
+        print("Get DB session")
         response = await call_next(request)
 
     finally:
         request.state.db.close()
-        print("close DB session")
+        print("Close DB session")
     return response
 
 
