@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../components/Navbars/Navbar";
+import Navbar from "../Navbars/Navbar";
 
-const Auth = ({ children }) => {
+const BaseLayout = ({ children }) => {
   return (
     <div className="layout-container">
       <Navbar />
@@ -9,5 +9,4 @@ const Auth = ({ children }) => {
     </div>
   );
 };
-
-export default Auth;
+export default BaseLayout;

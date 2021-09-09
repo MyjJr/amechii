@@ -23,7 +23,7 @@ const AuthForm = () => {
         {
           method: "POST",
           body: JSON.stringify({
-            username: user.username,
+            name: user.username,
             password: user.password,
           }),
           headers: {
@@ -48,8 +48,6 @@ const AuthForm = () => {
       alert(err);
     }
   };
-  // console.log(isLogin);
-  // console.log(user);
 
   const authUser = async (e) => {
     e.preventDefault();
