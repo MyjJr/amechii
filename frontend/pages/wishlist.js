@@ -34,7 +34,9 @@ const Card = ({ item }) => {
 const wishlist = () => {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
-  if (!userInfo.wishlist.length)
+  if (!userInfo) return null;
+
+  if (!userInfo.favourites.length)
     return (
       <div className="h-full flex flex-col justify-center items-center">
         <div className="alert alert-success">
@@ -50,8 +52,8 @@ const wishlist = () => {
 
   return (
     <div className="p-5">
-      {userInfo.wishlist &&
-        userInfo.wishlist.map((item) => <Card key={item.id} item={item} />)}
+      {userInfo.favourites &&
+        userInfo.favourites.map((item) => <Card key={item.id} item={item} />)}
     </div>
   );
 };

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { UserContext } from "../../contexts/UserContext";
 import { Dialog, Transition } from "@headlessui/react";
 import ProjectModal from "../../components/modal/ProjectModal";
+import { getAllProjects } from "../../lib/projects";
 
 const DummyCard = (props) => {
   const [projectTitle, setProjectTitle] = useState("");
@@ -42,9 +43,6 @@ const DummyCard = (props) => {
         >
           <PlusIcon className="h-5 w-5" />
           <p className="p-2">New Project</p>
-          {/* <Link href={`/projects/${props.projects.length + 1}`}>
-            <a className="p-2">New Project</a>
-        </Link> */}
         </div>
       </div>
       <ProjectModal
@@ -85,14 +83,18 @@ const DummyCard = (props) => {
   );
 };
 
-const projects = ({ projects }) => {
+const projects = (props) => {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
-  useEffect(() => {
-    setUserInfo({ ...userInfo, projects: projectData });
-  }, []);
+  // useEffect(() => {
+  //   setUserInfo({ ...userInfo, projects: projectData });
+  // }, []);
 
-  console.log(userInfo.projects);
+  console.log(userInfo);
+
+  // console.log(props)
+
+  if (!userInfo) return null;
 
   return (
     <div className="layout-container">
@@ -116,10 +118,14 @@ const projects = ({ projects }) => {
 
 export default projects;
 
-export async function getStaticProps() {
-  const projects = await projectData;
-  return {
-    props: { projects },
-    revalidate: 3,
-  };
-}
+// export const getServerSideProps = async (context) => {
+//   // const { data, parsedCookies } = await getUserData(context);
+
+//   const data = await getAllProjects(context)
+
+//   return {
+//     props: {
+//       data
+//     },
+//   };
+// };

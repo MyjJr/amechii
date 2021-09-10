@@ -36,21 +36,21 @@ const Navbar = (props) => {
     });
   }, [cookies]);
 
-
   // ロゴをクリックでユーザー情報取得（仮）
-  const getUser = async ()  => {
-    const data = await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/users/get-info`,{
-      // mode: "no-cors",
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${tokenInfo.token_type} ${tokenInfo.access_token}`,
+  const getUser = async () => {
+    const data = await fetch(
+      `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/users/get-info`,
+      {
+        // mode: "no-cors",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${tokenInfo.token_type} ${tokenInfo.access_token}`,
+        },
       }
-    })
-    console.log(data)
-  }
-
-
+    );
+    console.log(data);
+  };
 
   return (
     <Disclosure as="nav" className="bg-gray-800 navbar-section my-auto">
