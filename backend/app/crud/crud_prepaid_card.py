@@ -3,6 +3,7 @@ from typing import Optional
 
 from app.crud.base import CRUDBase
 from app.models.prepaid_card import PrepaidCard
+from app.models.user import Transaction
 from app.schemas.prepaid_card import PrepaidCardCreate, PrepaidCardUpdate
 from app.schemas.transaction import TransactionCreate
 from app.crud.crud_transaction import transaction
@@ -19,7 +20,7 @@ class CardUsed(Exception):
 
 
 class CRUDPrepaidCard(CRUDBase[PrepaidCard, PrepaidCardCreate, PrepaidCardUpdate]):
-    def charge(self, db_session: Session, *, card_number: str, user_id: int) -> Optional[PrepaidCard]:
+    def charge(self, db_session: Session, *, card_number: str, user_id: int) -> Optional[Transaction]:
         prepaid_card = db_session.query(PrepaidCard).filter(PrepaidCard.number == card_number).first()
         if not prepaid_card:
             raise CardNotFound

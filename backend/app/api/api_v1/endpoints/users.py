@@ -9,7 +9,6 @@ from app.models.user import User as DBUser
 
 from app.schemas.user import User, UserCreate, UserInfo, UserInDB, Favourite  # , Following, Follow, FavouriteCreate
 from app.schemas.address import Address, AddressCreateAPI, AddressCreate, AddressUpdate
-from app.schemas.transaction import Transaction
 from app.crud.crud_prepaid_card import CardNotFound, CardUsed
 
 from app.api.utils.security import get_current_user
@@ -168,7 +167,7 @@ async def del_address(
     return address
 
 
-@router.post("/charge", response_model=Transaction)
+@router.post("/charge", response_model=User)
 async def charge(
     card_number: str = Body(..., embed=True),
     db: Session = Depends(get_db),
@@ -182,4 +181,6 @@ async def charge(
     except CardUsed:
         raise HTTPException(status_code=406, detail="Card used")
 
-    return transaction
+    db.refresh(current_user)
+    current_user.balance = transaction.net_balance
+    return current_user
