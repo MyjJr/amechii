@@ -38,9 +38,9 @@ class SubTaskCreate(BaseModel):
 
 
 class SubTaskUpdate(BaseModel):
-    title: Optional[str] = None
-    priority: Optional[str] = None
-    status: Optional[str] = None
+    title: str = None
+    priority: str = None
+    status: str = None
 
 
 class Task_itemCreate(BaseModel):

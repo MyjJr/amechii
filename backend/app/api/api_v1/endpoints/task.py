@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Depends  # , HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 
-from app.schemas.task import TaskRes, SubTask, SetTaskRes, SubTaskCreate  # , SubTaskUpdate  # , TaskCreate
+from app.schemas.task import TaskRes, SubTask, SetTaskRes, SubTaskCreate, SubTaskUpdate  # , TaskCreate
 from app.models.user import User as DBUser
 from app.api.utils.db import get_db
 from app.api.utils.security import get_current_user
@@ -61,21 +61,35 @@ async def create_subtask(
     return subtask
 
 
-# @router.post("/update-subtask", response_model=SubTask)
-# async def update_subtask(
-#     *,
-#     db: Session = Depends(get_db),
-#     subtask_id: int,
-#     subtask_in: SubTaskUpdate,
-#     current_user: DBUser = Depends(get_current_user)
-# ):
-#     subtask_obj = crud.subtask.get(db, subtask_id)
-#     if not subtask_obj:
-#         return HTTPException(
-#             status_code=402,
-#             detail="Subtask not found",
-#             headers={"WWW-Authenticate": "Bearer"},
-#         )
-#     subtask = crud.subtask.update(db, db_obj=subtask_obj, obj_in=subtask_in)
+@router.put("/update-subtask", response_model=SubTask)
+async def update_subtask(
+    *,
+    db: Session = Depends(get_db),
+    subtask_id: int,
+    subtask_in: SubTaskUpdate,
+    current_user: DBUser = Depends(get_current_user)
+):
+    subtask_obj = crud.subtask.get(db, subtask_id)
+    if not subtask_obj:
+        raise HTTPException(
+            status_code=404,
+            detail="Subtask not found",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    subtask = crud.subtask.update(db, db_obj=subtask_obj, obj_in=subtask_in)
 
-#     return subtask
+    return subtask
+
+
+@router.delete("/del-subtask", response_model=SubTask)
+async def del_address(
+    subtask_id: int,
+    db: Session = Depends(get_db),
+    current_user: DBUser = Depends(get_current_user),
+):
+    subtask = crud.subtask.get(db, subtask_id)
+    if not subtask:
+        raise HTTPException(status_code=404, detail="Subtask not found")
+
+    subtask = crud.subtask.remove(db, id=subtask_id)
+    return subtask
