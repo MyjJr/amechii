@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, Body
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Union
 
-from app.schemas.task import TaskRes, SubTask, SetTaskRes, SubTaskCreate, SubTaskUpdate, TaskCreate, TaskUpdate
+from app.schemas.task import AllTask, TaskRes, SubTask, SetTaskRes, SubTaskCreate, SubTaskUpdate, TaskCreate, TaskUpdate
 from app.schemas.transaction import TransactionCreate
 
 from app.models.user import User as DBUser
@@ -12,23 +13,41 @@ from app import crud
 router = APIRouter()
 
 
-@router.get("/get-mytasks", response_model=List[TaskRes])
+@router.get("/get-allproject", response_model=AllTask)
 async def get_mytasks(
     *,
     db: Session = Depends(get_db),
     current_user: DBUser = Depends(get_current_user),
 ):
-    task_list = crud.task.get_by_do_id(db, do_id=current_user.id)
-    return task_list
+    db.refresh(current_user)
+    all_task = AllTask(do_tasks=current_user.do_tasks, set_tasks=current_user.set_tasks)
+    return all_task
 
 
-@router.get("/get-theirtasks", response_model=List[SetTaskRes])
-async def get_theirtasks(
+@router.get("/get-project", response_model=SetTaskRes)
+async def get_subtasks(
+    *,
+    project_id: int,
     db: Session = Depends(get_db),
-    current_user: DBUser = Depends(get_current_user),
+    current_user: DBUser = Depends(get_current_user)
 ):
-    task_list = crud.task.get_by_set_id(db, set_id=current_user.id)
-    return task_list
+    task = crud.task.get(db, project_id)
+    if not task:
+        raise HTTPException(status_code=404, detail="Project not Found")
+
+    if task.do_id != current_user.id and task.set_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Forbidden")
+
+    return task
+
+
+# @router.get("/get-theirtasks", response_model=List[SetTaskRes])
+# async def get_theirtasks(
+#     db: Session = Depends(get_db),
+#     current_user: DBUser = Depends(get_current_user),
+# ):
+#     task_list = crud.task.get_by_set_id(db, set_id=current_user.id)
+#     return task_list
 
 
 @router.post("/create-new-project", response_model=TaskRes)
@@ -66,10 +85,7 @@ async def start_project(
         crud.subtask.create(db, obj_in=i)
 
     if price > 0:
-        transaction_in = TransactionCreate(
-            user_id=current_user.id,
-            amount=-price
-        )
+        transaction_in = TransactionCreate(user_id=current_user.id, amount=-price)
 
         crud.transaction.create(db, obj_in=transaction_in)
 
@@ -116,12 +132,6 @@ async def delete_project(
 #     task = crud.task.create(db, obj_in=task_post)
 
 #     return task
-
-
-@router.get("/get-subtasks", response_model=List[SubTask])
-async def get_subtasks(*, db: Session = Depends(get_db), task_id: int):
-    subtask_list = crud.subtask.get_by_task_id(db, task_id=task_id)
-    return subtask_list
 
 
 @router.post("/create-subtask", response_model=SubTask)

@@ -95,5 +95,10 @@ class SetTaskRes(TaskRes):
         orm_mode = True
 
 
+class AllTask(BaseModel):
+    do_tasks: List[TaskRes] = []
+    set_tasks: List[SetTaskRes] = []
+
+
 class FinishTask(BaseModel):
     end_time: datetime
