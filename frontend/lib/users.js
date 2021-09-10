@@ -15,7 +15,6 @@ export const getUserData = async (context) => {
     {
       method: "GET",
       headers: {
-        // 'User-Agent': '*',
         accept: "application/json",
         Authorization: `${parsedCookies.token_type} ${parsedCookies.access_token}`,
       },
@@ -33,18 +32,52 @@ export const getUsers = async (context) => {
       },
     };
   }
-  const parsedCookies = cookie.parse(context.req.headers.cookie);
-
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/users/get-users?name=f`,
     {
       method: "GET",
       headers: {
         accept: "application/json",
-        // Authorization: `${parsedCookies.token_type} ${parsedCookies.access_token}`,
       },
     }
   );
   const data = await res.json();
   return data;
 };
+
+
+export const followUser = async ({cookies, id}) => {
+  try {
+    await fetch(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}api/v1/users/follow-user?id=${id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+          Authorization: `${cookies.token_type} ${cookies.access_token}`
+        },
+      }
+    ) 
+  } catch (err) {
+    alert(err);
+  }
+}
+
+export const unfollowUser = async ({cookies, id}) => {
+  try {
+    await fetch(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}api/v1/users/unfollow-user?id=${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+          Authorization: `${cookies.token_type} ${cookies.access_token}`
+        },
+      }
+    ) 
+  } catch (err) {
+    alert(err);
+  }
+}
