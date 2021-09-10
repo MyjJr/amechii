@@ -1,10 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from typing import List
 
 from app import crud
+from app.models.user import User as DBUser
+
 from app.schemas.user import User, UserCreate, UserInfo, UserInDB, Favourite  # , Following, Follow, FavouriteCreate
-from app.models.user import User as DBUser  # , user_following
+from app.schemas.address import Address, AddressCreateAPI, AddressCreate, AddressUpdate
+
 from app.api.utils.security import get_current_user
 from app.api.utils.db import get_db
 
@@ -118,3 +122,44 @@ async def del_fav(
     crud.favourite.del_favourite(db, user_id=current_user.id, item=item_id)
     fav_list = crud.favourite.get_favourites(db, user_id=current_user.id)
     return fav_list
+
+
+@router.post("/add-address", response_model=Address)
+async def add_address(
+    address: AddressCreateAPI,
+    db: Session = Depends(get_db),
+    current_user: DBUser = Depends(get_current_user),
+):
+    address_data = jsonable_encoder(address)
+    address_in = AddressCreate(user_id=current_user.id, **address_data)
+    res = crud.address.create(db, obj_in=address_in)
+    return res
+
+
+@router.put("/update-address", response_model=Address)
+async def update_address(
+    address_id: int,
+    address_in: AddressUpdate,
+    db: Session = Depends(get_db),
+    current_user: DBUser = Depends(get_current_user),
+):
+    address = crud.address.get(db, address_id)
+    if not address:
+        raise HTTPException(status_code=404, detail="Address not found")
+
+    address = crud.address.update(db, db_obj=address, obj_in=address_in)
+    return address
+
+
+@router.delete("/del-address", response_model=Address)
+async def del_address(
+    address_id: int,
+    db: Session = Depends(get_db),
+    current_user: DBUser = Depends(get_current_user),
+):
+    address = crud.address.get(db, address_id)
+    if not address:
+        raise HTTPException(status_code=404, detail="Address not found")
+
+    address = crud.address.remove(db, id=address_id)
+    return address

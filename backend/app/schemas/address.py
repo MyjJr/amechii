@@ -2,15 +2,15 @@ from pydantic import BaseModel
 from typing import Optional
 
 
-class Address(BaseModel):
-    user_id: int
+class AddressBase(BaseModel):
     name: str
     phone_number: str
     zipcode: str
     address: str
 
-    class Config:
-        orm_mode = True
+
+class AddressCreate(AddressBase):
+    user_id: int
 
 
 class AddressUpdate(BaseModel):
@@ -20,7 +20,12 @@ class AddressUpdate(BaseModel):
     address: Optional[str] = None
 
 
-class AddressCreate(Address):
+class Address(AddressCreate):
+    id: int
 
     class Config:
         orm_mode = True
+
+
+class AddressCreateAPI(AddressBase):
+    pass
