@@ -16,7 +16,7 @@ export const getAllProducts = async () => {
 
 export const addFavoriteList = async ({cookies, id}) => {
   try {
-    await fetch(
+    const res = await fetch(
       `${process.env.NEXT_PUBLIC_CLIENT_URL}api/v1/users/add-fav?item_id=${id}`,
       {
         method: "POST",
@@ -26,8 +26,33 @@ export const addFavoriteList = async ({cookies, id}) => {
           Authorization: `${cookies.token_type} ${cookies.access_token}`
         },
       }
-    )
+    ) 
+    // const data = res.json()
+    // console.log(res.body)
+    // return data
   } catch (err) {
     alert(err);
   }
 }
+
+export const deleteFavoriteList = async ({cookies, id}) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}api/v1/users/del-fav?item_id=${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+          Authorization: `${cookies.token_type} ${cookies.access_token}`
+        },
+      }
+    ) 
+    // const data = res.json()
+    // console.log(res.body)
+    // return data
+  } catch (err) {
+    alert(err);
+  }
+}
+

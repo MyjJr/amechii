@@ -4,7 +4,7 @@ import React, {useState, useEffect, useContext} from "react";
 import BaseLayout from "../components/layouts/BaseLayout";
 import Navbar from "../components/Navbars/Navbar";
 import { productsData } from "../data/productsData";
-import { addFavoriteList, getAllProducts } from "../lib/products";
+import { addFavoriteList, deleteFavoriteList, getAllProducts } from "../lib/products";
 import Image from "next/image";
 import Cookies from "universal-cookie";
 import { UserContext } from "../contexts/UserContext";
@@ -16,7 +16,7 @@ const Products = (props) => {
     const favItemIds = favorite.map((data) => data.items.id)
     const isFav = favItemIds.includes(id)
     if (isFav)
-      return <HeartIcon className="h-7 w-7 text-red-500 cursor-pointer" />;
+      return <HeartIcon className="h-7 w-7 text-red-500 cursor-pointer" onClick={() => deleteFavoriteList({cookies: tokenInfo, id})}/>;
     return <HeartIcon className="h-7 w-7 text-gray-200 cursor-pointer" onClick={() => addFavoriteList({cookies: tokenInfo, id})} />;
   };
 
@@ -35,6 +35,11 @@ const Products = (props) => {
       token_type: cookies.get("token_type"),
     });
   }, []);
+
+  // useEffect(() => {
+  //   setUserInfo(userInfo)
+  // }, [userInfo.favourites]);
+
 
 
   return (
