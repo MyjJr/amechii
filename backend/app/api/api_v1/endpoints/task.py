@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Body
-from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
-from typing import List, Union
+from typing import List
 
 from app.schemas.task import AllTask, TaskRes, SubTask, SetTaskRes, SubTaskCreate, SubTaskUpdate, TaskCreate, TaskUpdate
 from app.schemas.transaction import TransactionCreate
