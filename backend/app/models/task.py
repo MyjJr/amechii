@@ -32,13 +32,13 @@ class Task(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     set_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     do_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    address_id = Column(Integer, ForeignKey("addresses.id"), nullable=False)
+    address_id = Column(Integer, ForeignKey("addresses.id"), nullable=True)
     title = Column(String(256), index=True, nullable=False)
-    deadline = Column(DateTime, nullable=False)
+    deadline = Column(DateTime, nullable=True)
     create_datetime = Column(DateTime, default=datetime.datetime.now)
     end_datetime = Column(DateTime, nullable=True)
     back_money = Column(Boolean, default=True)
-    status = Column(Enum(StatusType), nullable=False)
+    status = Column(Enum(StatusType), nullable=True)
 
     subtasks = relationship("SubTask", back_populates="tasks")
 
