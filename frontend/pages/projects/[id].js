@@ -28,34 +28,32 @@ const Project = (props) => {
   const { id } = router.query;
 
   const [data, setData] = useState();
+  
 
   const [tasks, setTasks] = useState();
+
+  const [projectData, setProjectData] = useState()
 
   const { userInfo, setUserInfo } = useContext(UserContext);
 
   const [isOpen, setIsOpen] = useState(false);
 
-  return <ProjectCreateForm />;
+  // return <ProjectCreateForm />;
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
 
-  console.log(props.data);
-
-  // useEffect(() => {
-  //   setUserInfo({...userInfo, projects: userInfo.projects.map((item) => item.id === id ? project : item)})
-  // }, [])
 
   useEffect(() => {
-    // const p_data = userInfo.projects.filter((data) => data.id === Number(id));
-    // setData(p_data[0]);
-    setTasks(props.data);
-    // setData(props.data)
+    setProjectData(props.data);
   }, []);
 
-  if (!tasks) return <ProjectCreateForm />;
+  console.log(projectData)
 
-  // const product = data.products[0];
+
+
+  if (!projectData) return <ProjectCreateForm />;
+
 
   return (
     <div className="layout-container">
@@ -68,9 +66,9 @@ const Project = (props) => {
             style={{ height: "90%", width: "90%" }}
           >
             <div className="flex flex-col lg:flex-row items-center justify-center h-full w-full lg:p-3">
-              {/* <ProductsSection tasks={tasks} product={product} /> */}
+              <ProductsSection projectData={projectData} />
               <div className="rounded h-full flex flex-col justify-center items-center lg:w-7/12">
-                <TasksSection tasks={tasks} setTasks={setTasks} />
+                <TasksSection projectData={projectData} setProjectData={setProjectData} userInfo={userInfo} />
                 <div className="flex justify-end items-center border-gray-300 w-full lg:h-1/6 ">
                   <button
                     onClick={handleOpen}
@@ -94,7 +92,8 @@ export default Project;
 
 export const getServerSideProps = async (context) => {
   const { id } = context.query;
-  const data = await getProductTasks({ id: Number(id) });
+  const data = await getProductTasks({ id: Number(id), context });
+  console.log(data)
   return {
     props: {
       data,

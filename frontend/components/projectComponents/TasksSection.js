@@ -1,47 +1,60 @@
 import React, { useState } from "react";
 import { PlusIcon, TrashIcon } from "@heroicons/react/outline";
+import { createTask, deleteTask, updateTaskStatus } from "lib/projects";
 
 const TasksSection = (props) => {
-  const { tasks, setTasks } = props;
+  const { projectData, setProjectData, userInfo } = props;
+
+  const [tasks, setTasks] = useState(projectData.subtasks)
 
   const [inputValue, setInputValue] = useState("");
 
-  // const handleIsDone = (id) => {
-  //   const updateTasks = data.tasks.map((item) =>
-  //     item.id === id ? { ...item, isCompleted: !item.isCompleted } : item
-  //   );
-  //   setData({
-  //     ...data,
-  //     tasks: updateTasks,
-  //   });
-  // };
 
-  // const handleDelete = (id) => {
-  //   const deletedTasks = data.tasks.filter((item) => item.id !== id);
-  //   setData({
-  //     ...data,
-  //     tasks: deletedTasks,
-  //   });
-  // };
+  const changeStatusFormat = (status) => {
+    if(status) return "success"
+    return "not_complete"
+  }
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const newTask = {
-  //     id: data.tasks.length + 1,
-  //     name: inputValue,
-  //     isCompleted: false,
-  //   };
-  //   setData({
-  //     ...data,
-  //     tasks: [...data.tasks, newTask],
-  //   });
-  //   setInputValue("");
-  // };
+  const checkTaskStatus = (status) => {
+    switch (status) {
+      case "not_complete":
+        return false
+      case "success":
+        return true
+      default:
+        console.error("正当なstatusではありません");
+    }
+  }
+
+  const handleIsDone = async ({id, status}) => {
+    const updateTasks = tasks.map((item) =>
+      item.id === id ? { ...item, status: changeStatusFormat(!checkTaskStatus(item.status)) } : item
+    );
+    setTasks(updateTasks)
+    updateTaskStatus({ cookies: userInfo, id, status: changeStatusFormat(!checkTaskStatus(status))})
+    // console.log(res)
+  };
+
+  console.log(projectData.id)
+  // console.log()
+
+  const handleDelete = (id) => {
+    const deletedTasks = tasks.filter((item) => item.id !== id);
+    setTasks(deletedTasks)
+    deleteTask({ cookies: userInfo, id})
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newTask = await createTask({cookies: userInfo, title: inputValue, projectId: projectData.id})
+    setTasks([...tasks, newTask])
+    setInputValue("");
+  };
 
   return (
     <div className="border-2 border-gray-200 w-full lg:h-5/6 relative">
       <div className="lg:h-1/5 border-2 border-gray-200 flex justify-center items-center">
-        <h1>プロジェクト</h1>
+        <h1>{projectData.title}</h1>
       </div>
       <div className="lg:h-4/5 flex justify-center items-start relative">
         <ul className="lg:w-7/12 lg:h-5/6 overflow-y-scroll p-2 no-scrollbar">
@@ -54,8 +67,8 @@ const TasksSection = (props) => {
                 <input
                   type="checkbox"
                   className="checkbox checkbox-xs"
-                  checked={item.isCompleted}
-                  onChange={() => handleIsDone(item.id)}
+                  checked={checkTaskStatus(item.status)}
+                  onChange={() => handleIsDone({id: item.id, status: item.status})}
                 />
                 <input
                   type="text"
@@ -69,13 +82,13 @@ const TasksSection = (props) => {
                 />
                 <TrashIcon
                   className="h-4 w-4 text-red-600 cursor-pointer"
-                  // onClick={() => handleDelete(item.id)}
+                  onClick={() => handleDelete(item.id)}
                 />
               </li>
             ))}
         </ul>
         <form
-          // onSubmit={(e) => handleSubmit(e)}
+          onSubmit={(e) => handleSubmit(e)}
           className="lg:w-7/12 flex justify-evenly items-center border-b border-gray-100 lg:mx-30 absolute bottom-1"
         >
           <input
@@ -83,7 +96,7 @@ const TasksSection = (props) => {
             className="input border-none text-center w-10/12"
             value={inputValue}
             placeholder="タスクを入力してください"
-            // onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => setInputValue(e.target.value)}
           />
         </form>
       </div>
