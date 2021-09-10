@@ -8,6 +8,7 @@ export const productsData = [
       "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg",
     imageAlt:
       "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
+    favorite: true,
   },
   {
     id: 2,
@@ -18,7 +19,9 @@ export const productsData = [
       "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg",
     imageAlt:
       "Olive drab green insulated bottle with flared screw lid and flat top.",
+    favorite: false,
   },
+
   {
     id: 3,
     name: "Focus Paper Refill",
@@ -28,6 +31,7 @@ export const productsData = [
       "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg",
     imageAlt:
       "Person using a pen to cross a task off a productivity paper card.",
+    favorite: true,
   },
   {
     id: 4,
@@ -38,6 +42,7 @@ export const productsData = [
       "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg",
     imageAlt:
       "Hand holding black machined steel mechanical pencil with brass tip and top.",
+    favorite: true,
   },
   {
     id: 5,
@@ -48,6 +53,7 @@ export const productsData = [
       "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg",
     imageAlt:
       "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
+    favorite: false,
   },
   {
     id: 6,
@@ -58,6 +64,7 @@ export const productsData = [
       "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg",
     imageAlt:
       "Olive drab green insulated bottle with flared screw lid and flat top.",
+    favorite: false,
   },
   {
     id: 7,
@@ -68,6 +75,7 @@ export const productsData = [
       "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg",
     imageAlt:
       "Person using a pen to cross a task off a productivity paper card.",
+    favorite: false,
   },
   {
     id: 8,
@@ -78,6 +86,7 @@ export const productsData = [
       "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg",
     imageAlt:
       "Hand holding black machined steel mechanical pencil with brass tip and top.",
+    favorite: true,
   },
   {
     id: 9,
@@ -88,6 +97,7 @@ export const productsData = [
       "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg",
     imageAlt:
       "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
+    favorite: false,
   },
   {
     id: 10,
@@ -98,6 +108,7 @@ export const productsData = [
       "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg",
     imageAlt:
       "Olive drab green insulated bottle with flared screw lid and flat top.",
+    favorite: true,
   },
   {
     id: 11,
@@ -108,6 +119,7 @@ export const productsData = [
       "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg",
     imageAlt:
       "Person using a pen to cross a task off a productivity paper card.",
+    favorite: false,
   },
   {
     id: 12,
@@ -118,5 +130,6 @@ export const productsData = [
       "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg",
     imageAlt:
       "Hand holding black machined steel mechanical pencil with brass tip and top.",
+    favorite: false,
   },
 ];

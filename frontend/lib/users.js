@@ -25,7 +25,6 @@ export const getUserData = async (context) => {
   return data;
 };
 
-
 export const getUsers = async (context) => {
   if (!context.req.headers.cookie) {
     return {

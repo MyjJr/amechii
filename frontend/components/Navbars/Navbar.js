@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   BellIcon,
@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { nav_menu } from "../../data/navItem";
 import Cookies from "universal-cookie";
 import { AuthMenu, UserMenu } from "./NavItem";
+import { UserContext } from "../../contexts/UserContext";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -22,7 +23,9 @@ const cookies = new Cookies();
 const Navbar = (props) => {
   const router = useRouter();
 
-  // console.log(props)
+  const { userInfo, setUserInfo } = useContext(UserContext);
+
+  console.log(userInfo);
 
   const [tokenInfo, setTokenInfo] = useState({
     access_token: "",
@@ -35,22 +38,6 @@ const Navbar = (props) => {
       token_type: cookies.get("token_type"),
     });
   }, [cookies]);
-
-  // ロゴをクリックでユーザー情報取得（仮）
-  const getUser = async () => {
-    const data = await fetch(
-      `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/users/get-info`,
-      {
-        // mode: "no-cors",
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${tokenInfo.token_type} ${tokenInfo.access_token}`,
-        },
-      }
-    );
-    console.log(data);
-  };
 
   return (
     <Disclosure as="nav" className="bg-gray-800 navbar-section my-auto">
@@ -75,7 +62,6 @@ const Navbar = (props) => {
                     className="block lg:hidden h-8 w-auto"
                     src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                     alt="Workflow"
-                    onClick={() => getUser()}
                   />
                   <img
                     className="hidden lg:block h-8 w-auto"
@@ -108,7 +94,7 @@ const Navbar = (props) => {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {tokenInfo.access_token ? (
-                  <UserMenu cookies={cookies} />
+                  <UserMenu cookies={cookies} userInfo={userInfo} />
                 ) : (
                   <AuthMenu />
                 )}
