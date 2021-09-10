@@ -21,6 +21,7 @@ class PriorityType(str, enum.Enum):
 
 
 class StatusType(str, enum.Enum):
+    not_started = "not_started"
     not_complete = "not_complete"
     success = "success"
     faild = "faild"

@@ -23,7 +23,7 @@ class TaskCreate(TaskBase):
     set_id: int
     do_id: Optional[int] = None
     item_id_list: List[int] = []
-    status: str = "not_complete"
+    status: str = "not_started"
 
 
 class TaskUpdate(TaskBase):
