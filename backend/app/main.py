@@ -13,23 +13,14 @@ app = FastAPI(
 )
 
 origins = [
-    "*",
     "http://localhost",
+    "http://127.0.0.1",
     "null",
     "http://localhost:3000",
     "http://127.0.0.1:3000"
 ]  # yapf: disable
 
 origin_regex = "http://localhost:[0-9]+"
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_origin_regex=origin_regex,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 app.include_router(api_router, prefix=config.API_ROOT_PATH)
 
@@ -90,6 +81,16 @@ async def db_session_middleware(request: Request, call_next):
         request.state.db.close()
         print("Close DB session")
     return response
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_origin_regex=origin_regex,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 if __name__ == "__main__":
