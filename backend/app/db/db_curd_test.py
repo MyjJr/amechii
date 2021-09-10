@@ -4,6 +4,7 @@ from app.schemas.item import ItemCreate
 from app.schemas.task import TaskCreate, SubTaskCreate
 from app.schemas.address import AddressCreate
 from app.schemas.transaction import TransactionCreate
+from app.schemas.prepaid_card import PrepaidCardCreate
 from app.utils import print_obj_attributes
 
 from app.db import demo_date
@@ -100,6 +101,13 @@ def favourite_create(db):
         crud.favourite.create(db, obj_in=i)
 
 
+def prepaid_card_create(db):
+    for i in demo_date.demo_prepaid_card:
+        prepaid_card_in = PrepaidCardCreate(number=i, price=10000)
+        prepaid_card = crud.prepaid_card.create(db, obj_in=prepaid_card_in)
+        print(prepaid_card)
+
+
 def insert_demo_data_all(db):
 
     user_create(db)
@@ -110,6 +118,7 @@ def insert_demo_data_all(db):
     subtask_create(db)
     transaction_create(db)
     favourite_create(db)
+    prepaid_card_create(db)
 
 
 if __name__ == "__main__":
@@ -129,10 +138,12 @@ if __name__ == "__main__":
     user = crud.user.get(db, 1)
     print_obj_attributes(user)
 
-    task_in = TaskCreate(set_id=1)
-    a = crud.task.create(db, obj_in=task_in)
-    print(a)
+    crud.prepaid_card.charge(db, card_number="9068839573703133", user_id=1)
+    # task_in = TaskCreate(set_id=1)
+    # a = crud.task.create(db, obj_in=task_in)
+    # print(a)
 
+    # prepaid_card_create(db)
     # from app.schemas.task import SubTaskUpdate
     # subtask_in = SubTaskUpdate(
     #     priority="1",
