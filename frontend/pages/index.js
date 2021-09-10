@@ -7,20 +7,18 @@ import { getUserData } from "../lib/users";
 import { UserContext } from "../contexts/UserContext";
 import Cookies from "universal-cookie";
 
-
 export default function Home(props) {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
   const cookies = new Cookies();
 
-
   useEffect(() => {
     if (props.data) {
       setUserInfo({
-        ...props.data,  
+        ...props.data,
         access_token: cookies.get("access_token"),
         token_type: cookies.get("token_type"),
-    });
+      });
     }
   }, []);
 

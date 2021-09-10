@@ -6,11 +6,8 @@ import Cookies from "universal-cookie";
 import { AuthContext } from "../../contexts/AuthContext";
 import BaseLayout from "../../components/layouts/BaseLayout";
 
-
 const Login = () => {
-  return (
-    <AuthForm />
-  );
+  return <AuthForm />;
 };
 
 Login.layout = BaseLayout;
