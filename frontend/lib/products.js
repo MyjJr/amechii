@@ -20,7 +20,6 @@ export const addFavoriteList = async ({cookies, id}) => {
       `${process.env.NEXT_PUBLIC_CLIENT_URL}api/v1/users/add-fav?item_id=${id}`,
       {
         method: "POST",
-        // body: "",
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
