@@ -42,8 +42,6 @@ export const UserMenu = (props) => {
     { name: "欲しいもの", href: "/wishlist" },
   ];
 
-  console.log(props.userInfo.icon);
-
   // const iconURL = `http://amechii.jp/image/icon/${props.userInfo.icon}` ? `http://amechii.jp/image/icon/${props.userInfo.icon}` : "http://amechii.jp/image/icon/default.png"
 
   return (

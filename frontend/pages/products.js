@@ -16,31 +16,12 @@ const Products = (props) => {
     const favItemIds = favorite.map((data) => data.items.id)
     const isFav = favItemIds.includes(id)
     if (isFav)
-      return <HeartIcon className="h-7 w-7 text-red-500 cursor-pointer" onClick={() => deleteFavoriteList({cookies: tokenInfo, id})}/>;
-    return <HeartIcon className="h-7 w-7 text-gray-200 cursor-pointer" onClick={() => addFavoriteList({cookies: tokenInfo, id})} />;
+      return <HeartIcon className="h-7 w-7 text-red-500 cursor-pointer" onClick={() => deleteFavoriteList({cookies: userInfo, id})}/>;
+    return <HeartIcon className="h-7 w-7 text-gray-200 cursor-pointer" onClick={() => addFavoriteList({cookies: userInfo, id})} />;
   };
 
-  const cookies = new Cookies();
 
   const { userInfo, setUserInfo } = useContext(UserContext);
-
-  const [tokenInfo, setTokenInfo] = useState({
-    access_token: "",
-    token_type: "",
-  });
-
-  useEffect(() => {
-    setTokenInfo({
-      access_token: cookies.get("access_token"),
-      token_type: cookies.get("token_type"),
-    });
-  }, []);
-
-  // useEffect(() => {
-  //   setUserInfo(userInfo)
-  // }, [userInfo.favourites]);
-
-
 
   return (
     <div className="max-w-2xl mx-auto py-6 px-4 sm:py-20 sm:px-6 lg:max-w-7xl lg:px-8">

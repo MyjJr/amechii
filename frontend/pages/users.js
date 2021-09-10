@@ -1,8 +1,10 @@
 import { SearchCircleIcon, SearchIcon } from "@heroicons/react/outline";
+import { UserContext } from "contexts/UserContext";
 import React, { useState, useEffect } from "react";
+import { useContext } from "react/cjs/react.development";
 import BaseLayout from "../components/layouts/BaseLayout";
-import { getUsers } from "../lib/users";
-
+import { followUser, getUsers, unfollowUser } from "../lib/users";
+import Cookies from "universal-cookie";
 
 
 const SearchBox = ({users, setUsers, inputValue, setInputValue}) => {
@@ -39,20 +41,13 @@ const SearchBox = ({users, setUsers, inputValue, setInputValue}) => {
   );
 };
 
-
 const Users = () => {
+  const { userInfo, setUserInfo } = useContext(UserContext);
   const [users, setUsers] = useState([]);
-
   const [inputValue, setInputValue] = useState('')
-  
-  const temp = {
-    display_name: "hogehoge",
-    icon: "default.png",
-    id: 2,
-    name: "hogehoge",
-  };
 
-
+  const followingUserIds = userInfo.following.map((data) => data.id)
+    
   const Alert = () => {
     return (
       <div class="alert alert-warning">
@@ -71,7 +66,7 @@ const Users = () => {
       <SearchBox users={users} setUsers={setUsers} inputValue={inputValue} setInputValue={setInputValue} />
       <div
         className="lg:w-3/6 md:w-5/6 w-full bg-white rounded shadow-xl overflow-y-scroll"
-        style={{ height: "60%" }}
+        style={{ height: "70%" }}
       >
         {users.length ?
           users.map((user) => (
@@ -95,13 +90,20 @@ const Users = () => {
                   <p class="text-gray-400 text-sm">{user.name}</p>
                 </div>
               </div>
-              <button class="bg-blue-500 hover:opacity-75 text-white rounded-full px-8 py-2 cursor-pointer">
+
+              {followingUserIds.includes(user.id) ? (
+                <button onClick={() => unfollowUser({cookies: userInfo, id: user.id})} class="bg-red-500 hover:opacity-75 text-white rounded-full px-8 py-2 cursor-pointer">
+                  解除
+                </button>
+              ) : (
+                <button onClick={() => followUser({cookies: userInfo, id: user.id})} class="bg-blue-500 hover:opacity-75 text-white rounded-full px-8 py-2 cursor-pointer">
                 Follow
               </button>
+              )}              
             </div>
           )) : <Alert />}
       </div>
-      <div style={{ height: "15%" }}></div>
+      <div style={{ height: "10%" }}></div>
     </div>
   );
 };

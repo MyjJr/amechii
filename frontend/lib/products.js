@@ -27,9 +27,6 @@ export const addFavoriteList = async ({cookies, id}) => {
         },
       }
     ) 
-    // const data = res.json()
-    // console.log(res.body)
-    // return data
   } catch (err) {
     alert(err);
   }
