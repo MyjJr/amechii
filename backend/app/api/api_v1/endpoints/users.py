@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
+from fastapi.param_functions import Body
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -8,6 +9,8 @@ from app.models.user import User as DBUser
 
 from app.schemas.user import User, UserCreate, UserInfo, UserInDB, Favourite  # , Following, Follow, FavouriteCreate
 from app.schemas.address import Address, AddressCreateAPI, AddressCreate, AddressUpdate
+from app.schemas.transaction import Transaction
+from app.crud.crud_prepaid_card import CardNotFound, CardUsed
 
 from app.api.utils.security import get_current_user
 from app.api.utils.db import get_db
@@ -163,3 +166,20 @@ async def del_address(
 
     address = crud.address.remove(db, id=address_id)
     return address
+
+
+@router.post("/charge", response_model=Transaction)
+async def charge(
+    card_number: str = Body(..., embed=True),
+    db: Session = Depends(get_db),
+    current_user: DBUser = Depends(get_current_user),
+):
+    try:
+        try:
+            transaction = crud.prepaid_card.charge(db, card_number=card_number, user_id=current_user.id)
+        except CardNotFound:
+            raise HTTPException(status_code=404, detail="Card not found")
+    except CardUsed:
+        raise HTTPException(status_code=406, detail="Card used")
+
+    return transaction
