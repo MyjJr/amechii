@@ -34,7 +34,7 @@ def follow_create(db):
 def item_create(db):
     for i in demo_date.demo_items:
         item_in = ItemCreate(
-            name=i["name"], image=i["image"], detail=i["detail"], price=i["price"]
+            name=i["name"], image=i["image"], detail=i["detail"], price=i["price"], category=i["category"]
         )
         item = crud.item.create(db, obj_in=item_in)
         print(item)
