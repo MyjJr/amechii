@@ -5,26 +5,12 @@ import Link from "next/link";
 import { UserContext } from "../../contexts/UserContext";
 import { Dialog, Transition } from "@headlessui/react";
 import ProjectModal from "components/modal/ProjectModal";
+import { createProject } from "lib/projects";
 
-const DummyCard = (props) => {
+const DummyCard = ({userInfo, projects  ,setProjects}) => {
     const [projectTitle, setProjectTitle] = useState("");
-  
-    const temp = {
-      id: props.projectData.length + 1,
-      title: projectTitle,
-      status: "success",
-      imageURL: "http://placehold.it/200",
-      products: [
-        {
-          name: "",
-          price: "",
-          imageURL: "http://placehold.it/200",
-        },
-      ],
-      tasks: [],
-      memo: "",
-    };
-  
+
+    console.log(userInfo)
     const [isOpen, setIsOpen] = useState(false);
   
     const handleOpen = () => {
@@ -63,12 +49,11 @@ const DummyCard = (props) => {
             <button
               type="button"
               className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-              onClick={() => {
-                handleOpen();
-                props.setUserInfo({
-                  ...props.userInfo,
-                  projects: [...props.userInfo.projects, temp],
-                });
+              onClick={async () => {
+                const newProject = await createProject({ cookies: userInfo, title: projectTitle })
+                setProjects([...projects, newProject])                
+                setProjectTitle('')
+                handleOpen()
               }}
             >
               作成する

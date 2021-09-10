@@ -38,9 +38,9 @@ const projects = (props) => {
       <main className="main-section overflow-y-scroll bg-coolGray-500">
         <div className="cardWrapper lg:mt-8">
           <DummyCard
-            projectData={projectData}
             userInfo={userInfo}
-            setUserInfo={setUserInfo}
+            projects={projects}
+            setProjects={setProjects}
           />
           {projects &&
             projects.map((data) => <ProjectCard key={data.id} data={data} />)}

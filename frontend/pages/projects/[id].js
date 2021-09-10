@@ -25,12 +25,7 @@ const people = [
 
 const Project = (props) => {
   const router = useRouter();
-  const { id } = router.query;
-
-  const [data, setData] = useState();
-  
-
-  const [tasks, setTasks] = useState();
+  // const { id } = router.query;
 
   const [projectData, setProjectData] = useState()
 

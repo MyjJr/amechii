@@ -35,8 +35,6 @@ const TasksSection = (props) => {
     // console.log(res)
   };
 
-  console.log(projectData.id)
-  // console.log()
 
   const handleDelete = (id) => {
     const deletedTasks = tasks.filter((item) => item.id !== id);
@@ -58,7 +56,7 @@ const TasksSection = (props) => {
       </div>
       <div className="lg:h-4/5 flex justify-center items-start relative">
         <ul className="lg:w-7/12 lg:h-5/6 overflow-y-scroll p-2 no-scrollbar">
-          {tasks &&
+          {tasks.length > 0 &&
             tasks.map((item) => (
               <li
                 key={item.id}
@@ -73,7 +71,7 @@ const TasksSection = (props) => {
                 <input
                   type="text"
                   className={
-                    item.isCompleted
+                    checkTaskStatus(item.status)
                       ? "input border-none text-center w-9/12 line-through"
                       : "input border-none text-center w-9/12"
                   }

@@ -13,7 +13,7 @@ const ProjectCard = ({ data }) => {
       <figure className="p-6">
         {/* <img src={`http://amechii.jp/image/icon/${data.items[0].items.image}`} className="rounded-lg shadow-lg" /> */}
         <Image
-          src={`http://amechii.jp/image/icon/${data.items[0].items.image}`}
+          src={data.items[0] ? `http://amechii.jp/image/icon/${data.items[0].items.image}` : "https://placehold.jp/150x150.png"}
           width={170}
           height={170}
           className="rounded-lg shadow-lg"

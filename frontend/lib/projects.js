@@ -118,3 +118,28 @@ export const createTask = async ({ cookies, title, projectId }) => {
   alert(err);
 }
 }
+
+
+export const createProject = async ({ cookies, title }) => {
+  try {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_CLIENT_URL}api/v1/tasks/create-new-project`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+        Authorization: `${cookies.token_type} ${cookies.access_token}`,
+      },
+      body: JSON.stringify({
+        title
+      }),        
+    }
+  );
+  const data = await res.json();
+  return data;
+} catch (err) {
+  alert(err);
+}
+}
+
