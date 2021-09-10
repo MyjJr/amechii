@@ -16,6 +16,7 @@ class Item(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String(256), nullable=False)
+    category = Column(String(32))
     image = Column(String(256))
     price = Column(INTEGER(unsigned=True), nullable=False)
     url = Column(String(512), nullable=True)

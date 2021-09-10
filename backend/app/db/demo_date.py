@@ -903,6 +903,13 @@ demo_items = [
         "price": 7980,
         "category": "グルメ"
     },
+    {
+        "name": "A00le M0cB00k 2021",
+        "image": "noimage.png",
+        "detail": "もうすぐ発売予定あの会社のあれです！",
+        "price": 170000,
+        "category": "家電"
+    },
 ]
 
 demo_addresses = [
