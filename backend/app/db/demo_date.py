@@ -558,66 +558,350 @@ demo_items = [
         "image": "watch.jpeg",
         "detail": "クールな時計",
         "price": 20000,
+        "category": "ファッション"
     },
     {
         "name": "ゲーム",
         "image": "game.jpeg",
         "detail": "新作のゲーム",
         "price": 10000,
+        "category": "エンタメ"
     },
     {
         "name": "ぬいぐるみ",
         "image": "bear.jpeg",
         "detail": "可愛いぬいぐるみ",
         "price": 1000,
+        "category": "キッズ"
     },
     {
         "name": "タブレット",
         "image": "tablet.jpeg",
         "detail": "便利なタブレット",
         "price": 50000,
+        "category": "家電"
     },
     {
         "name": "ギター",
         "image": "guitar.jpeg",
         "detail": "人気No.1のギター",
         "price": 20000,
+        "category": "エンタメ"
     },
     {
         "name": "アイシャドウ",
         "image": "cosme.jpeg",
         "detail": "肌に優しいアイシャドウ",
         "price": 5000,
+        "category": "ファッション"
     },
     {
         "name": "指輪",
         "image": "ring.jpeg",
         "detail": "ゴールドのリング",
         "price": 10000,
+        "category": "ファッション"
     },
     {
         "name": "ワイン",
         "image": "wine.jpeg",
         "detail": "人気のワイン",
         "price": 10000,
+        "category": "グルメ"
     },
     {
         "name": "ゲーム",
         "image": "game_2.jpeg",
         "detail": "限定色のゲーム機",
         "price": 30000,
+        "category": "エンタメ"
     },
     {
         "name": "カメラ",
         "image": "camera.jpeg",
         "detail": "質の良いカメラ",
         "price": 40000,
+        "category": "家電"
     },
     {
-        "name": "サングラス",
-        "image": "glasses.jpeg",
-        "detail": "オシャレなサングラス",
-        "price": 10000,
+        "name": "ワンピース",
+        "image": "wan.jpeg",
+        "detail": "落ち着いた色味とシルエットが魅力のアイテム",
+        "price": 12500,
+        "category": "ファッション"
+    },
+    {
+        "name": "スカート",
+        "image": "skirt.jpeg",
+        "detail": "チェックが可愛く明るい印象のスカート",
+        "price": 7000,
+        "category": "ファッション"
+    },
+    {
+        "name": "ワンピース",
+        "image": "wan_2.jpeg",
+        "detail": "鮮やかな赤色が特徴的なワンピース",
+        "price": 10200,
+        "category": "ファッション"
+    },
+    {
+        "name": "時計",
+        "image": "watch_2.jpeg",
+        "detail": "高級感あふれる腕時計",
+        "price": 45000,
+        "category": "ファッション"
+    },
+    {
+        "name": "時計",
+        "image": "watch_3.jpeg",
+        "detail": "シンプルなデザインが魅力的な腕時計",
+        "price": 35000,
+        "category": "ファッション"
+    },
+    {
+        "name": "ブレスレット",
+        "image": "bracelet.jpeg",
+        "detail": "爽やかなブルーが際立つブレスレット",
+        "price": 3000,
+        "category": "ファッション"
+    },
+    {
+        "name": "ブレスレット",
+        "image": "bracelet_2.jpeg",
+        "detail": "高級感のあるゴールドが印象的なブレスレット",
+        "price": 35000,
+        "category": "ファッション"
+    },
+    {
+        "name": "ブレスレット",
+        "image": "bracelet_3.jpeg",
+        "detail": "ブドウとマスカットのような色合いが可愛らしいブレスレット",
+        "price": 35000,
+        "category": "ファッション"
+    },
+    {
+        "name": "ネックレス",
+        "image": "neck.jpeg",
+        "detail": "大振りで特徴的なデザインが魅力のネックレス",
+        "price": 18000,
+        "category": "ファッション"
+    },
+    {
+        "name": "肉",
+        "image": "meat.jpeg",
+        "detail": "国産の美味しいお肉",
+        "price": 12000,
+        "category": "グルメ"
+    },
+    {
+        "name": "ビール",
+        "image": "beer.jpeg",
+        "detail": "多くの人に愛されるロングセラー商品",
+        "price": 4000,
+        "category": "グルメ"
+    },
+    {
+        "name": "マカロン",
+        "image": "maca.jpeg",
+        "detail": "カラフルなマカロンの詰め合わせ",
+        "price": 2500,
+        "category": "グルメ"
+    },
+    {
+        "name": "ストロベリータルト",
+        "image": "strawberry.jpeg",
+        "detail": "甘い苺がたっぷり乗ったタルト",
+        "price": 4200,
+        "category": "グルメ"
+    },
+    {
+        "name": "フルーツタルト",
+        "image": "fruit.jpeg",
+        "detail": "色とりどりのフルーツが輝くフルーツタルト",
+        "price": 3800,
+        "category": "グルメ"
+    },
+    {
+        "name": "フルーツ詰め合わせ",
+        "image": "fruits.jpeg",
+        "detail": "新鮮なフルーツの詰め合わせ",
+        "price": 4500,
+        "category": "グルメ"
+    },
+    {
+        "name": "ゲーム",
+        "image": "game_3.jpeg",
+        "detail": "ポップなカラーが可愛らしいゲーム",
+        "price": 25200,
+        "category": "エンタメ"
+    },
+    {
+        "name": "カードゲーム",
+        "image": "uno.jpeg",
+        "detail": "誰でも楽しめるカードゲーム",
+        "price": 500,
+        "category": "エンタメ"
+    },
+    {
+        "name": "CD",
+        "image": "cd.jpeg",
+        "detail": "セット価格でお得になったCD",
+        "price": 15200,
+        "category": "エンタメ"
+    },
+    {
+        "name": "ルービックキューブ",
+        "image": "cube.jpeg",
+        "detail": "なめらかな動きで使いやすいルービックキューブ",
+        "price": 500,
+        "category": "エンタメ"
+    },
+    {
+        "name": "パズル",
+        "image": "puzzle.jpeg",
+        "detail": "難易度「高」の上級者向けパズル",
+        "price": 1200,
+        "category": "エンタメ"
+    },
+    {
+        "name": "テレビ",
+        "image": "tv.jpeg",
+        "detail": "高画質の最新型テレビ",
+        "price": 52000,
+        "category": "家電"
+    },
+    {
+        "name": "洗濯機",
+        "image": "wash.jpeg",
+        "detail": "コストパフォーマンス重視の方におすすめの洗濯機",
+        "price": 555000,
+        "category": "家電"
+    },
+    {
+        "name": "ドライヤー",
+        "image": "hairdry.jpeg",
+        "detail": "マイナスイオンを含む髪に優しいドライヤー",
+        "price": 12500,
+        "category": "家電"
+    },
+    {
+        "name": "スマートフォン",
+        "image": "smart.jpeg",
+        "detail": "高画質カメラが特徴の最新型スマートフォン",
+        "price": 105200,
+        "category": "家電"
+    },
+    {
+        "name": "テレビ",
+        "image": "tv_2.jpeg",
+        "detail": "昔ながらのテレビ",
+        "price": 22000,
+        "category": "家電"
+    },
+    {
+        "name": "カメラ",
+        "image": "camera_2.jpeg",
+        "detail": "シンプルなデザインの高性能カメラ",
+        "price": 45000,
+        "category": "家電"
+    },
+    {
+        "name": "ノートパソコン",
+        "image": "pc.jpeg",
+        "detail": "薄型で持ち運びが楽なノートパソコン",
+        "price": 95000,
+        "category": "家電"
+    },
+    {
+        "name": "おもちゃ",
+        "image": "toy.jpeg",
+        "detail": "線路が忠実に再現された子供用おもちゃ",
+        "price": 2500,
+        "category": "キッズ"
+    },
+    {
+        "name": "つみき",
+        "image": "tsumiki.jpeg",
+        "detail": "カラフルな色使いが目を引く積み木",
+        "price": 3500,
+        "category": "キッズ"
+    },
+    {
+        "name": "着せ替え人形",
+        "image": "toy_2.jpeg",
+        "detail": "着せ替え可能なクマの人形",
+        "price": 3300,
+        "category": "キッズ"
+    },
+    {
+        "name": "ぬいぐるみ",
+        "image": "kaeru.jpeg",
+        "detail": "キュートな表情のカエルのぬいぐるみ3点セット",
+        "price": 6200,
+        "category": "キッズ"
+    },
+    {
+        "name": "ミニカー",
+        "image": "car.jpeg",
+        "detail": "アンティークなデザインが可愛らしいミニカー",
+        "price": 750,
+        "category": "キッズ"
+    },
+    {
+        "name": "ミニカー",
+        "image": "car_2.jpeg",
+        "detail": "顔のようなデザインが人気のミニカー",
+        "price": 850,
+        "category": "キッズ"
+    },
+    {
+        "name": "ミニカー",
+        "image": "car_3.jpeg",
+        "detail": "花柄のデザインが可愛らしいミニカー",
+        "price": 750,
+        "category": "キッズ"
+    },
+    {
+        "name": "マニキュア",
+        "image": "manicure.jpeg",
+        "detail": "鮮やかな彩りのマニキュア8色セット",
+        "price": 6200,
+        "category": "ファッション"
+    },
+    {
+        "name": "香水",
+        "image": "kaori.jpeg",
+        "detail": "見た目も可愛い甘い香りの香水",
+        "price": 12000,
+        "category": "ファッション"
+    },
+    {
+        "name": "香水",
+        "image": "kaori_2.jpeg",
+        "detail": "夏限定発売の爽やかな香りの香水",
+        "price": 7200,
+        "category": "ファッション"
+    },
+    {
+        "name": "ぬいぐるみ",
+        "image": "kuma.jpeg",
+        "detail": "可愛いクマの家族のぬいぐるみ",
+        "price": 12500,
+        "category": "キッズ"
+    },
+    {
+        "name": "おもちゃ",
+        "image": "oto.jpeg",
+        "detail": "子供用の簡単に楽しむことができる楽器",
+        "price": 2200,
+        "category": "キッズ"
+    },
+    {
+        "name": "野菜",
+        "image": "vegetable.jpeg",
+        "detail": "旬の野菜のお得なセット",
+        "price": 7980,
+        "category": "グルメ"
     },
 ]
 
@@ -769,4 +1053,20 @@ demo_favourite = [
         "user_id": ryo_id,
         "item_id": item_tablet_id
     }
+]
+
+demo_prepaid_card = [
+    '9068839573703133', '3947156272307378', '2212223944567213', '2127720167842572',
+    '0843154635248785', '4464439304561017', '5724476031718081', '9586728811164624',
+    '7514093789796451', '6504542442451008', '4068833358947828', '1818635461537749',
+    '0904708861919289', '1703332979344941', '4124660674082759', '5308215407328015',
+    '3963736887153780', '4067833246186778', '1383658071381285', '1620576568121735',
+    '4006521543212258', '9174226354142896', '1662819443923367', '9700707995193857',
+    '4146122495512217', '1125522919807260', '3614797109745179', '2916904206710839',
+    '2029299546890504', '4551929856250539', '9053025835818306', '3496530153179403',
+    '3869386582922482', '1099979438626370', '9432210543218873', '2210950309748422',
+    '9493933316960470', '2311108318228969', '8743609624539845', '2985523540921771',
+    '8504671485076947', '7714219190949459', '6524702452966743', '7466819644200999',
+    '6785765215003046', '5972327868941060', '6879704217714812', '1826054181180772',
+    '2101882808491614', '0142858037062426'
 ]
