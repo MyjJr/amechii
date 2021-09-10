@@ -4,7 +4,7 @@ from app.schemas.item import ItemCreate
 from app.schemas.task import TaskCreate, SubTaskCreate
 from app.schemas.address import AddressCreate
 from app.schemas.transaction import TransactionCreate
-# from app.utils import print_obj_attributes
+from app.utils import print_obj_attributes
 
 from app.db import demo_date
 
@@ -130,8 +130,18 @@ if __name__ == "__main__":
     session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     db: Session = session()
-    insert_demo_data_all(db)
+    # insert_demo_data_all(db)
+    user = crud.user.get(db, 1)
+    print_obj_attributes(user)
 
+    from app.schemas.task import SubTaskUpdate
+    subtask_in = SubTaskUpdate(
+        priority="1",
+        status="success"
+    )
+    # a = crud.subtask.get(db, 1)
+    # b = crud.subtask.update(db, db_obj=a, obj_in=subtask_in)
+    # print(b)
     # a = crud.user.get_like_name(db, name="k")
     # a = 0
     # b = crud.item.get(db, 1)
@@ -171,12 +181,10 @@ if __name__ == "__main__":
     # db.commit()
     # db.refresh(user)
     # # user = crud.user.get_by_name(db, name="キ")
-    # user = crud.user.get(db, 1)
     # user2 = crud.user.get(db, 2)
     # user3 = crud.user.get(db, 3)
     # user4 = crud.user.get(db, 4)
     # user = crud.user.unfollow(db, from_user=user, unfollow_user=user2)
-    # print_obj_attributes(user)
 
     # users = crud.user.get_multi(db, limit=1)
     # for i in users:
