@@ -13,6 +13,7 @@ import Navbar from "../../components/Navbars/Navbar";
 import ProductsSection from "../../components/projectComponents/ProductsSection";
 import TasksSection from "../../components/projectComponents/TasksSection";
 import ProjectPaymentModal from "../../components/modal/ProjectPaymentModal";
+import { getProductTasks } from "lib/projects";
 
 const people = [
   { id: 1, name: "Durward Reynolds", unavailable: false },
@@ -22,32 +23,39 @@ const people = [
   { id: 5, name: "Katelyn Rohan", unavailable: false },
 ];
 
-const Project = ({ project }) => {
+const Project = (props) => {
   const router = useRouter();
   const { id } = router.query;
 
   const [data, setData] = useState();
 
+  const [tasks, setTasks] = useState()
+
   const { userInfo, setUserInfo } = useContext(UserContext);
 
   const [isOpen, setIsOpen] = useState(false);
 
+  return <ProjectCreateForm />;
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
+
+  console.log(props.data)
 
   // useEffect(() => {
   //   setUserInfo({...userInfo, projects: userInfo.projects.map((item) => item.id === id ? project : item)})
   // }, [])
 
   useEffect(() => {
-    const p_data = userInfo.projects.filter((data) => data.id === Number(id));
-    setData(p_data[0]);
+    // const p_data = userInfo.projects.filter((data) => data.id === Number(id));
+    // setData(p_data[0]);
+    setTasks(props.data)
+    // setData(props.data)
   }, []);
 
-  if (!data) return <ProjectCreateForm />;
+  if (!tasks) return <ProjectCreateForm />;
 
-  const product = data.products[0];
+  // const product = data.products[0];
 
   return (
     <div className="layout-container">
@@ -60,9 +68,9 @@ const Project = ({ project }) => {
             style={{ height: "90%", width: "90%" }}
           >
             <div className="flex flex-col lg:flex-row items-center justify-center h-full w-full lg:p-3">
-              <ProductsSection data={data} product={product} />
+              {/* <ProductsSection tasks={tasks} product={product} /> */}
               <div className="rounded h-full flex flex-col justify-center items-center lg:w-7/12">
-                <TasksSection data={data} setData={setData} />
+                <TasksSection tasks={tasks} setTasks={setTasks} />
                 <div className="flex justify-end items-center border-gray-300 w-full lg:h-1/6 ">
                   <button
                     onClick={handleOpen}
@@ -83,3 +91,14 @@ const Project = ({ project }) => {
 };
 
 export default Project;
+
+export const getServerSideProps = async (context) => {
+  const { id } = context.query;
+  const data = await getProductTasks({id: Number(id)})
+  return {
+    props: {
+      data
+    },
+  };
+};
+

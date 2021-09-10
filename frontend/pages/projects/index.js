@@ -8,9 +8,11 @@ import { UserContext } from "../../contexts/UserContext";
 import { Dialog, Transition } from "@headlessui/react";
 import ProjectModal from "../../components/modal/ProjectModal";
 import { getAllProjects } from "../../lib/projects";
+import { redirectHomePage } from "lib/redirect";
 
 const DummyCard = (props) => {
   const [projectTitle, setProjectTitle] = useState("");
+
 
   const temp = {
     id: props.projectData.length + 1,
@@ -90,11 +92,15 @@ const projects = (props) => {
   //   setUserInfo({ ...userInfo, projects: projectData });
   // }, []);
 
-  console.log(userInfo);
+  // console.log(userInfo);
+  console.log(props.data)
+
+  redirectHomePage({userInfo})
+
 
   // console.log(props)
 
-  if (!userInfo) return null;
+  // if (!userInfo) return null;
 
   return (
     <div className="layout-container">
@@ -106,8 +112,8 @@ const projects = (props) => {
             userInfo={userInfo}
             setUserInfo={setUserInfo}
           />
-          {userInfo.projects &&
-            userInfo.projects.map((data) => (
+          {props.data &&
+            props.data.map((data) => (
               <ProjectCard key={data.id} data={data} />
             ))}
         </div>
@@ -118,14 +124,11 @@ const projects = (props) => {
 
 export default projects;
 
-// export const getServerSideProps = async (context) => {
-//   // const { data, parsedCookies } = await getUserData(context);
-
-//   const data = await getAllProjects(context)
-
-//   return {
-//     props: {
-//       data
-//     },
-//   };
-// };
+export const getServerSideProps = async (context) => {
+  const data = await getAllProjects(context)
+  return {
+    props: {
+      data
+    },
+  };
+};

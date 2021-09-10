@@ -25,7 +25,7 @@ const Navbar = (props) => {
 
   const { userInfo, setUserInfo } = useContext(UserContext);
 
-  console.log(userInfo);
+  // console.log(userInfo);
 
   const [tokenInfo, setTokenInfo] = useState({
     access_token: "",

@@ -15,7 +15,9 @@ import { redirectHomePage } from "lib/redirect";
 const Products = (props) => {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
-  redirectHomePage({userInfo})
+  // redirectHomePage({userInfo})
+
+  // console.log(props.products)
 
   const addFavorite = async ({ cookies, id }) => {
     const data = await addFavoriteList({ cookies, id });
