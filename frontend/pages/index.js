@@ -10,8 +10,8 @@ export default function Home(props) {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
   useEffect(() => {
-    if(props.data) {
-      setUserInfo(props.data);  
+    if (props.data) {
+      setUserInfo(props.data);
     }
   }, []);
 

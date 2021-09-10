@@ -1,11 +1,10 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import ToggleBtn from "../buttons/ToggleBtn"
+import ToggleBtn from "../buttons/ToggleBtn";
 import SelectUserBox from "../selectBox/selectUserBox";
 
 const ProjectPaymentModal = ({ isOpen, handleOpen }) => {
-
-  const listStyle = "h-full w-1/2 flex items-center justify-center"
+  const listStyle = "h-full w-1/2 flex items-center justify-center";
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog

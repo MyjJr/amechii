@@ -23,17 +23,8 @@ export const getAllProjects = async (context) => {
 
   const data = await res.json();
 
-
-
-  return data
-
-
-}
-
-
-
-
-
+  return data;
+};
 
 // import { projectData } from "../data/projectData";
 
@@ -52,10 +43,10 @@ export const getAllProjects = async (context) => {
 //   }
 
 // export async function getAllProjectIds() {
-  // const res = await fetch(
-  //   new URL(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/list-post/`)
-  // );
-  // const posts = await res.json();
+// const res = await fetch(
+//   new URL(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/list-post/`)
+// );
+// const posts = await res.json();
 //   return projectData.map((project) => {
 //     return {
 //       params: {
@@ -66,11 +57,11 @@ export const getAllProjects = async (context) => {
 // }
 
 // export async function getProjectData(id) {
-  // const res = await fetch(
-  //   new URL(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/detail-post/${id}/`)
-  // );
-  // const project = projectData.filter((project) => project.id === Number(id));
-  // const post = await res.json();
-  // console.log(typeof id)
-  // return project[0];
+// const res = await fetch(
+//   new URL(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/detail-post/${id}/`)
+// );
+// const project = projectData.filter((project) => project.id === Number(id));
+// const post = await res.json();
+// console.log(typeof id)
+// return project[0];
 // }

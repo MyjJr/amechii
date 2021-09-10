@@ -6,8 +6,7 @@ import { UserContext } from "../contexts/UserContext";
 const Profile = () => {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
-  console.log(userInfo)
-
+  console.log(userInfo);
 
   return <ProfileCard userInfo={userInfo} />;
 };

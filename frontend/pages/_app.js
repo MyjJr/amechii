@@ -6,7 +6,9 @@ import { AuthProvider } from "../contexts/AuthContext";
 import { UserProvider } from "../contexts/UserContext";
 
 function MyApp({ Component, pageProps }) {
+
   const Layout = Component.layout || (({ children }) => <>{children}</>);
+
   return (
     <UserProvider>
       <AuthProvider>
