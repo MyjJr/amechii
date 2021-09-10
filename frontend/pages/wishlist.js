@@ -5,7 +5,6 @@ import BaseLayout from "../components/layouts/BaseLayout";
 import { UserContext } from "../contexts/UserContext";
 
 const Card = ({ item }) => {
-
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-2">
       <div className="md:flex">
@@ -36,7 +35,7 @@ const Card = ({ item }) => {
 const wishlist = () => {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
-  redirectHomePage({userInfo})
+  redirectHomePage({ userInfo });
 
   if (!userInfo.favourites?.length)
     return (
@@ -55,7 +54,9 @@ const wishlist = () => {
   return (
     <div className="h-full overflow-y-scroll py-5">
       {userInfo.favourites &&
-        userInfo.favourites.map((data, index) => <Card key={index} item={data.items} />)}
+        userInfo.favourites.map((data, index) => (
+          <Card key={index} item={data.items} />
+        ))}
     </div>
   );
 };

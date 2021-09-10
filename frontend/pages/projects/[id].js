@@ -29,7 +29,7 @@ const Project = (props) => {
 
   const [data, setData] = useState();
 
-  const [tasks, setTasks] = useState()
+  const [tasks, setTasks] = useState();
 
   const { userInfo, setUserInfo } = useContext(UserContext);
 
@@ -40,7 +40,7 @@ const Project = (props) => {
     setIsOpen(!isOpen);
   };
 
-  console.log(props.data)
+  console.log(props.data);
 
   // useEffect(() => {
   //   setUserInfo({...userInfo, projects: userInfo.projects.map((item) => item.id === id ? project : item)})
@@ -49,7 +49,7 @@ const Project = (props) => {
   useEffect(() => {
     // const p_data = userInfo.projects.filter((data) => data.id === Number(id));
     // setData(p_data[0]);
-    setTasks(props.data)
+    setTasks(props.data);
     // setData(props.data)
   }, []);
 
@@ -94,11 +94,10 @@ export default Project;
 
 export const getServerSideProps = async (context) => {
   const { id } = context.query;
-  const data = await getProductTasks({id: Number(id)})
+  const data = await getProductTasks({ id: Number(id) });
   return {
     props: {
-      data
+      data,
     },
   };
 };
-

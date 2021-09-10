@@ -7,8 +7,8 @@ import { UserContext } from "../contexts/UserContext";
 const Profile = () => {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
-  redirectHomePage({userInfo})
-  
+  redirectHomePage({ userInfo });
+
   return <ProfileCard userInfo={userInfo} />;
 };
 

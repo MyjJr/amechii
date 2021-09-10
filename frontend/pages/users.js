@@ -47,9 +47,10 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
-  redirectHomePage({userInfo})
+  redirectHomePage({ userInfo });
 
-  const followingUserIds = userInfo.following && userInfo.following.map((data) => data.id);
+  const followingUserIds =
+    userInfo.following && userInfo.following.map((data) => data.id);
 
   const Alert = () => {
     return (

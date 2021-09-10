@@ -13,7 +13,6 @@ import { redirectHomePage } from "lib/redirect";
 const DummyCard = (props) => {
   const [projectTitle, setProjectTitle] = useState("");
 
-
   const temp = {
     id: props.projectData.length + 1,
     title: projectTitle,
@@ -93,10 +92,9 @@ const projects = (props) => {
   // }, []);
 
   // console.log(userInfo);
-  console.log(props.data)
+  console.log(props.data);
 
-  redirectHomePage({userInfo})
-
+  redirectHomePage({ userInfo });
 
   // console.log(props)
 
@@ -113,9 +111,7 @@ const projects = (props) => {
             setUserInfo={setUserInfo}
           />
           {props.data &&
-            props.data.map((data) => (
-              <ProjectCard key={data.id} data={data} />
-            ))}
+            props.data.map((data) => <ProjectCard key={data.id} data={data} />)}
         </div>
       </main>
     </div>
@@ -125,10 +121,10 @@ const projects = (props) => {
 export default projects;
 
 export const getServerSideProps = async (context) => {
-  const data = await getAllProjects(context)
+  const data = await getAllProjects(context);
   return {
     props: {
-      data
+      data,
     },
   };
 };

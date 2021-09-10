@@ -26,8 +26,7 @@ export const getAllProjects = async (context) => {
   return data;
 };
 
-
-export const getProductTasks = async ({id}) => {
+export const getProductTasks = async ({ id }) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/tasks/get-subtasks?task_id=${id}`,
     {

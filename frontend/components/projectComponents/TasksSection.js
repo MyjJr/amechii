@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { PlusIcon, TrashIcon } from "@heroicons/react/outline";
 
 const TasksSection = (props) => {
-  const { tasks , setTasks } = props;
+  const { tasks, setTasks } = props;
 
   const [inputValue, setInputValue] = useState("");
 
