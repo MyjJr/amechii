@@ -14,5 +14,12 @@ class CRUDItem(CRUDBase[Item, ItemCreate, ItemUpdate]):
             ordre_by_id = desc(self.model.id)
         return db_session.query(self.model).order_by(ordre_by_id).offset(skip).limit(limit).all()
 
+    def get_price(self, db_session: Session, item_id_list: List[int]):
+        price = 0
+        for i in item_id_list:
+            price += self.get(db_session, i).price
+
+        return price
+
 
 item = CRUDItem(Item)

@@ -23,6 +23,19 @@ class CRUDTask(CRUDBase[Task, TaskCreate, TaskUpdate]):
                 task_item.create(db_session, obj_in=task_item_in)
         return task
 
+    def start_task(self, db_session: Session, *, db_obj: Task, obj_in: TaskUpdate, item_id_list: list):
+        task = super().update(db_session, db_obj=db_obj, obj_in=obj_in)
+
+        if item_id_list:
+            for i in item_id_list:
+                task_item_in = Task_itemCreate(
+                    task_id=task.id,
+                    item_id=i
+                )
+                task_item.create(db_session, obj_in=task_item_in)
+
+        return task
+
     def get_by_do_id(self, db_session: Session, *, do_id: int) -> Optional[List[Task]]:
         return db_session.query(Task).filter(Task.do_id == do_id).all()
 

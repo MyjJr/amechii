@@ -61,7 +61,7 @@ async def token_validate_middleware(request: Request, call_next):
 
     if request.url.path not in allow_no_authenticate:
         print("Validate token..........")
-        print(request)
+        print(request.headers)
         token = check_token(request)
         if not token:
             # return Response("Without Access Token", status_code=402)

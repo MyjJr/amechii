@@ -24,9 +24,7 @@ def user_create(db):
 
 def follow_create(db):
     for i in demo_date.demo_follows:
-        user = crud.user.follow(
-            db, from_user_id=i["from_id"], follow_user_id=i["to_id"]
-        )
+        user = crud.user.follow(db, from_user_id=i["from_id"], follow_user_id=i["to_id"])
         # for i in user.following:
         #     print(i.name)
         print(user)
@@ -89,10 +87,7 @@ def subtask_create(db):
 def transaction_create(db):
     for i in demo_date.demo_transactions:
 
-        obj_in = TransactionCreate(
-            amount=i["amount"],
-            user_id=i["user_id"]
-        )
+        obj_in = TransactionCreate(amount=i["amount"], user_id=i["user_id"])
         transaction = crud.transaction.create(db, obj_in=obj_in)
         print(transaction)
         # print_obj_attributes(transaction)
@@ -134,11 +129,15 @@ if __name__ == "__main__":
     user = crud.user.get(db, 1)
     print_obj_attributes(user)
 
-    from app.schemas.task import SubTaskUpdate
-    subtask_in = SubTaskUpdate(
-        priority="1",
-        status="success"
-    )
+    task_in = TaskCreate(set_id=1)
+    a = crud.task.create(db, obj_in=task_in)
+    print(a)
+
+    # from app.schemas.task import SubTaskUpdate
+    # subtask_in = SubTaskUpdate(
+    #     priority="1",
+    #     status="success"
+    # )
     # a = crud.subtask.get(db, 1)
     # b = crud.subtask.update(db, db_obj=a, obj_in=subtask_in)
     # print(b)
