@@ -1,27 +1,49 @@
 import { HeartIcon, XIcon } from "@heroicons/react/solid";
 // import { HeartIcon } from "@heroicons/react/solid";
-import React, {useState, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import BaseLayout from "../components/layouts/BaseLayout";
-import Navbar from "../components/Navbars/Navbar";
-import { productsData } from "../data/productsData";
-import { addFavoriteList, deleteFavoriteList, getAllProducts } from "../lib/products";
+import {
+  addFavoriteList,
+  deleteFavoriteList,
+  getAllProducts,
+} from "../lib/products";
 import Image from "next/image";
-import Cookies from "universal-cookie";
 import { UserContext } from "../contexts/UserContext";
+import { redirectHomePage } from "lib/redirect";
 
 
 const Products = (props) => {
+  const { userInfo, setUserInfo } = useContext(UserContext);
 
-  const FavIcon = ({ favorite, id }) => {
-    const favItemIds = favorite.map((data) => data.items.id)
-    const isFav = favItemIds.includes(id)
-    if (isFav)
-      return <HeartIcon className="h-7 w-7 text-red-500 cursor-pointer" onClick={() => deleteFavoriteList({cookies: userInfo, id})}/>;
-    return <HeartIcon className="h-7 w-7 text-gray-200 cursor-pointer" onClick={() => addFavoriteList({cookies: userInfo, id})} />;
+  redirectHomePage({userInfo})
+
+  const addFavorite = async ({ cookies, id }) => {
+    const data = await addFavoriteList({ cookies, id });
+    setUserInfo({ ...userInfo, favourites: data });
   };
 
+  const deleteFavorite = async ({ cookies, id }) => {
+    const data = await deleteFavoriteList({ cookies, id });
+    setUserInfo({ ...userInfo, favourites: data });
+  };
 
-  const { userInfo, setUserInfo } = useContext(UserContext);
+  const FavIcon = ({ favorite, id }) => {
+    const favItemIds = favorite.map((data) => data.items.id);
+    const isFav = favItemIds.includes(id);
+    if (isFav)
+      return (
+        <HeartIcon
+          className="h-7 w-7 text-red-500 cursor-pointer"
+          onClick={() => deleteFavorite({ cookies: userInfo, id })}
+        />
+      );
+    return (
+      <HeartIcon
+        className="h-7 w-7 text-gray-200 cursor-pointer"
+        onClick={() => addFavorite({ cookies: userInfo, id })}
+      />
+    );
+  };
 
   return (
     <div className="max-w-2xl mx-auto py-6 px-4 sm:py-20 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -63,8 +85,9 @@ const Products = (props) => {
                     {product.price}
                   </p>
                 </div>
-                {userInfo.favourites && <FavIcon id={product.id} favorite={userInfo.favourites}/> }
-                
+                {userInfo.favourites && (
+                  <FavIcon id={product.id} favorite={userInfo.favourites} />
+                )}
               </div>
             </div>
           ))}
