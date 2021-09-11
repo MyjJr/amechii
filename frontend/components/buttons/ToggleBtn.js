@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Switch } from "@headlessui/react";
 
-export default function ToggleBtn({isPayBack}) {
+export default function ToggleBtn({ isPayBack }) {
   const [enabled, setEnabled] = useState(isPayBack);
 
   return (

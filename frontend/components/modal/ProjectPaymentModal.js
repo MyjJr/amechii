@@ -5,7 +5,7 @@ import SelectUserBox from "../selectBox/SelectUserBox";
 
 const ProjectPaymentModal = ({ isOpen, handleOpen, projectData, userInfo }) => {
   const listStyle = "h-full w-1/2 flex items-center justify-center";
-  console.log(projectData)
+  console.log(projectData);
   // console.log(userInfo)
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -74,9 +74,12 @@ const ProjectPaymentModal = ({ isOpen, handleOpen, projectData, userInfo }) => {
                   <div className={listStyle}>{projectData.deadline}</div>
                 </div>
                 <div className="border-b-2 border-gray-300 h-full w-full flex items-center">
-                  <p className={listStyle}>失敗した場合は{projectData.back_money ? "返金する" : "募金する"}</p>
+                  <p className={listStyle}>
+                    失敗した場合は
+                    {projectData.back_money ? "返金する" : "募金する"}
+                  </p>
                   <div className={listStyle}>
-                    <ToggleBtn isPayBack={projectData.back_money}/>
+                    <ToggleBtn isPayBack={projectData.back_money} />
                   </div>
                 </div>
                 <div className="h-full w-full flex justify-center items-center">

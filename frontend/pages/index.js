@@ -34,8 +34,8 @@ export default function Home(props) {
       <Navbar />
       <div className="main-section flex justify-center items-center">
         <div className="w-4/5 md:w-3/5">
-          <img src="https://lh3.googleusercontent.com/RZ7drWKNNeRL55to56M7pzyNKPehrbWX1qCJuYUM6jg--ycBGgBB1ilDKKVyCQOnCd6S2sHIREiiut3_gFV2yeiSTEWpSHVTLXzHsU2hK5xjeLpl_sOe7GHlFE0i9Wn8LT5nyrfecFRp8fsghzSQTzrnKTLmdA45iuKtStBIAqCjwiquZ9d3HkQXsMkJydGkawnIhfUEtulMRaNJEkfu3wAiso9ncBw6sRs4ITBmAz4OsMSYtU_lSozcmNi2EheTshm-rmEjxFtS3vZiHxPQ0jqKhaN13s0dPIyau4NPtqc6m3Y5ELUJ1pjjFFaL2t2Okx0P4DW1NQYw6FjbjjVdtCdbWk7N6k9UnzMoDGe5z3y8os2Zf8MTplIIjVddlpYQa3Y_RDNUGr85XlOC2nBlr-2VgspW2yh-VcHYjJJIyr3J9To2wtOH1oW5bfl2QGhDn9PDubwOoAABeaPmSxWHQyJFIPWyPtH5z8kK3nG5sTZDYzXbbb6Ylz1qSbFlzcszDcykLUcirocF_fBKQKeGiGP-XreaJ5F3NuzWGy90t02kqAlMPSu5o-WrTZFa7vv019s7bP_H7drPKqvHdVS2FxmktEwx-FWmxT7tfFyKyaD2JFdoAXK4puascsB0Sqy6zk-iB8CXnaw8P8q0ydaeDjwZxZR4w1mXtS3tujyMjan_37tR6LsD_QRczm9x9USX2ymMkVNh7EJHBbPgSnHtJw=w2160-h1174-no?authuser=0"/>
-        </div> 
+          <img src="https://lh3.googleusercontent.com/pw/AM-JKLWAGQX7KxiZkxSSXaS_56njDQUSMi-baVS6woHFKWinAx2-6xHCoSbUhbd8_Umb2F356PaHaiuFf_OVJQ6r6Jjf56LJtEwWI6ptIQ609YaeL-uVt5YDJlt19ZgkdC2IXNcTfVOMzYZob49pmfoyf2k=w2160-h1174-no?authuser=0" />
+        </div>
       </div>
     </div>
   );

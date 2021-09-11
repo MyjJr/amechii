@@ -5,46 +5,54 @@ import { createTask, deleteTask, updateTaskStatus } from "lib/projects";
 const TasksSection = (props) => {
   const { projectData, setProjectData, userInfo } = props;
 
-  const [tasks, setTasks] = useState(projectData.subtasks)
+  const [tasks, setTasks] = useState(projectData.subtasks);
 
   const [inputValue, setInputValue] = useState("");
 
-
   const changeStatusFormat = (status) => {
-    if(status) return "success"
-    return "not_complete"
-  }
+    if (status) return "success";
+    return "not_complete";
+  };
 
   const checkTaskStatus = (status) => {
     switch (status) {
       case "not_complete":
-        return false
+        return false;
       case "success":
-        return true
+        return true;
       default:
         console.error("正当なstatusではありません");
     }
-  }
-
-  const handleIsDone = async ({id, status}) => {
-    const updateTasks = tasks.map((item) =>
-      item.id === id ? { ...item, status: changeStatusFormat(!checkTaskStatus(item.status)) } : item
-    );
-    setTasks(updateTasks)
-    updateTaskStatus({ cookies: userInfo, id, status: changeStatusFormat(!checkTaskStatus(status))})
   };
 
+  const handleIsDone = async ({ id, status }) => {
+    const updateTasks = tasks.map((item) =>
+      item.id === id
+        ? { ...item, status: changeStatusFormat(!checkTaskStatus(item.status)) }
+        : item
+    );
+    setTasks(updateTasks);
+    updateTaskStatus({
+      cookies: userInfo,
+      id,
+      status: changeStatusFormat(!checkTaskStatus(status)),
+    });
+  };
 
   const handleDelete = (id) => {
     const deletedTasks = tasks.filter((item) => item.id !== id);
-    setTasks(deletedTasks)
-    deleteTask({ cookies: userInfo, id})
+    setTasks(deletedTasks);
+    deleteTask({ cookies: userInfo, id });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newTask = await createTask({cookies: userInfo, title: inputValue, projectId: projectData.id})
-    setTasks([...tasks, newTask])
+    const newTask = await createTask({
+      cookies: userInfo,
+      title: inputValue,
+      projectId: projectData.id,
+    });
+    setTasks([...tasks, newTask]);
     setInputValue("");
   };
 
@@ -65,7 +73,9 @@ const TasksSection = (props) => {
                   type="checkbox"
                   className="checkbox checkbox-xs"
                   checked={checkTaskStatus(item.status)}
-                  onChange={() => handleIsDone({id: item.id, status: item.status})}
+                  onChange={() =>
+                    handleIsDone({ id: item.id, status: item.status })
+                  }
                 />
                 <input
                   type="text"
