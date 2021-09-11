@@ -13,56 +13,51 @@ import Navbar from "../../components/Navbars/Navbar";
 import ProductsSection from "../../components/projectComponents/ProductsSection";
 import TasksSection from "../../components/projectComponents/TasksSection";
 import ProjectPaymentModal from "../../components/modal/ProjectPaymentModal";
+import { handleGetProjectTasks } from "lib/projects";
 
-const people = [
-  { id: 1, name: "Durward Reynolds", unavailable: false },
-  { id: 2, name: "Kenton Towne", unavailable: false },
-  { id: 3, name: "Therese Wunsch", unavailable: false },
-  { id: 4, name: "Benedict Kessler", unavailable: true },
-  { id: 5, name: "Katelyn Rohan", unavailable: false },
-];
-
-const Project = ({ project }) => {
+const Project = (props) => {
   const router = useRouter();
-  const { id } = router.query;
 
-  const [data, setData] = useState();
+  const [projectData, setProjectData] = useState();
 
   const { userInfo, setUserInfo } = useContext(UserContext);
 
   const [isOpen, setIsOpen] = useState(false);
 
+  // return <ProjectCreateForm />;
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
 
-  // useEffect(() => {
-  //   setUserInfo({...userInfo, projects: userInfo.projects.map((item) => item.id === id ? project : item)})
-  // }, [])
-
   useEffect(() => {
-    const p_data = userInfo.projects.filter((data) => data.id === Number(id));
-    setData(p_data[0]);
+    setProjectData(props.data);
   }, []);
 
-  if (!data) return <ProjectCreateForm />;
-
-  const product = data.products[0];
+  if (!projectData) return <ProjectCreateForm />;
 
   return (
     <div className="layout-container">
       <Navbar />
-      <main className="main-section overflow-y-scroll bg-coolGray-500">
+      <main className="main-section overflow-y-scroll bg-white">
         <div className="h-full w-full flex flex-col justify-center items-center">
-          <ProjectPaymentModal isOpen={isOpen} handleOpen={handleOpen} />
+          <ProjectPaymentModal
+            isOpen={isOpen}
+            handleOpen={handleOpen}
+            projectData={projectData}
+            userInfo={userInfo}
+          />
           <div
             className="bg-white shadow-lg rounded-lg"
-            style={{ height: "90%", width: "90%" }}
+            style={{ height: "80%", width: "80%" }}
           >
             <div className="flex flex-col lg:flex-row items-center justify-center h-full w-full lg:p-3">
-              <ProductsSection data={data} product={product} />
+              <ProductsSection projectData={projectData} userInfo={userInfo} />
               <div className="rounded h-full flex flex-col justify-center items-center lg:w-7/12">
-                <TasksSection data={data} setData={setData} />
+                <TasksSection
+                  projectData={projectData}
+                  setProjectData={setProjectData}
+                  userInfo={userInfo}
+                />
                 <div className="flex justify-end items-center border-gray-300 w-full lg:h-1/6 ">
                   <button
                     onClick={handleOpen}
@@ -83,3 +78,14 @@ const Project = ({ project }) => {
 };
 
 export default Project;
+
+export const getServerSideProps = async (context) => {
+  const { id } = context.query;
+
+  const data = await handleGetProjectTasks({ id: Number(id), context });
+  return {
+    props: {
+      data,
+    },
+  };
+};

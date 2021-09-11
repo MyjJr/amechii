@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   BellIcon,
@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { nav_menu } from "../../data/navItem";
 import Cookies from "universal-cookie";
 import { AuthMenu, UserMenu } from "./NavItem";
+import { UserContext } from "../../contexts/UserContext";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -22,7 +23,9 @@ const cookies = new Cookies();
 const Navbar = (props) => {
   const router = useRouter();
 
-  // console.log(props)
+  const { userInfo, setUserInfo } = useContext(UserContext);
+
+  // console.log(userInfo);
 
   const [tokenInfo, setTokenInfo] = useState({
     access_token: "",
@@ -36,24 +39,11 @@ const Navbar = (props) => {
     });
   }, [cookies]);
 
-
-  // ロゴをクリックでユーザー情報取得（仮）
-  const getUser = async ()  => {
-    const data = await fetch(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/users/get-info`,{
-      // mode: "no-cors",
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${tokenInfo.token_type} ${tokenInfo.access_token}`,
-      }
-    })
-    console.log(data)
-  }
-
-
-
   return (
-    <Disclosure as="nav" className="bg-gray-800 navbar-section my-auto">
+    <Disclosure
+      as="nav"
+      className="bg-white navbar-section h-17 mx-auto shadow pt-1"
+    >
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 h-full">
@@ -72,18 +62,17 @@ const Navbar = (props) => {
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
                   <img
-                    className="block lg:hidden h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                    alt="Workflow"
-                    onClick={() => getUser()}
+                    className="block lg:hidden h-6 w-auto mt-1"
+                    src="https://lh3.googleusercontent.com/pw/AM-JKLV6FHLJ3tY7lo2WdWkkSRm3TLVilk95rFJvLlMDc0xDHBwpaY8XimKe8PFBBEA6DZRZMWTbSimnCdF93wSok8V3-Nk9jWv_bBwsSRKbV1h0XLTWkLNZQuo1oEPBwXmOEPdJP3dd0FgaMJfhFLJXnIg=w1444-h304-no?authuser=0"
+                    alt="Amechii"
                   />
                   <img
-                    className="hidden lg:block h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                    alt="Workflow"
+                    className="hidden lg:block h-6 w-auto mt-1"
+                    src="https://lh3.googleusercontent.com/pw/AM-JKLV6FHLJ3tY7lo2WdWkkSRm3TLVilk95rFJvLlMDc0xDHBwpaY8XimKe8PFBBEA6DZRZMWTbSimnCdF93wSok8V3-Nk9jWv_bBwsSRKbV1h0XLTWkLNZQuo1oEPBwXmOEPdJP3dd0FgaMJfhFLJXnIg=w1444-h304-no?authuser=0"
+                    alt="Amechii"
                   />
                 </div>
-
+                ​
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
                     {nav_menu.map((item) => (
@@ -91,9 +80,9 @@ const Navbar = (props) => {
                         <a
                           className={classNames(
                             item.href === router.pathname
-                              ? "bg-gray-900 text-white"
-                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                            "px-3 py-2 rounded-md text-sm font-medium"
+                              ? "border-b-2 border-teal-400 text-gray-900"
+                              : "hover:opacity-75",
+                            "mt-4 px-3 py-5 text-sm text-gray-500"
                           )}
                           aria-current={
                             item.href === router.pathname ? "page" : undefined
@@ -108,14 +97,14 @@ const Navbar = (props) => {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {tokenInfo.access_token ? (
-                  <UserMenu cookies={cookies} />
+                  <UserMenu cookies={cookies} userInfo={userInfo} />
                 ) : (
                   <AuthMenu />
                 )}
               </div>
             </div>
           </div>
-
+          ​
           <Disclosure.Panel className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {nav_menu.map((item) => (

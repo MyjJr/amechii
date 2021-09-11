@@ -1,3 +1,4 @@
+import { redirectHomePage } from "lib/redirect";
 import Link from "next/link";
 import React, { useContext } from "react";
 import BaseLayout from "../components/layouts/BaseLayout";
@@ -10,13 +11,13 @@ const Card = ({ item }) => {
         <div className="md:flex-shrink-0">
           <img
             className="h-48 w-full object-cover md:w-48"
-            src={item.imageSrc}
-            alt={item.imageAlt}
+            src={`http://amechii.jp/image/icon/${item.image}`}
+            alt={item.name}
           />
         </div>
         <div className="p-8">
           <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-            {item.name}
+            カテゴリー名
           </div>
           <a
             href="#"
@@ -24,7 +25,7 @@ const Card = ({ item }) => {
           >
             {item.name}
           </a>
-          <p className="mt-2 text-gray-500">{item.price}</p>
+          <p className="mt-2 text-gray-500">{item.price}円</p>
         </div>
       </div>
     </div>
@@ -34,7 +35,9 @@ const Card = ({ item }) => {
 const wishlist = () => {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
-  if (!userInfo.wishlist.length)
+  redirectHomePage({ userInfo });
+
+  if (!userInfo.favourites?.length)
     return (
       <div className="h-full flex flex-col justify-center items-center">
         <div className="alert alert-success">
@@ -49,9 +52,11 @@ const wishlist = () => {
     );
 
   return (
-    <div className="p-5">
-      {userInfo.wishlist &&
-        userInfo.wishlist.map((item) => <Card key={item.id} item={item} />)}
+    <div className="h-full overflow-y-scroll py-5">
+      {userInfo.favourites &&
+        userInfo.favourites.map((data, index) => (
+          <Card key={index} item={data.items} />
+        ))}
     </div>
   );
 };

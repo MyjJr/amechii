@@ -6,108 +6,49 @@ import { projectData } from "../../data/projectData";
 import Link from "next/link";
 import { UserContext } from "../../contexts/UserContext";
 import { Dialog, Transition } from "@headlessui/react";
-import ProjectModal from "../../components/modal/ProjectModal";
+import { redirectHomePage } from "lib/redirect";
+import DummyCard from "components/cards/DummyCard";
+import { handleGetAllProjects } from "lib/projects";
 
-const DummyCard = (props) => {
-  const [projectTitle, setProjectTitle] = useState("");
-
-  const temp = {
-    id: props.projectData.length + 1,
-    title: projectTitle,
-    status: "success",
-    imageURL: "http://placehold.it/200",
-    products: [
-      {
-        name: "",
-        price: "",
-        imageURL: "http://placehold.it/200",
-      },
-    ],
-    tasks: [],
-    memo: "",
-  };
-
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleOpen = () => {
-    setIsOpen(!isOpen);
-  };
-
-  return (
-    <>
-      <div className="cardStyle m-3 border-4 border-dashed border-gray-200 rounded-xl flex justify-center items-center">
-        <div
-          className="flex items-center p-3 cursor-pointer text-white hover:text-gray-200"
-          onClick={handleOpen}
-        >
-          <PlusIcon className="h-5 w-5" />
-          <p className="p-2">New Project</p>
-          {/* <Link href={`/projects/${props.projects.length + 1}`}>
-            <a className="p-2">New Project</a>
-        </Link> */}
-        </div>
-      </div>
-      <ProjectModal
-        title="Project Title"
-        isOpen={isOpen}
-        handleOpen={handleOpen}
-      >
-        <div className="mt-2">
-          <div className="p-10 card bg-base-200">
-            <div className="form-control">
-              <input
-                type="text"
-                placeholder="title"
-                className="input"
-                onChange={(e) => setProjectTitle(e.target.value)}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="mt-4 flex justify-end">
-          <button
-            type="button"
-            // disabled
-            className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-            onClick={() => {
-              handleOpen();
-              props.setUserInfo({
-                ...props.userInfo,
-                projects: [...props.userInfo.projects, temp],
-              });
-            }}
-          >
-            作成する
-          </button>
-        </div>
-      </ProjectModal>
-    </>
-  );
-};
-
-const projects = ({ projects }) => {
+const projects = (props) => {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
+  const [projects, setProjects] = useState([]);
+
+  if (!userInfo.access_token) return null;
+
   useEffect(() => {
-    setUserInfo({ ...userInfo, projects: projectData });
+    const projectsData = projects.concat(
+      props.data.do_tasks,
+      props.data.set_tasks
+    );
+    setProjects(projectsData);
   }, []);
 
-  console.log(userInfo.projects);
+  const filteredObject = ({ projects }) => {
+    const data = projects.filter(
+      (item, index, array) =>
+        array.findIndex((nextItem) => item.id === nextItem.id) === index
+    );
+    return data;
+  };
+
+  redirectHomePage({ userInfo });
 
   return (
     <div className="layout-container">
       <Navbar />
-      <main className="main-section overflow-y-scroll bg-coolGray-500">
+      <main className="main-section overflow-y-scroll bg-white">
         <div className="cardWrapper lg:mt-8">
           <DummyCard
-            projectData={projectData}
             userInfo={userInfo}
-            setUserInfo={setUserInfo}
+            projects={projects}
+            setProjects={setProjects}
           />
-          {userInfo.projects &&
-            userInfo.projects.map((data) => (
-              <ProjectCard key={data.id} data={data} />
-            ))}
+          {projects &&
+            filteredObject({ projects })
+              .sort((a, b) => (a < b ? 1 : -1))
+              .map((data) => <ProjectCard key={data.id} data={data} />)}
         </div>
       </main>
     </div>
@@ -116,10 +57,12 @@ const projects = ({ projects }) => {
 
 export default projects;
 
-export async function getStaticProps() {
-  const projects = await projectData;
+export const getServerSideProps = async (context) => {
+  const data = await handleGetAllProjects(context);
+
   return {
-    props: { projects },
-    revalidate: 3,
+    props: {
+      data,
+    },
   };
-}
+};

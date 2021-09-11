@@ -9,6 +9,7 @@ class ItemBase(BaseModel):
     detail: Optional[str] = None
     price: Optional[int] = None
     url: Optional[str] = None
+    category: Optional[str] = None
 
 
 class ItemCreate(ItemBase):
@@ -23,6 +24,7 @@ class ItemUpdate(ItemBase):
 class Item(BaseModel):
     id: int
     name: str
+    category: str
     image: Optional[str] = None
     price: int
     url: Optional[str] = None

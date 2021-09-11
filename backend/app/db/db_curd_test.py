@@ -4,6 +4,7 @@ from app.schemas.item import ItemCreate
 from app.schemas.task import TaskCreate, SubTaskCreate
 from app.schemas.address import AddressCreate
 from app.schemas.transaction import TransactionCreate
+from app.schemas.prepaid_card import PrepaidCardCreate
 from app.utils import print_obj_attributes
 
 from app.db import demo_date
@@ -24,9 +25,7 @@ def user_create(db):
 
 def follow_create(db):
     for i in demo_date.demo_follows:
-        user = crud.user.follow(
-            db, from_user_id=i["from_id"], follow_user_id=i["to_id"]
-        )
+        user = crud.user.follow(db, from_user_id=i["from_id"], follow_user_id=i["to_id"])
         # for i in user.following:
         #     print(i.name)
         print(user)
@@ -35,7 +34,7 @@ def follow_create(db):
 def item_create(db):
     for i in demo_date.demo_items:
         item_in = ItemCreate(
-            name=i["name"], image=i["image"], detail=i["detail"], price=i["price"]
+            name=i["name"], image=i["image"], detail=i["detail"], price=i["price"], category=i["category"]
         )
         item = crud.item.create(db, obj_in=item_in)
         print(item)
@@ -89,10 +88,7 @@ def subtask_create(db):
 def transaction_create(db):
     for i in demo_date.demo_transactions:
 
-        obj_in = TransactionCreate(
-            amount=i["amount"],
-            user_id=i["user_id"]
-        )
+        obj_in = TransactionCreate(amount=i["amount"], user_id=i["user_id"])
         transaction = crud.transaction.create(db, obj_in=obj_in)
         print(transaction)
         # print_obj_attributes(transaction)
@@ -105,6 +101,13 @@ def favourite_create(db):
         crud.favourite.create(db, obj_in=i)
 
 
+def prepaid_card_create(db):
+    for i in demo_date.demo_prepaid_card:
+        prepaid_card_in = PrepaidCardCreate(number=i, price=10000)
+        prepaid_card = crud.prepaid_card.create(db, obj_in=prepaid_card_in)
+        print(prepaid_card)
+
+
 def insert_demo_data_all(db):
 
     user_create(db)
@@ -115,6 +118,7 @@ def insert_demo_data_all(db):
     subtask_create(db)
     transaction_create(db)
     favourite_create(db)
+    prepaid_card_create(db)
 
 
 if __name__ == "__main__":
@@ -134,11 +138,17 @@ if __name__ == "__main__":
     user = crud.user.get(db, 1)
     print_obj_attributes(user)
 
-    from app.schemas.task import SubTaskUpdate
-    subtask_in = SubTaskUpdate(
-        priority="1",
-        status="success"
-    )
+    crud.prepaid_card.charge(db, card_number="9068839573703133", user_id=1)
+    # task_in = TaskCreate(set_id=1)
+    # a = crud.task.create(db, obj_in=task_in)
+    # print(a)
+
+    # prepaid_card_create(db)
+    # from app.schemas.task import SubTaskUpdate
+    # subtask_in = SubTaskUpdate(
+    #     priority="1",
+    #     status="success"
+    # )
     # a = crud.subtask.get(db, 1)
     # b = crud.subtask.update(db, db_obj=a, obj_in=subtask_in)
     # print(b)

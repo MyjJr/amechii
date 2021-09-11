@@ -13,23 +13,14 @@ app = FastAPI(
 )
 
 origins = [
-    "*",
     "http://localhost",
+    "http://127.0.0.1",
     "null",
     "http://localhost:3000",
     "http://127.0.0.1:3000"
 ]  # yapf: disable
 
 origin_regex = "http://localhost:[0-9]+"
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_origin_regex=origin_regex,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 app.include_router(api_router, prefix=config.API_ROOT_PATH)
 
@@ -61,9 +52,11 @@ async def token_validate_middleware(request: Request, call_next):
 
     if request.url.path not in allow_no_authenticate:
         print("Validate token..........")
+        print(request.headers)
         token = check_token(request)
         if not token:
-            return Response("Without Access Token", status_code=402)
+            # return Response("Without Access Token", status_code=402)
+            return request
 
         current_user = validate_token(request.state.db, token)
         if not current_user:
@@ -88,6 +81,16 @@ async def db_session_middleware(request: Request, call_next):
         request.state.db.close()
         print("Close DB session")
     return response
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_origin_regex=origin_regex,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 if __name__ == "__main__":

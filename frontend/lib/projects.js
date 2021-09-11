@@ -1,39 +1,142 @@
-import { projectData } from "../data/projectData";
+import * as cookie from "cookie";
 
-import fetch from "node-fetch";
-
-// export async function getAllPostsData() {
-//     const res = await fetch(
-//       new URL(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/list-post/`)
-//     );
-//     const posts = await res.json();
-//     // const filteredPosts = posts.sort(
-//     //   (a, b) => new Date(b.created_at) - new Date(a.created_at)
-//     // );
-//     // return filteredPosts;
-//     return posts
-//   }
-
-export async function getAllProjectIds() {
-  // const res = await fetch(
-  //   new URL(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/list-post/`)
-  // );
-  // const posts = await res.json();
-  return projectData.map((project) => {
+export const handleGetAllProjects = async (context) => {
+  if (!context.req.headers.cookie) {
     return {
-      params: {
-        id: String(project.id),
+      props: {
+        data: [],
       },
     };
-  });
-}
+  }
+  const parsedCookies = cookie.parse(context.req.headers.cookie);
 
-export async function getProjectData(id) {
-  // const res = await fetch(
-  //   new URL(`${process.env.NEXT_PUBLIC_RESTAPI_URL}api/detail-post/${id}/`)
-  // );
-  const project = projectData.filter((project) => project.id === Number(id));
-  // const post = await res.json();
-  // console.log(typeof id)
-  return project[0];
-}
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/tasks/get-allproject`,
+    {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `${parsedCookies.token_type} ${parsedCookies.access_token}`,
+      },
+    }
+  );
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const handleGetProjectTasks = async ({ id, context }) => {
+  if (!context.req.headers.cookie) {
+    return {
+      props: {
+        data: [],
+      },
+    };
+  }
+
+  const parsedCookies = cookie.parse(context.req.headers.cookie);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/v1/tasks/get-project?project_id=${id}`,
+    {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `${parsedCookies.token_type} ${parsedCookies.access_token}`,
+      },
+    }
+  );
+  const data = await res.json();
+
+  return data;
+};
+
+export const updateTaskStatus = async ({ cookies, id, status }) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}api/v1/tasks/update-subtask?subtask_id=${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+          Authorization: `${cookies.token_type} ${cookies.access_token}`,
+        },
+        body: JSON.stringify({
+          status,
+        }),
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    alert(err);
+  }
+};
+
+export const deleteTask = async ({ cookies, id }) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}api/v1/tasks/del-subtask?subtask_id=${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+          Authorization: `${cookies.token_type} ${cookies.access_token}`,
+        },
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    alert(err);
+  }
+};
+
+export const createTask = async ({ cookies, title, projectId }) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}api/v1/tasks/create-subtask`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+          Authorization: `${cookies.token_type} ${cookies.access_token}`,
+        },
+        body: JSON.stringify({
+          title,
+          task_id: projectId,
+        }),
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    alert(err);
+  }
+};
+
+export const createProject = async ({ cookies, title }) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_CLIENT_URL}api/v1/tasks/create-new-project`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+          Authorization: `${cookies.token_type} ${cookies.access_token}`,
+        },
+        body: JSON.stringify({
+          title,
+        }),
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    alert(err);
+  }
+};

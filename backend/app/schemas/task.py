@@ -23,6 +23,7 @@ class TaskCreate(TaskBase):
     set_id: int
     do_id: Optional[int] = None
     item_id_list: List[int] = []
+    status: str = "not_started"
 
 
 class TaskUpdate(TaskBase):
@@ -88,10 +89,15 @@ class TaskRes(Task):
 
 class SetTaskRes(TaskRes):
     from app.schemas.user import Address
-    address: Address
+    address: Optional[Address] = None
 
     class Config:
         orm_mode = True
+
+
+class AllTask(BaseModel):
+    do_tasks: List[TaskRes] = []
+    set_tasks: List[SetTaskRes] = []
 
 
 class FinishTask(BaseModel):
