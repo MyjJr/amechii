@@ -15,10 +15,6 @@ const projects = (props) => {
 
   const [projects, setProjects] = useState([])
 
-  // useEffect(() => {
-  //   setUserInfo({ ...userInfo, projects: projectData });
-  // }, []);
-
   useEffect(() => {
     setProjects(projects.concat(props.data.do_tasks, props.data.set_tasks))
   },[])
@@ -35,7 +31,7 @@ const projects = (props) => {
   return (
     <div className="layout-container">
       <Navbar />
-      <main className="main-section overflow-y-scroll bg-coolGray-500">
+      <main className="main-section overflow-y-scroll bg-white">
         <div className="cardWrapper lg:mt-8">
           <DummyCard
             userInfo={userInfo}

@@ -19,9 +19,9 @@ const DummyCard = ({userInfo, projects  ,setProjects}) => {
   
     return (
       <>
-        <div className="cardStyle m-3 border-4 border-dashed border-gray-200 rounded-xl flex justify-center items-center">
+        <div className="cardStyle m-3 border-4 border-dashed border-gray-400 rounded-xl flex justify-center items-center">
           <div
-            className="flex items-center p-3 cursor-pointer text-white hover:text-gray-200"
+            className="flex items-center p-3 cursor-pointer text-gray-400 hover:text-gray-200"
             onClick={handleOpen}
           >
             <PlusIcon className="h-5 w-5" />

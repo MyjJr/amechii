@@ -43,9 +43,6 @@ const Project = (props) => {
     setProjectData(props.data);
   }, []);
 
-  console.log(projectData)
-
-
 
   if (!projectData) return <ProjectCreateForm />;
 
@@ -55,7 +52,7 @@ const Project = (props) => {
       <Navbar />
       <main className="main-section overflow-y-scroll bg-coolGray-500">
         <div className="h-full w-full flex flex-col justify-center items-center">
-          <ProjectPaymentModal isOpen={isOpen} handleOpen={handleOpen} />
+          <ProjectPaymentModal isOpen={isOpen} handleOpen={handleOpen} projectData={projectData} userInfo={userInfo} />
           <div
             className="bg-white shadow-lg rounded-lg"
             style={{ height: "90%", width: "90%" }}

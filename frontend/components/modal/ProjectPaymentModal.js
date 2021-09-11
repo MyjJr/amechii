@@ -1,10 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import ToggleBtn from "../buttons/ToggleBtn";
-import SelectUserBox from "../selectBox/selectUserBox";
+import SelectUserBox from "../selectBox/SelectUserBox";
 
-const ProjectPaymentModal = ({ isOpen, handleOpen }) => {
+const ProjectPaymentModal = ({ isOpen, handleOpen, projectData, userInfo }) => {
   const listStyle = "h-full w-1/2 flex items-center justify-center";
+  console.log(projectData)
+  // console.log(userInfo)
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -54,7 +56,7 @@ const ProjectPaymentModal = ({ isOpen, handleOpen }) => {
               <div className="flex flex-col p-2 h-full w-full">
                 <div className="border-b-2 border-gray-300 h-full w-full flex justify-evenly items-center">
                   <p className={listStyle}>決済</p>
-                  <div className={listStyle}>残高：XXXX円</div>
+                  <div className={listStyle}>残高：{userInfo.balance}円</div>
                 </div>
                 <div className="border-b-2 border-gray-300 h-full w-full flex justify-evenly items-center">
                   <p className={listStyle}>お届け先</p>
@@ -63,18 +65,18 @@ const ProjectPaymentModal = ({ isOpen, handleOpen }) => {
                 <div className="border-b-2 border-gray-300 h-full w-full flex justify-evenly items-center">
                   <p className={listStyle}>誰に？</p>
                   <div className={listStyle}>
-                    <SelectUserBox />
+                    <SelectUserBox userInfo={userInfo} />
                   </div>
                 </div>
 
                 <div className="border-b-2 border-gray-300 h-full w-full flex justify-evenly items-center">
                   <p className={listStyle}>締め切り</p>
-                  <div className={listStyle}>XXXXX</div>
+                  <div className={listStyle}>{projectData.deadline}</div>
                 </div>
                 <div className="border-b-2 border-gray-300 h-full w-full flex items-center">
-                  <p className={listStyle}>募金しますか？</p>
+                  <p className={listStyle}>失敗した場合は{projectData.back_money ? "返金する" : "募金する"}</p>
                   <div className={listStyle}>
-                    <ToggleBtn />
+                    <ToggleBtn isPayBack={projectData.back_money}/>
                   </div>
                 </div>
                 <div className="h-full w-full flex justify-center items-center">

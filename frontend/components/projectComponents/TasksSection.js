@@ -32,7 +32,6 @@ const TasksSection = (props) => {
     );
     setTasks(updateTasks)
     updateTaskStatus({ cookies: userInfo, id, status: changeStatusFormat(!checkTaskStatus(status))})
-    // console.log(res)
   };
 
 
