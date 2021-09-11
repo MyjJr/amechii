@@ -13,6 +13,8 @@ app = FastAPI(
 )
 
 origins = [
+    "http://amechii.jp/",
+    "http://api.amechii.jp/",
     "http://localhost",
     "http://127.0.0.1",
     "null",
