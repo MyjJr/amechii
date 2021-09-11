@@ -48,7 +48,7 @@ const Project = (props) => {
           />
           <div
             className="bg-white shadow-lg rounded-lg"
-            style={{ height: "90%", width: "90%" }}
+            style={{ height: "80%", width: "80%" }}
           >
             <div className="flex flex-col lg:flex-row items-center justify-center h-full w-full lg:p-3">
               <ProductsSection projectData={projectData} userInfo={userInfo} />

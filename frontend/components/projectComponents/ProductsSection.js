@@ -4,17 +4,19 @@ import React from "react";
 const ProductsSection = ({ projectData, userInfo }) => {
   const item = projectData.items[0]?.items;
 
+  console.log(userInfo.favourites)
+
   return (
     <div className="rounded h-full flex flex-col justify-center items-center lg:w-5/12">
       <div className="border-2 border-gray-300 h-full w-full flex justify-center items-center">
         {item ? (
           <img
-            className="bg-cover h-32"
+            className="bg-cover rounded h-40"
             src={`http://amechii.jp/image/item/${item.image}`}
           />
         ) : (
           <img
-            className="bg-cover h-32"
+            className="bg-cover rounded h-40"
             src={`http://amechii.jp/image/item/${userInfo.favourites[0].items.image}`}
           />
         )}
