@@ -8,15 +8,15 @@ const UserProfileSection = ({ userInfo }) => {
     },
     {
       key: "プロジェクトの数",
-      data: userInfo.do_tasks.length,
+      data: userInfo.do_tasks? userInfo.do_tasks.length : 0,
     },
     {
       key: "フォローしている数",
-      data: userInfo.following.length,
+      data: userInfo.following ? userInfo.following.length : 0,
     },
     {
       key: "フォローされている数",
-      data: userInfo.followers.length,
+      data: userInfo.followers ? userInfo.followers.length : 0,
     },
   ];
 

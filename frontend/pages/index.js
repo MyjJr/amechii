@@ -13,6 +13,7 @@ export default function Home(props) {
   const cookies = new Cookies();
 
   useEffect(() => {
+    
     if (props.data) {
       setUserInfo({
         ...props.data,
