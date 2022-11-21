@@ -43,6 +43,7 @@ async def token_validate_middleware(request: Request, call_next):
         config.API_ROOT_PATH + "/users/get-users-by-name",
         config.API_ROOT_PATH + "/users/get-users",
         config.API_ROOT_PATH + "/tasks/get-subtasks",
+        config.API_ROOT_PATH + "/alive_check",
     ]  # yapf: disable
 
     print("Access from", request.url.path)
