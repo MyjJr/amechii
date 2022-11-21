@@ -1,8 +1,8 @@
-import { SearchCircleIcon, SearchIcon } from "@heroicons/react/outline";
+import { SearchIcon } from "@heroicons/react/outline";
 import { UserContext } from "contexts/UserContext";
 import { redirectHomePage } from "lib/redirect";
-import React, { useState, useEffect } from "react";
-import { useContext } from "react/cjs/react.development";
+import React, { useState } from "react";
+import { useContext } from "react";
 import BaseLayout from "../components/layouts/BaseLayout";
 import { followUser, unfollowUser } from "../lib/users";
 

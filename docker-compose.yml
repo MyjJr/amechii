@@ -8,6 +8,7 @@ services:
       - 80:80
     volumes:
       - ./nginx/conf:/etc/nginx/conf.d
+      - ./image:/image
       # - ./nginx/logs:/var/log/nginx
       # - ./nginx/html:/usr/share/nginx/html
 
@@ -16,11 +17,11 @@ services:
       context: ./frontend
       dockerfile: frontend.dockerfile
 
-    ports:
-      - 3000:3000
-    volumes:
-      # - ./image:/image
-      - ./frontend:/code
+    # ports:
+    #   - 3000:3000
+    # volumes:
+    #   - ./image:/image
+    #   - ./frontend:/code
 
   backend:
     depends_on:
@@ -30,18 +31,18 @@ services:
       dockerfile: backend.dockerfile
     env_file: 
       - ${ENV_FILE_PATH:-config.env}
-    ports: 
-      - 8080:80
-    restart: always
-    volumes:
-      - ./image:/image
-      - ./backend/app:/app
+    # ports: 
+    #   - 8080:80
+    # restart: always
+    # volumes:
+    #   - ./image:/image
+    #   - ./backend/app:/app
   
   db:
     image: mariadb:latest
     env_file: 
       - ${ENV_FILE_PATH:-config.env}
-    ports:
-      - 3306:3306
-    volumes: 
-    - ./db/data:/var/lib/mysql
+    # ports:
+    #   - 3306:3306
+    # volumes: 
+    #   - ./db/data:/var/lib/mysql
