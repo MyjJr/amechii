@@ -18,10 +18,10 @@ services:
       dockerfile: frontend.dockerfile
 
     # ports:
-      # - 3000:3000
+    #   - 3000:3000
     # volumes:
-      # - ./image:/image
-      # - ./frontend:/code
+    #   - ./image:/image
+    #   - ./frontend:/code
 
   backend:
     depends_on:
@@ -32,17 +32,17 @@ services:
     env_file: 
       - ${ENV_FILE_PATH:-config.env}
     # ports: 
-      # - 8080:80
-    restart: always
+    #   - 8080:80
+    # restart: always
     # volumes:
     #   - ./image:/image
-      # - ./backend/app:/app
+    #   - ./backend/app:/app
   
   db:
     image: mariadb:latest
     env_file: 
       - ${ENV_FILE_PATH:-config.env}
-    ports:
-      - 3306:3306
+    # ports:
+    #   - 3306:3306
     # volumes: 
-    # - ./db/data:/var/lib/mysql
+    #   - ./db/data:/var/lib/mysql
